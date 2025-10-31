@@ -20,6 +20,13 @@ jobs:
     steps:
       - name: Checkout your repository using git
         uses: actions/checkout@v4
+      - uses: jdx/mise-action@v3
+      - uses: actions/setup-python@v6
+        with:
+          python-version: "3.13"
+      - name: Generate Assets
+        run: |
+          mise run diagrams
       - name: Install, build, and upload your site
         uses: withastro/action@v3
 
