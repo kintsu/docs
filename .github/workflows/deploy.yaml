@@ -35,6 +35,7 @@ jobs:
         run: |
           pip install diagrams
           mise run diagrams
+
       - name: Install, build, and upload your site
         uses: withastro/action@v3
 
