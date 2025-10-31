@@ -1,11 +1,11 @@
 ---
 import StarlightPage from "@astrojs/starlight/components/StarlightPage.astro";
 import { getCollection } from "astro:content";
-import kintsuSpec from "../../../assets/kintsu.json" with { type: "json" };
-import { qualifiedId } from "../../../lib/specs";
+import { qualifiedId } from "@/lib/specs";
+import { kintsu } from "@/content/specs/config";
 
 export async function getStaticPaths() {
-  const kinds = kintsuSpec.spec_kinds;
+  const kinds = kintsu.spec_kinds;
   const paths = [];
 
   for (const kind of kinds) {

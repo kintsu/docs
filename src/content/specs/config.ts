@@ -1,13 +1,14 @@
 import { defineCollection, type z } from "astro:content";
 // Import the canonical manifest (optimistic: schema is guaranteed correct)
-import kintsuSpec from "../../assets/kintsu.json" with { type: "json" };
+import kintsuSpec from "@/assets/kintsu.json";
 
-import { specSchema } from "../../lib/specs";
+import { specSchema } from "@/lib/specs";
 import { glob } from "astro/loaders";
 
+export const kintsu = kintsuSpec;
 // Register one collection per spec kind, using bare names since files live in src/content/specs/<kind>
 export const collections = Object.fromEntries(
-  kintsuSpec.spec_kinds.map((k: any) => [
+  kintsu.spec_kinds.map((k: any) => [
     k.id.toLowerCase(),
     defineCollection({
       loader: glob({

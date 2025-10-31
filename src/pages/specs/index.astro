@@ -1,21 +1,23 @@
 ---
 import StarlightPage from "@astrojs/starlight/components/StarlightPage.astro";
 import { getCollection } from "astro:content";
-import kintsuSpec from "../../assets/kintsu.json" with { type: "json" };
 import { qualifiedId } from "../../lib/specs";
+import { kintsu } from "@/content/specs/config";
 
-const kinds = kintsuSpec.spec_kinds;
+const kinds = kintsu.spec_kinds;
 
-// Load all collections and sort entries by number
-export const collections = await Promise.all(
-  kinds.map(async (k) => {
+// Precompute a promise to load each collection; we await this in-template.
+const collectionsPromise = Promise.all(
+  kinds.map(async (k: any) => {
     const collectionKey = k.id.toLowerCase();
     const entries = (await getCollection(collectionKey as any)) as any[];
-    // Sort by number for consistent display
     const sorted = entries.sort((a, b) => a.data.number - b.data.number);
     return { kind: k, collectionKey, entries: sorted };
   }),
 );
+
+// We'll load collections in-template to avoid ordering issues during build
+// (use an inline await where the collections are rendered).
 
 export const frontmatter = {
   title: "Specifications",
@@ -34,7 +36,14 @@ export const frontmatter = {
     </div>
 
     {
-      collections.map(({ kind, collectionKey, entries }) => (
+      (await Promise.all(
+        kinds.map(async (k) => {
+          const collectionKey = k.id.toLowerCase();
+          const entries = (await getCollection(collectionKey as any)) as any[];
+          const sorted = entries.sort((a, b) => a.data.number - b.data.number);
+          return { kind: k, collectionKey, entries: sorted };
+        })
+      )).map(({ kind, collectionKey, entries }) => (
         <details class="spec-kind" open>
           <summary class="kind-header">
             <div class="kind-title-row">

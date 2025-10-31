@@ -9,8 +9,8 @@ import {
   qualifiedId,
   type SpecSchema,
 } from "../../../lib/specs";
-import kintsuSpec from "../../../assets/kintsu.json" with { type: "json" };
 import type { RenderedContent } from "astro:content";
+import { kintsu } from "@/content/specs/config";
 
 type SpecCollectionKey =
   | "rfc"
@@ -31,7 +31,7 @@ interface SpecPageProps {
 }
 
 export async function getStaticPaths() {
-  const kinds = kintsuSpec.spec_kinds;
+  const kinds = kintsu.spec_kinds;
   const paths: Array<{
     params: { kind: string; id: string };
     props: SpecPageProps;

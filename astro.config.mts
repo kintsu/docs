@@ -47,11 +47,7 @@ function generateSpecSidebarItems() {
         ],
       });
     } catch (error) {
-      // If directory doesn't exist or can't be read, just add the kind link
-      items.push({
-        label: kind.name,
-        link: `/specs/${kindId}`,
-      });
+      // If directory doesn't exist or can't be read, skip
     }
   }
 

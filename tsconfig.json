@@ -4,9 +4,8 @@
     "paths": {
       "@/*": ["./src/*"]
     },
-    "resolveJsonModule": true,
-    "moduleResolution": "bundler"
+    "resolveJsonModule": true
   },
-  "include": [".astro/types.d.ts", "**/*"],
+  "include": [".astro/types.d.ts", "**/*", "src/**/*.json"],
   "exclude": ["dist"]
 }
