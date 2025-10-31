@@ -1,0 +1,8 @@
+- id: core
+  name: Core Specifications
+  description: Fundamental specifications that define the core functionality of Kintsu.
+- id: test
+  name: Testing Specifications
+  description:
+    Specifications related to testing strategies and practices for Kintsu
+    implementations.

@@ -1,0 +1,22 @@
+- id: docs
+  name: Documentation
+  description: The official user documentation for Kintsu.
+  code: D
+- id: spec
+  name: Specifications
+  description: The formal specifications defining the Kintsu schema language.
+  code: S
+- id: roadmap
+  name: Roadmap
+  description:
+    The development roadmap outlining planned features and improvements
+    for Kintsu.
+  code: R
+- id: compiler
+  name: Compiler
+  description: The core compiler responsible for parsing and compiling Kintsu schemas.
+  code: C
+- id: parser
+  name: Parser
+  description: The module that handles parsing of Kintsu ast streams.
+  code: P

@@ -1,0 +1,76 @@
+[tools]
+node = "latest"
+prek = "latest"
+
+[tasks]
+demos = ["vhs demos/compile.vhs.tape"]
+
+compilation-diagram = "python -m diagrams.compilation"
+handlers-diagram = "python -m diagrams.handlers"
+
+struct-types-diagram = "python -m diagrams.struct_types"
+struct-compilation-diagram = "python -m diagrams.struct_compilation"
+alias-resolution-chain-diagram = "python -m diagrams.alias_resolution_chain"
+alias-resolution-flow-diagram = "python -m diagrams.alias_resolution_flow"
+anonymous-extraction-diagram = "python -m diagrams.anonymous_extraction"
+enum-value-determination-diagram = "python -m diagrams.enum_value_determination"
+enum-variants-diagram = "python -m diagrams.enum_variants"
+error-resolution-diagram = "python -m diagrams.error_resolution"
+error-structure-diagram = "python -m diagrams.error_structure"
+import-resolution-flow-diagram = "python -m diagrams.import_resolution_flow"
+metadata-ast-hierarchy-diagram = "python -m diagrams.metadata_ast_hierarchy"
+metadata-inheritance-diagram = "python -m diagrams.metadata_inheritance"
+namespace-compilation-flow-diagram = "python -m diagrams.namespace_compilation_flow"
+namespace-hierarchy-diagram = "python -m diagrams.namespace_hierarchy"
+oneof-structure-diagram = "python -m diagrams.oneof_structure"
+operation-flow-diagram = "python -m diagrams.operation_flow"
+phase-flows-detailed-diagram = "python -m diagrams.phase_flows_detailed"
+phase-ordering-diagram = "python -m diagrams.phase_ordering"
+type-resolution-architecture-diagram = "python -m diagrams.type_resolution_architecture"
+union-compilation-flow-diagram = "python -m diagrams.union_compilation_flow"
+union-field-merging-diagram = "python -m diagrams.union_field_merging"
+parallel-compilation-architecture-diagram = "python -m diagrams.parallel_compilation_architecture"
+schema-compilation-flow-diagram = "python -m diagrams.schema_compilation_flow"
+schema-dependency-graph-diagram = "python -m diagrams.schema_dependency_graph"
+type-lookup-flow-diagram = "python -m diagrams.type_lookup_flow"
+type-registry-structure-diagram = "python -m diagrams.type_registry_structure"
+
+[tasks.diagrams]
+depends = [
+    "compilation-diagram",
+    "handlers-diagram",
+    "struct-types-diagram",
+    "struct-compilation-diagram",
+    "alias-resolution-chain-diagram",
+    "alias-resolution-flow-diagram",
+    "anonymous-extraction-diagram",
+    "enum-value-determination-diagram",
+    "enum-variants-diagram",
+    "error-resolution-diagram",
+    "error-structure-diagram",
+    "import-resolution-flow-diagram",
+    "metadata-ast-hierarchy-diagram",
+    "metadata-inheritance-diagram",
+    "namespace-compilation-flow-diagram",
+    "namespace-hierarchy-diagram",
+    "oneof-structure-diagram",
+    "operation-flow-diagram",
+    "phase-flows-detailed-diagram",
+    "phase-ordering-diagram",
+    "type-resolution-architecture-diagram",
+    "union-compilation-flow-diagram",
+    "union-field-merging-diagram",
+    "parallel-compilation-architecture-diagram",
+    "schema-compilation-flow-diagram",
+    "schema-dependency-graph-diagram",
+    "type-lookup-flow-diagram",
+    "type-registry-structure-diagram",
+]
+
+[tasks.prep-docs]
+run = [
+    "cargo run -p kintsu-parser --bin emit --features emit",
+    "cargo run -p kintsu-cli --bin emit --features emit",
+]
+
+depends = ["diagrams"]

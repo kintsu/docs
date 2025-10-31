@@ -1,0 +1,56 @@
+---
+title: Specs
+---
+
+- Architecture Decision
+  - [AD-0001 - Type Resolution Architecture](./ad/AD-0001.md)
+  - [AD-0002 - Parallel Compilation Architecture](./ad/AD-0002.md)
+
+- Request for Comment
+  - [RFC-0001 - Builtin Type System Design](./rfc/RFC-0001.md)
+  - [RFC-0002 - Struct Type Design](./rfc/RFC-0002.md)
+  - [RFC-0003 - Support Anonymous Structs](./rfc/RFC-0003.md)
+  - [RFC-0004 - Enum Type Design](./rfc/RFC-0004.md)
+  - [RFC-0005 - Error Type Design](./rfc/RFC-0005.md)
+  - [RFC-0006 - Type Alias Design](./rfc/RFC-0006.md)
+  - [RFC-0007 - Union Type Support](./rfc/RFC-0007.md)
+  - [RFC-0008 - OneOf Type Design](./rfc/RFC-0008.md)
+  - [RFC-0009 - Operation Design](./rfc/RFC-0009.md)
+  - [RFC-0010 - Namespace System](./rfc/RFC-0010.md)
+  - [RFC-0011 - Import System](./rfc/RFC-0011.md)
+  - [RFC-0012 - Metadata System](./rfc/RFC-0012.md)
+  - [RFC-0013 - Type Resolution Design](./rfc/RFC-0013.md)
+  - [RFC-0014 - Parallel Compilation Design](./rfc/RFC-0014.md)
+  - [RFC-0015 - Type Registry Design](./rfc/RFC-0015.md)
+  - [RFC-0016 - Union Or](./rfc/RFC-0016.md)
+
+- Technical Specification
+  - [SPEC-0001 - Builtin Type Resolution](./spec/SPEC-0001.md)
+  - [SPEC-0002 - Struct Compilation](./spec/SPEC-0002.md)
+  - [SPEC-0003 - Anonymous Struct Compilation](./spec/SPEC-0003.md)
+  - [SPEC-0004 - Enum Compilation](./spec/SPEC-0004.md)
+  - [SPEC-0005 - Error Compilation](./spec/SPEC-0005.md)
+  - [SPEC-0006 - Type Alias Compilation](./spec/SPEC-0006.md)
+  - [SPEC-0007 - Union Type Compilation](./spec/SPEC-0007.md)
+  - [SPEC-0008 - OneOf Compilation](./spec/SPEC-0008.md)
+  - [SPEC-0009 - Operation Compilation](./spec/SPEC-0009.md)
+  - [SPEC-0010 - Namespace Compilation](./spec/SPEC-0010.md)
+  - [SPEC-0011 - Import Resolution](./spec/SPEC-0011.md)
+  - [SPEC-0012 - Metadata Resolution](./spec/SPEC-0012.md)
+  - [SPEC-0013 - Type Resolution Phases](./spec/SPEC-0013.md)
+  - [SPEC-0014 - Schema Compilation](./spec/SPEC-0014.md)
+  - [SPEC-0015 - Type Registry](./spec/SPEC-0015.md)
+
+- Type System
+  - [TSY-0001 - Builtin Types](./tsy/TSY-0001.md)
+  - [TSY-0002 - Struct Types](./tsy/TSY-0002.md)
+  - [TSY-0003 - Anonymous Structs](./tsy/TSY-0003.md)
+  - [TSY-0004 - Enum Types](./tsy/TSY-0004.md)
+  - [TSY-0005 - Error Types](./tsy/TSY-0005.md)
+  - [TSY-0006 - Type Aliases](./tsy/TSY-0006.md)
+  - [TSY-0007 - Union Types](./tsy/TSY-0007.md)
+  - [TSY-0008 - OneOf Types](./tsy/TSY-0008.md)
+  - [TSY-0009 - Operations](./tsy/TSY-0009.md)
+  - [TSY-0010 - Namespaces](./tsy/TSY-0010.md)
+  - [TSY-0011 - Imports](./tsy/TSY-0011.md)
+  - [TSY-0012 - Metadata](./tsy/TSY-0012.md)
