@@ -1,0 +1,44 @@
+---
+export interface Action { text: string; link: string; icon?: string }
+const { title = '', tagline = '', image = null, imageAlt = '', actions = [] } = Astro.props as { title?: string; tagline?: string; image?: string | null; imageAlt?: string; actions?: Action[] };
+---
+<header class="hero" role="banner" aria-label="Site introduction">
+  <div class="hero-inner">
+    <div class="hero-content">
+      <h1 class="hero-title">{title}</h1>
+      {tagline && <p class="hero-tagline">{tagline}</p>}
+
+      <nav class="hero-actions" aria-label="Primary">
+        {actions.map((a) => (
+          <a class="action" href={a.link}>
+            <span class="action-text">{a.text}</span>
+          </a>
+        ))}
+      </nav>
+    </div>
+
+    {image && (
+      <figure class="hero-media" role="img" aria-label={imageAlt || `${title} demo`}> 
+        <picture>
+          <!-- Prefer modern WebP if available, fallback to original -->
+          <source srcset={image.replace(/\.gif$/i, '.webp')} type="image/webp" />
+          <img src={image} alt={imageAlt || title} loading="lazy" decoding="async" />
+        </picture>
+      </figure>
+    )}
+  </div>
+</header>
+
+<style>
+:root{--hero-bg:linear-gradient(180deg, rgba(20,20,30,0.05), transparent); --accent:#6b5cff}
+.hero{padding:3rem 1rem; background:var(--hero-bg);}
+.hero-inner{max-width:1100px;margin:0 auto;display:grid;grid-template-columns:1fr 420px;gap:2rem;align-items:center}
+@media (max-width:900px){.hero-inner{grid-template-columns:1fr;}}
+.hero-title{font-size:2.1rem;margin:0;color:var(--accent);font-weight:700}
+.hero-tagline{margin:.6rem 0 1.2rem;color:var(--muted,#555);font-size:1.05rem}
+.hero-actions{display:flex;gap:0.75rem;flex-wrap:wrap}
+.action{display:inline-flex;align-items:center;padding:.6rem 1rem;background:#fff;border:1px solid rgba(0,0,0,0.06);border-radius:8px;text-decoration:none;color:inherit;box-shadow:0 6px 18px rgba(16,24,40,0.04);}
+.action:hover{transform:translateY(-2px)}
+.hero-media{justify-self:end;margin:0}
+.hero-media img{max-width:420px;width:100%;height:auto;border-radius:10px;box-shadow:0 12px 30px rgba(11,15,30,0.08)}
+</style>

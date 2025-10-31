@@ -19,6 +19,8 @@ import starlightGitHubAlerts from "starlight-github-alerts";
 // highlighter.loadLanguageSync(kintsu)
 
 export default defineConfig({
+  site: 'https://kintsu.github.io',
+  base: '/docs',
   server: {
     port: 3000,
   },

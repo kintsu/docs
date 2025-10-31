@@ -23,3 +23,72 @@ import { Card, CardGrid } from "@astrojs/starlight/components";
     Learn more about `kintsu`
   </Card>
 </CardGrid>
+
+## Kintsu — a compact, expressive type schema language
+
+Kintsu is a small, human-friendly language for defining schemas, operations, and typed contracts.
+This site documents the syntax, the type system, and the design decisions behind the project.
+
+<CardGrid stagger>
+  <Card title="Get started" icon="rocket">
+    <p>Read the quick overview and examples.</p>
+    <p><a href="/syntax">Syntax</a> · <a href="/types">Types</a></p>
+  </Card>
+
+{" "}
+
+<Card title="Reference & CLI" icon="terminal">
+  <p>Command-line usage and reference docs.</p>
+  <p>
+    <a href="/reference/cli">CLI</a>
+  </p>
+</Card>
+
+{" "}
+
+<Card title="Design & Specs" icon="book-open">
+  <p>RFCs, specs, and architecture decisions.</p>
+  <p>
+    <a href="/summary">Specs</a>
+  </p>
+</Card>
+
+  <Card title="Contribute" icon="github">
+    <p>Found a bug? Want to propose a change?</p>
+    <p><a href="https://github.com/kintsu/kintsu">GitHub</a></p>
+  </Card>
+</CardGrid>
+
+### Small example
+
+Here is a compact example to show Kintsu's flavor. The site includes syntax highlighting for `kintsu` sources.
+
+```kintsu
+namespace demo;
+
+struct User {
+	id: i64,
+	name: str,
+	email: str,
+};
+
+error UserError {
+  NotFound { id: i64 }
+};
+
+#[err(UserError)]
+operation get_user(id: i64) -> User!;
+```
+
+### Why Kintsu?
+
+- Concise syntax for types and operations.
+- Strong documentation and specification-driven development.
+- Designed for readable RFCs and machine-friendly compilation.
+
+### Quick links
+
+- Syntax - Builtin types - [Syntax overview](/syntax)
+- Types · Structs - Enums - [Type system](/types)
+- RFCs & Specs - [Specs](/summary)
+- CLI - [Reference](/reference/cli)
