@@ -3,7 +3,7 @@ from diagrams.generic.storage import Storage
 from diagrams.programming.flowchart import Action
 from diagrams.programming.language import Rust
 
-from docs.diagrams.common import OPTS, diag_path
+from gen_diagrams.common import OPTS, diag_path
 
 
 def struct_compilation():

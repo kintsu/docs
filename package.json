@@ -11,10 +11,16 @@
   },
   "dependencies": {
     "@astrojs/starlight": "^0.36.1",
-    "astro": "^5.6.1",
+    "astro": "^5.15",
     "sharp": "^0.34.2",
     "starlight-github-alerts": "^0.1.1",
     "starlight-heading-badges": "^0.6.1",
     "starlight-versions": "^0.5.6"
+  },
+  "trustedDependencies": [
+    "core-js"
+  ],
+  "devDependencies": {
+    "@biomejs/biome": "2.3.2"
   }
 }

@@ -1,6 +1,6 @@
 """Package for docs diagrams.
 
-Run diagrams via: python -m docs.diagrams.<diagram_module>
+Run diagrams via: python -m gen_diagrams.<diagram_module>
 """
 
 __all__ = [

@@ -14,7 +14,7 @@ from diagrams.generic.storage import Storage
 from diagrams.onprem.workflow import Airflow
 from diagrams.programming.language import Rust
 
-from docs.diagrams.common import OPTS, diag_path
+from gen_diagrams.common import OPTS, diag_path
 
 graph_attr = {
     "fontsize": "16",

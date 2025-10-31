@@ -2,7 +2,7 @@ from diagrams import Cluster, Diagram, Edge
 from diagrams.custom import Custom
 from diagrams.programming.language import Rust
 
-from docs.diagrams.common import diag_path
+from gen_diagrams.common import diag_path
 
 with Diagram(
     "Detailed Phase Flows",

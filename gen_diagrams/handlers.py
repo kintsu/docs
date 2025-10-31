@@ -3,7 +3,7 @@ from diagrams.generic.storage import Storage
 from diagrams.programming.flowchart import Action, InternalStorage
 from diagrams.programming.language import Rust
 
-from docs.diagrams.common import diag_path, edge_attr, graph_attr, node_attr
+from gen_diagrams.common import diag_path, edge_attr, graph_attr, node_attr
 
 with Diagram(
     "kintsu Type System & Registration",

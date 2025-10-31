@@ -1,7 +1,7 @@
 from diagrams import Cluster, Diagram, Edge
 from diagrams.onprem.compute import Server
 
-from docs.diagrams.common import diag_path
+from gen_diagrams.common import diag_path
 
 with Diagram(
     "Phase Ordering",

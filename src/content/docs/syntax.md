@@ -4,7 +4,7 @@ title: "Syntax"
 
 ## Overview
 
-- [Builtin Types](./syntax/builtin.md)
-- [Tokens](./syntax/tokens.md)
-- [Keywords](./syntax/keywords.md)
-- [Spanned Tokens](./syntax/spanned.md)
+- [Builtin Types](./syntax/builtin)
+- [Tokens](./syntax/tokens)
+- [Keywords](./syntax/keywords)
+- [Spanned Tokens](./syntax/spanned)

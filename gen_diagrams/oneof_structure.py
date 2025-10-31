@@ -1,7 +1,7 @@
 from diagrams import Cluster, Diagram, Edge
 from diagrams.custom import Custom
 
-from docs.diagrams.common import OPTS, diag_path
+from gen_diagrams.common import OPTS, diag_path
 
 with Diagram(
     "OneOf Discriminated Union Structure",

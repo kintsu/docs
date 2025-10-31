@@ -8,7 +8,7 @@ parameter types, processing, and result/error returns.
 from diagrams import Cluster, Diagram, Edge
 from diagrams.generic.blank import Blank
 
-from docs.diagrams.common import diag_path
+from gen_diagrams.common import diag_path
 
 graph_attr = {
     "fontsize": "14",

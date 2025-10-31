@@ -4,7 +4,7 @@ from diagrams.generic.storage import Storage
 from diagrams.onprem.queue import Kafka
 from diagrams.programming.language import Rust
 
-from docs.diagrams.common import diag_path
+from gen_diagrams.common import diag_path
 
 graph_attr = {
     "fontsize": "16",

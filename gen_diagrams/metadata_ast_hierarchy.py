@@ -9,7 +9,7 @@ from diagrams import Cluster, Diagram, Edge
 from diagrams.onprem.compute import Server
 from diagrams.programming.language import Rust
 
-from docs.diagrams.common import diag_path
+from gen_diagrams.common import diag_path
 
 with Diagram(
     "Metadata AST Hierarchy",

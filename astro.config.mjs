@@ -4,11 +4,27 @@ import starlight from "@astrojs/starlight";
 import starlightHeadingBadges from "starlight-heading-badges";
 import starlightGitHubAlerts from "starlight-github-alerts";
 
-import starlightVersions from "starlight-versions";
+// import * as kintsu from './src/assets/kintsu.tmLanguage.json' with { type: 'json' };
+// import starlightVersions from "starlight-versions";
+
+// const kintsu = await import("./src/lib/syntax/kintsu.js");
+
+// const highlighter = await createHighlighter({
+//   langs: [
+
+//   ],
+//   themes: []
+// })
+
+// highlighter.loadLanguageSync(kintsu)
+
 export default defineConfig({
   server: {
     port: 3000,
   },
+  // langs: [
+  //   kintsu,
+  // ],
   integrations: [
     starlight({
       title: "Kintsu Docs",
@@ -20,9 +36,9 @@ export default defineConfig({
         },
       ],
       plugins: [
-        starlightVersions({
-          versions: [{ slug: "0.1.0", label: "wip" }],
-        }),
+        // starlightVersions({
+        //   versions: [{ slug: "0.1.0", label: "wip" }],
+        // }),
         starlightGitHubAlerts(),
         starlightHeadingBadges(),
       ],
