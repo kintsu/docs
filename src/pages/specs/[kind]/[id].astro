@@ -1,0 +1,144 @@
+---
+// Import StarlightPage first to set up cascade layers
+import StarlightPage from "@astrojs/starlight/components/StarlightPage.astro";
+import { getCollection, render } from "astro:content";
+import type { MarkdownHeading } from "astro";
+import SpecHeader from "../../../components/SpecHeader.astro";
+import {
+  normalizeKind,
+  qualifiedId,
+  type SpecSchema,
+} from "../../../lib/specs";
+import kintsuSpec from "../../../assets/kintsu.json" with { type: "json" };
+import type { RenderedContent } from "astro:content";
+
+type SpecCollectionKey =
+  | "rfc"
+  | "ad"
+  | "spec"
+  | "tsy"
+  | "cg"
+  | "perf"
+  | "integ"
+  | "unit"
+  | "e2e";
+
+interface SpecPageProps {
+  entry: SpecSchema;
+  Content: any;
+  headings: MarkdownHeading[];
+  qid: string;
+}
+
+export async function getStaticPaths() {
+  const kinds = kintsuSpec.spec_kinds;
+  const paths: Array<{
+    params: { kind: string; id: string };
+    props: SpecPageProps;
+  }> = [];
+
+  for (const k of kinds) {
+    const collectionKey = k.id.toLowerCase() as SpecCollectionKey;
+    const entries = await getCollection<
+      SpecCollectionKey,
+      { data: SpecSchema } & {
+        id: string;
+        body?: string | undefined;
+        collection: "e2e";
+        rendered?: RenderedContent | undefined;
+        filePath?: string | undefined;
+      }
+    >(collectionKey);
+
+    for (const entry of entries) {
+      const qid = qualifiedId(entry.data.kind, entry.data.number);
+      const { Content, headings } = await render(entry);
+
+      paths.push({
+        params: { kind: collectionKey, id: qid },
+        props: {
+          entry: entry.data,
+          Content,
+          headings,
+          qid,
+        },
+      });
+    }
+  }
+
+  return paths;
+}
+
+const { entry, Content, headings, qid } = Astro.props as SpecPageProps;
+
+// Create Starlight frontmatter from spec frontmatter
+const starlightFrontmatter = {
+  title: `${qid}: ${entry.title}`,
+  editUrl: false as const,
+};
+---
+
+<StarlightPage
+  frontmatter={starlightFrontmatter}
+  headings={headings}
+  hasSidebar={true}
+>
+  <SpecHeader {...entry} />
+
+  <article class="spec-content">
+    <Content />
+  </article>
+</StarlightPage>
+
+<style>
+  .spec-content {
+    max-width: 100%;
+    margin: 2rem 0;
+  }
+
+  .spec-content :global(h1),
+  .spec-content :global(h2),
+  .spec-content :global(h3),
+  .spec-content :global(h4),
+  .spec-content :global(h5),
+  .spec-content :global(h6) {
+    margin-top: 2rem;
+    margin-bottom: 1rem;
+  }
+
+  .spec-content :global(p) {
+    margin: 1rem 0;
+    line-height: 1.7;
+  }
+
+  .spec-content :global(ul),
+  .spec-content :global(ol) {
+    margin: 1rem 0;
+    padding-left: 1.5rem;
+  }
+
+  .spec-content :global(li) {
+    margin: 0.5rem 0;
+  }
+
+  .spec-content :global(code) {
+    background: #f3f4f6;
+    padding: 0.125rem 0.375rem;
+    border-radius: 4px;
+    font-size: 0.9em;
+  }
+
+  .spec-content :global(pre) {
+    margin: 1.5rem 0;
+    padding: 1rem;
+    background: #1e293b;
+    border-radius: 8px;
+    overflow-x: auto;
+  }
+
+  .spec-content :global(pre code) {
+    background: transparent;
+    padding: 0;
+    color: #e2e8f0;
+  }
+</style>

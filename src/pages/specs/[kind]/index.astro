@@ -1,0 +1,241 @@
+---
+import StarlightPage from "@astrojs/starlight/components/StarlightPage.astro";
+import { getCollection } from "astro:content";
+import kintsuSpec from "../../../assets/kintsu.json" with { type: "json" };
+import { qualifiedId } from "../../../lib/specs";
+
+export async function getStaticPaths() {
+  const kinds = kintsuSpec.spec_kinds;
+  const paths = [];
+
+  for (const kind of kinds) {
+    const collectionKey = kind.id.toLowerCase();
+    const entries = (await getCollection(collectionKey as any)) as any[];
+    const sorted = entries.sort((a, b) => a.data.number - b.data.number);
+
+    paths.push({
+      params: { kind: collectionKey },
+      props: { kind, entries: sorted },
+    });
+  }
+
+  return paths;
+}
+
+const { kind, entries } = Astro.props;
+const collectionKey = kind.id.toLowerCase();
+
+const frontmatter = {
+  title: kind.name,
+  description: kind.description,
+};
+---
+
+<StarlightPage frontmatter={frontmatter} hasSidebar={true}>
+  <div class="kind-index">
+    <nav class="breadcrumb">
+      <a href="/specs">Specifications</a>
+      <span class="separator">›</span>
+      <span class="current">{kind.name}</span>
+    </nav>
+
+    <div class="kind-intro">
+      <p class="description">{kind.description}</p>
+      <div class="meta">
+        <span class="count">{entries.length} specifications</span>
+        {
+          kind.category && (
+            <span class="category">Category: {kind.category}</span>
+          )
+        }
+      </div>
+    </div>
+
+    <section class="spec-list">
+      <h2 class="visually-hidden">List of {kind.name} Specifications</h2>
+      <ul>
+        {
+          entries.map((entry: any) => {
+            const qid = qualifiedId(entry.data.kind, entry.data.number);
+            return (
+              <li>
+                <a href={`/specs/${collectionKey}/${qid}`}>
+                  <div class="spec-card">
+                    <div class="spec-id-badge">{qid}</div>
+                    <h3 class="spec-title">{entry.data.title}</h3>
+                    <div class="spec-meta">
+                      <span class="status" data-status={entry.data.status}>
+                        {entry.data.status}
+                      </span>
+                      <span class="author">{entry.data.author}</span>
+                      <span class="version">v{entry.data.version_after}</span>
+                    </div>
+                  </div>
+                </a>
+              </li>
+            );
+          })
+        }
+      </ul>
+    </section>
+  </div>
+</StarlightPage>
+
+<style>
+  .visually-hidden {
+    position: absolute !important;
+    overflow: hidden !important;
+    clip: rect(1px, 1px, 1px, 1px) !important;
+    height: 1px;
+    width: 1px;
+    white-space: nowrap;
+  }
+
+  .kind-index {
+    width: 100%;
+  }
+
+  .breadcrumb {
+    margin-bottom: 1.5rem;
+    font-size: 0.875rem;
+    color: var(--sl-color-gray-3);
+  }
+
+  .breadcrumb a {
+    color: var(--sl-color-text-accent);
+    text-decoration: none;
+  }
+
+  .breadcrumb a:hover {
+    text-decoration: underline;
+  }
+
+  .separator {
+    margin: 0 0.5rem;
+  }
+
+  .current {
+    color: var(--sl-color-white);
+  }
+
+  .kind-intro {
+    margin-bottom: 2rem;
+    padding-bottom: 1rem;
+    border-bottom: 1px solid var(--sl-color-gray-5);
+  }
+
+  .description {
+    margin: 0 0 1rem 0;
+    font-size: 1.125rem;
+    color: var(--sl-color-gray-2);
+  }
+
+  .meta {
+    display: flex;
+    gap: 1.5rem;
+    font-size: 0.875rem;
+    color: var(--sl-color-gray-3);
+  }
+
+  .spec-list ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: grid;
+    gap: 1rem;
+  }
+
+  .spec-list a {
+    text-decoration: none;
+    color: inherit;
+    display: block;
+  }
+
+  .spec-card {
+    border: 1px solid var(--sl-color-gray-5);
+    border-radius: 12px;
+    padding: 1.5rem;
+    transition: all 0.2s ease;
+    background: var(--sl-color-bg);
+  }
+
+  .spec-card:hover {
+    border-color: var(--sl-color-text-accent);
+    box-shadow: 0 4px 12px rgba(var(--sl-color-accent-high), 0.2);
+    transform: translateY(-2px);
+  }
+
+  .spec-id-badge {
+    display: inline-block;
+    font-family: var(--__sl-font-mono);
+    font-size: 0.75rem;
+    font-weight: 700;
+    color: var(--sl-color-text-accent);
+    background: var(--sl-color-accent-low);
+    padding: 0.25rem 0.75rem;
+    border-radius: 999px;
+    margin-bottom: 0.75rem;
+  }
+
+  .spec-title {
+    margin: 0 0 0.75rem 0;
+    font-size: 1.25rem;
+    font-weight: 600;
+    color: var(--sl-color-white);
+  }
+
+  .spec-meta {
+    display: flex;
+    gap: 1rem;
+    align-items: center;
+    font-size: 0.875rem;
+  }
+
+  .status {
+    font-weight: 600;
+    padding: 0.25rem 0.5rem;
+    border-radius: 4px;
+    text-transform: capitalize;
+  }
+
+  .status[data-status="draft"] {
+    background: var(--sl-color-gray-5);
+    color: var(--sl-color-gray-2);
+  }
+
+  .status[data-status="proposed"] {
+    background: hsl(45, 100%, 85%);
+    color: hsl(45, 100%, 20%);
+  }
+
+  .status[data-status="accepted"] {
+    background: hsl(142, 76%, 85%);
+    color: hsl(142, 76%, 20%);
+  }
+
+  .status[data-status="stable"] {
+    background: hsl(213, 94%, 85%);
+    color: hsl(213, 94%, 20%);
+  }
+
+  .status[data-status="unstable"] {
+    background: hsl(350, 89%, 85%);
+    color: hsl(350, 89%, 20%);
+  }
+
+  .status[data-status="deprecated"] {
+    background: var(--sl-color-gray-5);
+    color: var(--sl-color-gray-2);
+  }
+
+  .author,
+  .version {
+    color: var(--sl-color-gray-3);
+  }
+
+  @media (max-width: 768px) {
+    .spec-card {
+      padding: 1rem;
+    }
+  }
+</style>

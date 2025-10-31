@@ -1,0 +1,100 @@
+---
+import dayjs from "dayjs";
+const { updates = [] } = Astro.props as {
+  updates?: Array<{ author: string; date: string; description: string }>;
+};
+
+function formatDate(d: string | Date | undefined) {
+  return dayjs(d).format("YYYY-MM-DD");
+}
+
+const hasUpdates = updates && updates.length > 0;
+---
+
+<section class="spec-changelog" aria-labelledby="changelog-heading">
+  <h3 id="changelog-heading" class="visually-hidden">Specification updates</h3>
+
+  {
+    hasUpdates ? (
+      <details class="updates-details">
+        <summary class="updates-summary">{`Updates (${updates.length})`}</summary>
+        <ul class="updates-list">
+          {updates.map((u) => (
+            <li class="update-item">
+              <div class="update-head">
+                <span class="update-author">{u.author}</span>
+                <span class="update-date">
+                  <time datetime={new Date(u.date).toISOString()}>
+                    {formatDate(u.date)}
+                  </time>
+                </span>
+              </div>
+              <div class="update-desc">{u.description}</div>
+            </li>
+          ))}
+        </ul>
+      </details>
+    ) : (
+      <div class="no-updates">No updates recorded.</div>
+    )
+  }
+</section>
+
+<style>
+  .visually-hidden {
+    position: absolute !important;
+    overflow: hidden !important;
+    clip: rect(1px, 1px, 1px, 1px) !important;
+    height: 1px;
+    width: 1px;
+    white-space: nowrap;
+  }
+  .spec-changelog {
+    margin-top: 1rem;
+  }
+  .updates-details {
+    border-left: 3px solid rgba(99, 102, 241, 0.08);
+    padding: 0.6rem 0.8rem;
+    border-radius: 6px;
+    background: linear-gradient(180deg, rgba(255, 255, 255, 0.02), transparent);
+  }
+  .updates-summary {
+    font-weight: 700;
+    cursor: pointer;
+    margin-bottom: 0.5rem;
+  }
+  .updates-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+  }
+  .update-item {
+    padding: 0.5rem;
+    border-radius: 6px;
+    background: rgba(6, 8, 15, 0.02);
+  }
+  .update-head {
+    display: flex;
+    gap: 0.5rem;
+    align-items: center;
+    justify-content: space-between;
+  }
+  .update-author {
+    font-weight: 600;
+  }
+  .update-date {
+    font-size: 0.9rem;
+    color: #6b7280;
+  }
+  .update-desc {
+    margin-top: 0.4rem;
+    color: #111827;
+  }
+  .no-updates {
+    color: #6b7280;
+    font-style: italic;
+  }
+</style>

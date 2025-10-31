@@ -1,6 +1,6 @@
 import typer
 
-from docs.auto.types import ROOT, SPEC_DIR, Language, Spec
+from auto.types import ROOT, SPEC_DIR, Language, Spec
 
 app = typer.Typer(
     name="doc-manager",

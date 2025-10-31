@@ -1,0 +1,240 @@
+---
+import SpecStatusBadge from "./SpecStatusBadge.astro";
+import SpecChangelog from "./SpecChangelog.astro";
+import type { SpecSchema } from "../lib/specs";
+
+// Schema is validated by Astro content collections - no undefined checks needed
+const {
+  title,
+  kind,
+  number,
+  status,
+  author,
+  created,
+  updates,
+  version_after,
+  version_before,
+  components,
+} = Astro.props as SpecSchema;
+
+function formatDate(d: Date): string {
+  return new Intl.DateTimeFormat("en-US", {
+    year: "numeric",
+    month: "short",
+    day: "numeric",
+  }).format(d);
+}
+
+const createdDate = created instanceof Date ? created : new Date(created);
+const lastUpdatedDate =
+  updates.length > 0
+    ? updates.reduce((acc, u) => {
+        const d = u.date instanceof Date ? u.date : new Date(u.date);
+        return acc > d ? acc : d;
+      }, createdDate)
+    : createdDate;
+
+const identifier = `${kind.toUpperCase()}-${String(number).padStart(4, "0")}`;
+---
+
+<header class="spec-header" role="region" aria-labelledby="spec-title">
+  <div class="spec-meta">
+    <div class="spec-id">
+      <div class="spec-identifier">{identifier}</div>
+      <h1 id="spec-title" class="spec-title">{title}</h1>
+    </div>
+
+    <div class="spec-side">
+      <SpecStatusBadge status={status} />
+
+      <div class="spec-author">
+        <div class="meta-label">Author</div>
+        <div class="meta-value">{author}</div>
+      </div>
+
+      <div class="spec-created">
+        <div class="meta-label">Created</div>
+        <div class="meta-value">
+          <time datetime={createdDate.toISOString()}>
+            {formatDate(createdDate)}
+          </time>
+        </div>
+      </div>
+
+      <div class="spec-updated">
+        <div class="meta-label">Last updated</div>
+        <div class="meta-value">
+          <time datetime={lastUpdatedDate.toISOString()}>
+            {formatDate(lastUpdatedDate)}
+          </time>
+        </div>
+      </div>
+
+      <div class="spec-version">
+        <div class="meta-label">Version</div>
+        <div class="meta-value">
+          {
+            version_before
+              ? `${version_before} → ${version_after}`
+              : version_after
+          }
+        </div>
+      </div>
+    </div>
+  </div>
+
+  {
+    components.length > 0 && (
+      <div class="spec-components">
+        <div class="components-label">Components:</div>
+        <ul class="components-list">
+          {components.map((comp) => (
+            <li class="component-tag">{comp}</li>
+          ))}
+        </ul>
+      </div>
+    )
+  }
+
+  <SpecChangelog updates={updates} />
+</header>
+
+<style>
+  .spec-header {
+    padding: 1.5rem 0;
+    border-bottom: 2px solid rgba(15, 23, 42, 0.06);
+    margin-bottom: 2rem;
+  }
+
+  .spec-meta {
+    display: flex;
+    gap: 1.5rem;
+    align-items: flex-start;
+    justify-content: space-between;
+    margin-bottom: 1rem;
+  }
+
+  .spec-id {
+    flex: 1;
+  }
+
+  .spec-identifier {
+    font-family: "SF Mono", "Monaco", "Inconsolata", "Fira Code", monospace;
+    font-size: 0.875rem;
+    color: #6366f1;
+    font-weight: 700;
+    margin-bottom: 0.5rem;
+  }
+
+  .spec-title {
+    margin: 0;
+    font-size: 2rem;
+    font-weight: 700;
+    color: #111827;
+    line-height: 1.2;
+  }
+
+  .spec-side {
+    display: flex;
+    gap: 1.25rem;
+    /* align all side items to the top so the badge and the stacked meta groups line up */
+    align-items: flex-start;
+    flex-wrap: wrap;
+  }
+
+  .spec-author,
+  .spec-created,
+  .spec-updated,
+  .spec-version {
+    display: flex;
+    flex-direction: column;
+    /* keep labels and values left-aligned with each other for consistent reading */
+    align-items: flex-start;
+  }
+
+  .meta-label {
+    font-size: 0.75rem;
+    color: #9ca3af;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    font-weight: 600;
+  }
+
+  .meta-value {
+    font-size: 0.875rem;
+    font-weight: 600;
+    color: #111827;
+  }
+
+  .spec-components {
+    /* align components block with the left edge of the main title/identifier
+       so it visually lines up with the spec content above */
+    margin: 1.25rem 0;
+    padding: 1rem;
+    background: linear-gradient(135deg, #f9fafb 0%, #ffffff 100%);
+    border-radius: 8px;
+    border: 1px solid #e5e7eb;
+  }
+
+  /* ensure the status badge itself sits at the top of the stack */
+  .spec-side .spec-status {
+    align-self: flex-start;
+  }
+
+  .components-label {
+    font-size: 0.75rem;
+    color: #6b7280;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    font-weight: 600;
+    margin-bottom: 0.5rem;
+  }
+
+  .components-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+  }
+
+  .component-tag {
+    display: inline-block;
+    padding: 0.25rem 0.75rem;
+    background: #eef2ff;
+    color: #4f46e5;
+    border-radius: 999px;
+    font-size: 0.8125rem;
+    font-weight: 600;
+    transition: all 0.15s ease;
+  }
+
+  .component-tag:hover {
+    background: #e0e7ff;
+    transform: translateY(-1px);
+  }
+
+  @media (max-width: 900px) {
+    .spec-meta {
+      flex-direction: column;
+      gap: 1rem;
+    }
+
+    .spec-side {
+      justify-content: flex-start;
+      gap: 1rem;
+    }
+
+    .spec-author,
+    .spec-created,
+    .spec-updated,
+    .spec-version {
+      align-items: flex-start;
+    }
+
+    .spec-title {
+      font-size: 1.5rem;
+    }
+  }
+</style>

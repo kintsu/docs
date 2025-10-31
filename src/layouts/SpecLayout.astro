@@ -1,0 +1,62 @@
+---
+import SpecHeader from "../components/SpecHeader.astro";
+import { type SpecSchema, specUpdate } from "../lib/specs";
+
+const { frontmatter, meta = {} } = Astro.props as {
+  frontmatter: SpecSchema;
+  meta?: { canonical?: string };
+};
+
+const title = frontmatter?.title || "Kintsu Spec";
+const description = frontmatter?.title;
+const canonical =
+  meta?.canonical ||
+  `/${frontmatter?.kind?.toLowerCase()}/${frontmatter?.number ? `${frontmatter.kind}-${String(frontmatter.number).padStart(4, "0")}` : ""}`;
+
+const jsonLd = {
+  "@context": "https://schema.org",
+  "@type": "TechArticle",
+  headline: title,
+  description: description || undefined,
+  author: frontmatter?.author || undefined,
+  datePublished: frontmatter?.created || undefined,
+  dateModified:
+    frontmatter?.updates && frontmatter.updates.length
+      ? frontmatter.updates[frontmatter.updates.length - 1].date
+      : frontmatter?.created || undefined,
+  mainEntityOfPage: { "@type": "WebPage", "@id": canonical },
+};
+---
+
+<head>
+  <title>{title} · Kintsu</title>
+  {description && <meta name="description" content={description} />}
+  {canonical && <link rel="canonical" href={canonical} />}
+  <meta property="og:type" content="article" />
+  <meta property="og:title" content={title} />
+  {description && <meta property="og:description" content={description} />}
+  {canonical && <meta property="og:url" content={canonical} />}
+  <script type="application/ld+json">{JSON.stringify(jsonLd)}</script>
+</head>
+
+<a class="skip-link" href="#main-content">Skip to content</a>
+
+<div class="spec-layout">
+  <SpecHeader {...frontmatter} />
+
+  <main id="main-content" class="spec-body">
+    <slot />
+  </main>
+</div>
+
+<style>
+.skip-link{position:absolute;left:-999px;top:auto;width:1px;height:1px;overflow:hidden}
+.skip-link:focus{position:static;width:auto;height:auto;padding:0.5rem 0.75rem;background:#111;color:#fff;border-radius:4px}
+.spec-layout{max-width:1100px;margin:0 auto;padding:1rem}
+.spec-body{padding:1.25rem 0;line-height:1.6}
+
+/* Basic responsive rules */
+@media (min-width:900px){
+  .spec-layout{padding:2rem}
+}
+</style>
