@@ -73,7 +73,7 @@ enum Role {
 
 All variants in an enum must have the same value type. Mixing integers and strings is rejected:
 
-```kintsu
+```kintsu del={1,4}
 // INVALID: mixed value types
 enum Mixed {
     First = 1,
@@ -87,7 +87,7 @@ The compiler checks value type consistency during parsing and reports an error i
 
 Variant names must be unique within the enum:
 
-```kintsu
+```kintsu del={1,5}
 // INVALID: duplicate variant name
 enum Status {
     Active,

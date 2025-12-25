@@ -120,7 +120,7 @@ The inner oneof is treated as a single variant. In generated code, this typicall
 
 During compilation, the compiler validates that all named types in oneof variants exist:
 
-```kintsu
+```kintsu del={2}
 // INVALID: Unknown type
 type Invalid = oneof Foo | Bar;  // ERROR: types 'Foo' and 'Bar' not found
 ```

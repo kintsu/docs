@@ -20,12 +20,11 @@ Schemas can be published and consumed as packages, similar to modules in other l
 
 The compiler performs automatic tree shaking to include only the definitions actually used by your project:
 
-```kintsu
-// In your schema
+```kintsu title="Tree Shaking Example" "baz::BazOrString"
 use bar_corp::baz;
 
 struct MyMessage {
-    value: baz::BazOrString,  // Only BazOrString is included
+    value: baz::BazOrString,
 };
 ```
 

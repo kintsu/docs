@@ -9,6 +9,8 @@ import remarkGithubAlerts from "remark-github-blockquote-alert";
 import kintsuSpec from "./src/assets/kintsu.json" with { type: "json" };
 import tailwindcss from "@tailwindcss/vite";
 
+
+import starlightLinksValidator from 'starlight-links-validator'
 import react from "@astrojs/react";
 
 // Generate nested sidebar items for specs
@@ -105,6 +107,9 @@ export default defineConfig({
         // }),
         starlightHeadingBadges(),
         starlightGitHubAlerts(),
+        starlightLinksValidator({
+          exclude: ["/specs/**"],
+        }),
       ],
       sidebar: [
         {
@@ -118,12 +123,18 @@ export default defineConfig({
           ],
         },
         {
-          label: "Tooling and Schemas",
+          label: "Getting Started",
           items: [
             { label: "Schemas", slug: "schemas/intro" },
             { label: "Schema Manifest", slug: "schemas/manifest" },
             { label: "Schema Structure", slug: "schemas/structure" },
+          ],
+        },
+        {
+          label: "Reference",
+          items: [
             { label: "Kintsu CLI", slug: "reference/cli" },
+            { label: "Kintsu Config", slug: "reference/config" },
           ],
         },
         {

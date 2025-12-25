@@ -6,18 +6,27 @@ The `schema.toml` manifest declares package metadata, dependencies, and configur
 
 ## Basic Structure
 
-```toml
+```toml title="schema.toml"
+version = "v1"
+
 [package]
 name = "abc-corp"
 version = "0.1.0"
 description = "Core types for ABC Corporation"
 authors = [{ name = "alice", email = "alice@example.com" }]
+license = "MIT"
 homepage = "https://github.com/abc-corp/schemas"
 
 [dependencies]
 bar-corp = { path = "../bar-corp" }
 common-types = { git = "https://github.com/abc-corp/common.git", ref = "v1.2.3" }
 ```
+
+## Manifest Versions
+
+### `version`
+
+The current manifest version is `v1`, and is required as a top-level field.
 
 ## Package Section
 
@@ -30,11 +39,11 @@ Package name in **kebab-case** (e.g., `abc-corp`, `my-types`). Must be 2-128 cha
 > [!IMPORTANT]
 > Package names use **kebab-case** in manifests but **snake_case** in imports. The compiler handles this conversion automatically.
 >
-> ```kintsu
-> // Manifest uses kebab-case
+> ```kintsu title="schema.toml" "abc-corp"
 > name = "abc-corp"
+> ```
 >
-> // Imports use snake_case
+> ```kintsu title="lib.ks" "abc_corp"
 > use abc_corp::types;
 > ```
 
@@ -46,7 +55,7 @@ Semantic version following `MAJOR.MINOR.PATCH` format (e.g., `1.2.3`).
 
 Human-readable package description. Can be inline text or a path to a file:
 
-```toml
+```toml title="Description Options"
 # Inline
 description = "Core types for ABC Corporation"
 
@@ -58,7 +67,7 @@ description = { path = "README.md" }
 
 List of package maintainers with optional email addresses:
 
-```toml
+```toml title="Authors Field"
 authors = [
     { name = "Alice", email = "alice@example.com" },
     { name = "Bob" }
@@ -69,6 +78,36 @@ authors = [
 
 Optional URL to project homepage or documentation.
 
+### `license`
+
+SPDX license identifier (e.g., `MIT`, `Apache-2.0`):
+
+```toml title="License Field"
+license = "MIT"
+```
+
+### `license_text`
+
+Optional custom license text for non-standard licenses:
+
+```toml title="Custom License Text"
+license_text = """
+Custom license terms...
+"""
+```
+
+### `readme`
+
+Optional README content, either inline or from a file:
+
+```toml title="Readme Options"
+# Inline content
+readme = "This package provides core types..."
+
+# From file
+readme = { path = "README.md" }
+```
+
 ## Dependencies
 
 Dependencies are declared in the `[dependencies]` section using kebab-case names:
@@ -77,7 +116,7 @@ Dependencies are declared in the `[dependencies]` section using kebab-case names
 
 Local filesystem paths (relative or absolute):
 
-```toml
+```toml title="Path Dependencies"
 [dependencies]
 bar-corp = { path = "../bar-corp" }
 local-types = { path = "./vendor/types" }
@@ -90,7 +129,7 @@ local-types = { path = "./vendor/types" }
 
 Git repositories with tags or branches:
 
-```toml
+```toml title="Git Dependencies"
 [dependencies]
 common-types = { git = "https://github.com/org/common.git", tag = "v1.2.3" }
 experimental = { git = "https://github.com/org/exp.git", branch = "main" }
@@ -100,7 +139,7 @@ experimental = { git = "https://github.com/org/exp.git", branch = "main" }
 
 Remote registries with version constraints:
 
-```toml
+```toml title="Registry Dependencies"
 [dependencies]
 std-types = { version = "^1.0.0", registry = "https://registry.example.com" }
 ```
@@ -132,7 +171,7 @@ Examples of valid patches:
 
 Examples of valid minor updates:
 
-```kintsu
+```kintsu title="Valid Minor Updates" ins="email?: str" ins="Pending = 3" ins=/operation update_user.*/
 // YES - Adding optional fields
 struct Message {
     id: i64,
@@ -158,7 +197,7 @@ operation update_user(id: i64, name: str) -> User;  // New operation
 
 Examples requiring major version bump:
 
-```kintsu
+```kintsu title="Breaking Changes" del=/// name.*/ del="id: str" del="email: str" del=/// Inactive.*/
 // NO - Removing fields
 struct Message {
     id: i64,
@@ -190,7 +229,7 @@ enum Status {
 
 Dependency version constraints will follow these patterns:
 
-```toml
+```toml title="Version Constraints"
 [dependencies]
 # Exact version
 lib-a = "1.2.3"
@@ -211,7 +250,7 @@ lib-d = ">=1.2.3, <2.0.0"
 
 Control which schema files are included:
 
-```toml
+```toml title="File Exclusions"
 [files]
 exclude = [
     "tests/**",
@@ -222,7 +261,9 @@ exclude = [
 
 ## Complete Example
 
-```toml
+```toml title="schema.toml"
+version = "v1"
+
 [package]
 name = "abc-corp"
 version = "1.2.3"
@@ -231,6 +272,7 @@ authors = [
     { name = "Alice Johnson", email = "alice@abc.com" },
     { name = "Bob Smith" }
 ]
+license = "Apache-2.0"
 homepage = "https://github.com/abc-corp/schemas"
 
 [dependencies]

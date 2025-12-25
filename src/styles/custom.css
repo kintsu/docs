@@ -351,7 +351,7 @@ mobile-starlight-toc > nav {
   --sl-aside-border-color: var(--sl-color-blue);
   --sl-aside-bg-color: var(--sl-color-blue-low);
   --sl-aside-text-color: var(--sl-color-blue-high);
-  
+
   border-inline-start: 4px solid var(--sl-aside-border-color);
   border-radius: 0.5rem;
   padding: 1rem;
@@ -377,7 +377,7 @@ mobile-starlight-toc > nav {
 }
 
 .markdown-alert-title::before {
-  content: '';
+  content: "";
   display: inline-block;
   width: 1.25rem;
   height: 1.25rem;

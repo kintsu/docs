@@ -107,7 +107,7 @@ The empty array provides the base case for recursion, allowing the compiler to a
 
 Array sizes must be positive integers:
 
-```kintsu
+```kintsu del={4-5}
 type Valid = u8[128];
 
 // INVALID: size must be positive

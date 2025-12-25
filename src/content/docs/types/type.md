@@ -36,7 +36,7 @@ The final resolved type for `C` is `i64`.
 
 The compiler detects circular alias chains and reports an error:
 
-```kintsu
+```kintsu del={3}
 // INVALID: circular alias
 type A = B;
 type B = A;  // ERROR: circular type alias
@@ -48,7 +48,7 @@ Circular aliases are detected during compilation and cause it to fail.
 
 The target type of an alias must resolve to a valid type. During compilation, the compiler ensures all type references are valid:
 
-```kintsu
+```kintsu del={2}
 // INVALID: unknown type
 type Invalid = UnknownType;  // ERROR: type 'UnknownType' not found
 ```

@@ -3,6 +3,7 @@ black = "latest"
 bun = "latest"
 node = "latest"
 prek = "latest"
+prettier = "latest"
 python = "latest"
 uv = "latest"
 

@@ -41,8 +41,7 @@ use abc::types::{
 
 Imports in a namespace are private to that namespace:
 
-```kintsu
-# api/handlers.ks
+```kintsu title="api/handlers.ks"
 namespace api::handlers;
 
 use abc::types::User;  // Private: only visible in api::handlers
@@ -56,8 +55,7 @@ Types imported privately are not re-exported and cannot be accessed by other nam
 
 Imports in `lib.ks` are public and re-exported:
 
-```kintsu
-// lib.ks
+```kintsu title="lib.ks"
 namespace myschema;
 
 use foo;
@@ -113,19 +111,19 @@ The compiler validates all imports during compilation:
 
 **Missing package:**
 
-```kintsu
+```kintsu del={1}
 use nonexistent::Type;  // ERROR: package 'nonexistent' not found
 ```
 
 **Missing namespace:**
 
-```kintsu
+```kintsu del={1}
 use abc::nonexistent::Missing;  // ERROR: namespace 'nonexistent' not found in 'abc'
 ```
 
 **Missing type:**
 
-```kintsu
+```kintsu del={1}
 use abc::types::Missing;  // ERROR: type 'Missing' not found in 'abc::types'
 ```
 

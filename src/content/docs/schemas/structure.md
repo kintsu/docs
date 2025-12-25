@@ -29,9 +29,7 @@ Every schema package **must** have a `schema/lib.ks` file. This is the entry poi
 
 `lib.ks` declares the package's root namespace, which matches the package name in snake_case:
 
-```kintsu
-# abc-corp/lib.ks
-// In abc-corp package
+```kintsu title="lib.ks"
 namespace abc_corp;
 
 use types;
@@ -53,7 +51,7 @@ Package names are normalized to kebab-case publicly, and snake_case package name
 
 `lib.ks` can also define scoped child namespaces inline:
 
-```kintsu
+```kintsu title="lib.ks"
 namespace abc_corp;
 
 namespace config {
@@ -96,7 +94,7 @@ schema/
 
 **`types.ks`:**
 
-```kintsu
+```kintsu title="types.ks"
 namespace types;
 
 struct User {
@@ -110,9 +108,7 @@ struct Message {
 };
 ```
 
-**`lib.ks` imports it:**
-
-```kintsu
+```kintsu title="lib.ks"
 namespace abc_corp;
 
 use types;  // Imports types.ks
@@ -146,9 +142,7 @@ schema/
 
 **`api/meta.ks`**
 
-```kintsu
-# api/meta.ks
-// all items in our namespace are tagged version 1 unless overridden, and use schema::Error for return types
+```kintsu title="api/meta.ks"
 #![version(1)]
 #![err(schema::error::Error)]
 namespace api;
@@ -156,7 +150,7 @@ namespace api;
 
 **`api/users.ks`:**
 
-```kintsu
+```kintsu title="api/users.ks"
 namespace api;
 
 struct User {
@@ -164,13 +158,12 @@ struct User {
     username: str,
 };
 
-// get user by id and return a user result (error defined in meta.ks)
 operation get_user(id: i64) -> User!;
 ```
 
 **`api/auth.ks`:**
 
-```kintsu
+```kintsu title="api/auth.ks"
 namespace api;
 
 struct AuthToken {
@@ -183,12 +176,12 @@ operation login(code: str) -> AuthToken!;
 
 **`lib.ks` imports the namespace:**
 
-```kintsu
+```kintsu title="lib.ks"
 namespace abc_corp;
 
-use api;  // Declares the namespace per the files within api/ directory
+use api;
 
-namespace error {  // our errors
+namespace error {
     error Error {
         LoginError { cause: str },
         UserNotFound { id: i64 },
@@ -223,7 +216,7 @@ schema/
 
 **`lib.ks`:**
 
-```kintsu
+```kintsu title="lib.ks"
 namespace abc_corp;
 
 use types;
@@ -250,9 +243,9 @@ This creates:
 
 Each namespace can declare metadata:
 
-```kintsu
-#![version(1)]                          // Schema version
-#![err(schema::errors::Error)]          // Default error type for operations
+```kintsu title="api/user.ks" {1-2}
+#![version(1)]
+#![err(schema::errors::Error)]
 namespace api;
 
 struct User {
@@ -319,19 +312,20 @@ schema/
 
 All types defined in a namespace are public and accessible via imports:
 
-```kintsu
-// From external package
+```kintsu title="abc-corp/api/user.ks"
 use abc_corp::types;
 
 struct MyType {
     user: types::User,
 };
+```
 
-// Or import specific types
+```kintsu title="foo-corp/api/exts.ks"
 use abc_corp::types::User;
 
 struct MyType {
     user: User,
+    my_special_extension: str
 };
 ```
 
@@ -342,17 +336,20 @@ struct MyType {
 
 **`schema.toml`:**
 
-```toml
+```toml title="schema.toml"
+version = "v1"
+
 [package]
 name = "abc-corp"
 version = "1.0.0"
 description = "ABC Corp schema definitions"
-authors = []
+authors = [{ name = "ABC Team" }]
+license = "MIT"
 ```
 
 **`schema/lib.ks`:**
 
-```kintsu
+```kintsu title="schema/lib.ks"
 namespace abc_corp;
 
 use types;
@@ -367,7 +364,7 @@ namespace internal {
 
 **`schema/types.ks`:**
 
-```kintsu
+```kintsu title="schema/types.ks"
 namespace types;
 
 struct User {
@@ -379,7 +376,7 @@ struct User {
 
 **`schema/errors.ks`:**
 
-```kintsu
+```kintsu title="schema/errors.ks"
 namespace errors;
 
 enum ErrorCode {
@@ -395,7 +392,7 @@ error AbcCorpError {
 
 **`schema/api/users.ks`:**
 
-```kintsu
+```kintsu title="schema/api/users.ks" {1-2}
 #![version(1)]
 #![err(schema::errors::AbcCorpError)]
 namespace api;

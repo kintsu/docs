@@ -144,7 +144,7 @@ type Response = oneof (A & B) | (C & D);
 
 Before merging, the compiler validates that all member types exist in the type registry. If a member type cannot be resolved, the union resolution fails:
 
-```kintsu
+```kintsu del={2}
 // INVALID: Unknown type Bar
 type Invalid = Foo & Bar;  // ERROR: type 'Bar' not found
 ```
@@ -155,16 +155,16 @@ All struct members must be registered before union resolution begins.
 
 Only struct types can be merged. Unions with non-struct types are rejected:
 
-```kintsu
+```kintsu del={1,13}
 // INVALID: cannot merge enum with struct
 
-enum Status { 
-    Active, 
-    Inactive 
+enum Status {
+    Active,
+    Inactive
 };
 
-struct User { 
-    id: i64 
+struct User {
+    id: i64
 };
 
 type Invalid = User & Status;  // ERROR: cannot merge enum

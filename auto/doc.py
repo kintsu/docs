@@ -80,7 +80,7 @@ def collect_specs():
 
         summary += f"- {category.name}\n"
         for spec in specs:
-            summary += f"\t- [{spec.qualified_id()} - {spec.title}](./{spec.path_for().relative_to(SPEC_DIR)})\n"
+            summary += f"\t- [{spec.qualified_id()} - {spec.title}]({spec.url_for()})\n"
         summary += "\n"
     summary_path = SPEC_DIR / "summary.md"
     summary_path.write_text(summary)

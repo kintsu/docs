@@ -37,7 +37,7 @@ title: "Builtins"
 
 | Token      | Description                                                                                     |
 | :--------- | :---------------------------------------------------------------------------------------------- |
-| `datetime` | An [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) compliant datetime string with timezone.         |
+| `datetime` | An [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) compliant datetime string with timezone.  |
 | `never`    | A unit type (0 size). Indicates a function never returns or a type that cannot be instantiated. |
 
 ## Binary Data

@@ -319,6 +319,9 @@ class Spec(Serde):
     def path_for(self) -> Path:
         return SPEC_DIR / self.kind.lower() / f"{self.qualified_id()}.md"
 
+    def url_for(self) -> str:
+        return f"/specs/{self.kind.lower()}/{self.qualified_id()}"
+
     @staticmethod
     def existing_spec_numbers(spec_kind: str) -> list[str]:
         specs = []

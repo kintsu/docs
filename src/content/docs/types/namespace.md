@@ -8,8 +8,7 @@ Declares a namespace, which serves as a logical container for type definitions a
 
 **File-level namespace:**
 
-```kintsu
-# foo/bar.ks
+```kintsu title="foo/bar.ks"
 namespace foo;
 
 struct Item {
@@ -163,7 +162,7 @@ Namespaces contain named items (children):
 
 All children must have unique names within their namespace:
 
-```kintsu
+```kintsu del={8-11}
 namespace api;
 
 struct User {

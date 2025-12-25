@@ -126,7 +126,7 @@ The compiler converts `fetch_user` to `FetchUser` when storing error metadata. T
 
 If an operation has a result return type but no error attribute (at operation or namespace level), compilation fails:
 
-```kintsu
+```kintsu del={1}
 operation process() -> i64!;  // ERROR: no error type specified
 ```
 
