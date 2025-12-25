@@ -31,7 +31,7 @@ pre,
   --sl-color-gray-6: #0c0a09;
   --sl-color-black: #0c0a09;
 
-  --sl-color-bg-nav: var(--sl-color-black);
+  --sl-color-bg-nav: var(--background, var(--sl-color-black));
   --sl-color-bg-sidebar: var(--sl-color-black);
   --sl-color-hairline: var(--sl-color-gray-5);
   --sl-color-hairline-light: var(--sl-color-gray-5);
@@ -178,13 +178,13 @@ pre,
   --sl-color-accent: #2563eb;
   --sl-color-accent-high: #1e3a8a;
   --sl-color-white: #0c0a09;
-  --sl-color-gray-1: #1c1917;
-  --sl-color-gray-2: #292524;
-  --sl-color-gray-3: #57534e;
-  --sl-color-gray-4: #78716c;
-  --sl-color-gray-5: #a8a29e;
-  --sl-color-gray-6: #e7e5e4;
-  --sl-color-gray-7: #fafaf9;
+  --sl-color-gray-1: #171a1c;
+  --sl-color-gray-2: #242529;
+  --sl-color-gray-3: #4e4f57;
+  --sl-color-gray-4: #6c7078;
+  --sl-color-gray-5: #9ea2a8;
+  --sl-color-gray-6: #e4e5e7;
+  --sl-color-gray-7: #f9fafa;
   --sl-color-black: #ffffff;
 
   --sl-color-orange-high: hsl(var(--sl-hue-orange), 80%, 28%);
@@ -220,12 +220,30 @@ pre,
   --error-text: #9f1239;
   --info-text: #1e40af;
 
-  --sl-color-bg-nav: var(--sl-color-gray-7);
+  --sl-color-bg-nav: var(--background, var(--sl-color-gray-7));
   --sl-color-bg-sidebar: var(--sl-color-black);
 }
 
 header.header {
-  border-block-end: 1px solid var(--sl-color-hairline);
+  background-color: oklch(0.145 0 0 / 0.95);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+}
+
+@supports (backdrop-filter: blur(8px)) {
+  header.header {
+    background-color: oklch(0.145 0 0 / 0.6);
+  }
+}
+
+:root[data-theme="light"] header.header {
+  background-color: oklch(1 0 0 / 0.95);
+}
+
+@supports (backdrop-filter: blur(8px)) {
+  :root[data-theme="light"] header.header {
+    background-color: oklch(1 0 0 / 0.6);
+  }
 }
 
 /* Fix header to have consistent padding regardless of sidebar state */
