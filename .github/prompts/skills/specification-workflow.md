@@ -82,17 +82,54 @@ python -m auto.doc new-spec \
 - Include GitHub-style admonitions
 - Cross-reference related specs
 
-## Admonition Syntax
+## Admonition Syntax (GitHub Alerts)
+
+Admonitions use **GitHub-style alerts** (supported by starlight-github-alerts plugin).
+
+### Correct format
+
+The alert type must be on its own line, with content on subsequent lines:
 
 ```markdown
 > [!NOTE]
-> Supplementary information
+> Supplementary information that users should know.
+
+> [!TIP]
+> Helpful advice for doing things better or more easily.
 
 > [!IMPORTANT]
-> Critical implementation requirements
+> Critical implementation requirements users need to know.
 
 > [!WARNING]
-> Edge cases and potential pitfalls
+> Edge cases and potential pitfalls to avoid problems.
+
+> [!CAUTION]
+> Risks or negative outcomes of certain actions.
+```
+
+### Common mistakes
+
+**Wrong** - content on same line:
+```markdown
+> [!NOTE] > This is wrong.
+```
+
+**Correct** - content on next line:
+```markdown
+> [!NOTE]
+> This is correct.
+```
+
+### Multi-line content
+
+Each line must start with `>`:
+
+```markdown
+> [!WARNING]
+> First line of warning.
+> Second line continues here.
+>
+> Blank line within the admonition.
 ```
 
 ## Key Resources
