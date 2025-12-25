@@ -75,10 +75,16 @@ Type "kintsu check -d ./root-pkg"
 
 Sleep 500ms
 Enter
-Sleep 2s
+Sleep 3s
 
-Type "kintsu registry publish -d ./pkg-2"
+Type "kintsu registry publish -d ./pkg-5"
 
 Sleep 500ms
 Enter
-Sleep 2s
+Sleep 3s
+
+Type "kintsu fmt -d ./pkg-5"
+
+Sleep 500ms
+Enter
+Sleep 3s
