@@ -5,7 +5,6 @@ import { getCollection, render } from "astro:content";
 import type { MarkdownHeading } from "astro";
 import SpecHeader from "../../../components/SpecHeader.astro";
 import {
-  normalizeKind,
   qualifiedId,
   type SpecSchema,
 } from "../../../lib/specs";
@@ -21,7 +20,8 @@ type SpecCollectionKey =
   | "perf"
   | "integ"
   | "unit"
-  | "e2e";
+  | "e2e"
+  | "err";
 
 interface SpecPageProps {
   entry: SpecSchema;

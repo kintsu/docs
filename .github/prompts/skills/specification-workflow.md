@@ -1,8 +1,8 @@
 ---
 name: specification-workflow
 title: "Specification Workflow"
-description: "Standard workflow for creating RFC, TSY, AD, and SPEC documents for Kintsu"
-tags: ["specs", "documentation", "workflow", "kintsu"]
+description: "Standard workflow for creating RFC, TSY, AD, SPEC, and ERR documents for Kintsu"
+tags: ["specs", "documentation", "workflow", "kintsu", "errors"]
 updated: 2025-12-25
 ---
 
@@ -12,12 +12,13 @@ This skill documents the process for creating and managing Kintsu specifications
 
 ## Specification Types
 
-| Kind | Name                    | Purpose                            |
-| ---- | ----------------------- | ---------------------------------- |
-| RFC  | Request for Comments    | Design proposals and rationale     |
-| TSY  | Type System             | Type system rules and semantics    |
-| AD   | Architecture Decision   | High-level architectural decisions |
-| SPEC | Technical Specification | Detailed implementation specs      |
+| Kind | Name                    | Purpose                                 |
+| ---- | ----------------------- | --------------------------------------- |
+| RFC  | Request for Comments    | Design proposals and rationale          |
+| TSY  | Type System             | Type system rules and semantics         |
+| AD   | Architecture Decision   | High-level architectural decisions      |
+| SPEC | Technical Specification | Detailed implementation specs           |
+| ERR  | Error Handling          | Error codes, diagnostics, and reporting |
 
 ## Workflow Order
 
@@ -26,7 +27,8 @@ Specifications are created in this order:
 1. **RFC** - Anyone can submit; describes the "why"
 2. **TSY** - If type system changes needed
 3. **AD** - If architectural decisions needed
-4. **SPEC** - Technical details and behavior
+4. **SPEC** - Technical details and behaviour
+5. **ERR** - Error domain specifications (references SPEC for validations)
 
 ## Before Creating Specs
 
@@ -64,6 +66,17 @@ python -m auto.doc new-spec \
   --spec-kind=SPEC \
   --title="Feature - Compilation" \
   --author=joshua-auchincloss \
+  --components=compiler
+```
+
+### Generate ERR
+
+```bash
+python -m auto.doc new-spec \
+  --spec-kind=ERR \
+  --title="Error Domain Name" \
+  --author=joshua-auchincloss \
+  --components=parser \
   --components=compiler
 ```
 
@@ -110,11 +123,13 @@ The alert type must be on its own line, with content on subsequent lines:
 ### Common mistakes
 
 **Wrong** - content on same line:
+
 ```markdown
 > [!NOTE] > This is wrong.
 ```
 
 **Correct** - content on next line:
+
 ```markdown
 > [!NOTE]
 > This is correct.

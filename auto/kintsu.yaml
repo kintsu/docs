@@ -191,6 +191,22 @@ spec_kinds:
       - Setup
       - Implications
       - References
+  - id: ERR
+    name: Error Handling
+    description: Error codes and reporting mechanisms in Kintsu.
+    category: core
+    references:
+      - AD
+      - RFC
+      - SPEC
+      - TSY
+      - CG
+    sections:
+      - Overview
+      - Motivation
+      - Design Principles
+      - Implications
+      - References
 spec_categories:
   - id: core
     name: Core Specifications

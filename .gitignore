@@ -8,6 +8,8 @@ auto/instructions.md
 
 .vscode/
 
+/zzz
+
 __pycache__/
 .DS_Store
 
