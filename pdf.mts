@@ -300,6 +300,9 @@ export function kintsuPdf(options: KintsuPdfOptions) {
   }
 
   return pdf({
+    server: {
+        sandbox: true
+    },
     baseOptions: {
       path: "/pdf[pathname].pdf",
       waitUntil: "networkidle0",
