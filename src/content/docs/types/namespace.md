@@ -13,7 +13,7 @@ Declares a namespace, which serves as a logical container for type definitions a
 namespace foo;
 
 struct Item {
-    id: i64
+    id: i64,
 };
 
 operation get_item(id: i64) -> Item;
@@ -27,7 +27,7 @@ namespace foo {
 
     struct Item {
         id: Id
-    }
+    };
 };
 ```
 
@@ -128,7 +128,10 @@ operation task2() -> str!;
 
 // Overrides version
 #[version(2)]
-struct NewFeature { ... };
+struct NewFeature {
+    id: i64,
+    enabled: bool
+};
 ```
 
 ## Type Resolution

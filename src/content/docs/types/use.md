@@ -42,7 +42,7 @@ use abc::types::{
 Imports in a namespace are private to that namespace:
 
 ```kintsu
-// api/handlers.ks
+# api/handlers.ks
 namespace api::handlers;
 
 use abc::types::User;  // Private: only visible in api::handlers

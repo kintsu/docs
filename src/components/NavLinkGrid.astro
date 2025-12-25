@@ -1,0 +1,115 @@
+---
+import { Github } from "@lucide/astro";
+---
+
+<div class="nav-link-grid">
+  <a href="https://registry.kintsu.dev" class="nav-link" data-link="registry">
+    <span class="nav-link-icon">R</span>
+    <span class="nav-link-label">Registry</span>
+  </a>
+  
+  <a href="/" class="nav-link nav-link-active nav-link-emphasized" data-link="docs">
+    <span class="nav-link-icon">L</span>
+    <span class="nav-link-label">Language</span>
+  </a>
+
+  <a href="https://github.com/kintsu" target="_blank" rel="noopener noreferrer" class="nav-link" data-link="github">
+    <Github class="nav-link-icon-svg" />
+    <span class="nav-link-label">GitHub</span>
+  </a>
+</div>
+
+<style>
+  .nav-link-grid {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+
+  .nav-link {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 2.5rem;
+    height: 2.5rem;
+    border-radius: 9999px;
+    border: 2px solid var(--sl-color-gray-5);
+    background: var(--sl-color-bg);
+    color: var(--sl-color-white);
+    text-decoration: none;
+    font-weight: 500;
+    font-size: var(--sl-text-sm);
+    transition: all 0.3s ease-out;
+    overflow: hidden;
+  }
+
+  .nav-link:hover {
+    width: 8rem;
+    padding-inline: 1rem;
+    border-color: var(--sl-color-white);
+    background: var(--sl-color-gray-6);
+  }
+
+  .nav-link-emphasized {
+    background: var(--sl-color-white);
+    color: var(--sl-color-black);
+    border-color: var(--sl-color-white);
+    box-shadow: 0 0 15px rgba(255, 255, 255, 0.2);
+  }
+
+  .nav-link-emphasized:hover {
+    background: var(--sl-color-white);
+    color: var(--sl-color-black);
+    box-shadow: 0 0 20px rgba(255, 255, 255, 0.4);
+  }
+
+  .nav-link-active {
+    border-color: var(--sl-color-accent);
+  }
+
+  .nav-link-icon {
+    font-weight: 600;
+    flex-shrink: 0;
+    transition: margin 0.3s ease-out;
+  }
+
+  .nav-link:hover .nav-link-icon {
+    margin-inline-end: 0.25rem;
+  }
+
+  .nav-link-icon-svg {
+    width: 1rem;
+    height: 1rem;
+    flex-shrink: 0;
+    transition: margin 0.3s ease-out;
+  }
+
+  .nav-link:hover .nav-link-icon-svg {
+    margin-inline-end: 0.25rem;
+  }
+
+  .nav-link-label {
+    max-width: 0;
+    opacity: 0;
+    white-space: nowrap;
+    overflow: hidden;
+    transition: all 0.3s ease-out;
+  }
+
+  .nav-link:hover .nav-link-label {
+    max-width: 100px;
+    opacity: 1;
+  }
+
+  :global([data-theme='light']) .nav-link-emphasized {
+    background: var(--sl-color-black);
+    color: var(--sl-color-white);
+    border-color: var(--sl-color-black);
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.15);
+  }
+
+  :global([data-theme='light']) .nav-link-emphasized:hover {
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.25);
+  }
+</style>

@@ -4,7 +4,9 @@
     "paths": {
       "@/*": ["./src/*"]
     },
-    "resolveJsonModule": true
+    "resolveJsonModule": true,
+    "jsx": "react-jsx",
+    "jsxImportSource": "react"
   },
   "include": [".astro/types.d.ts", "**/*", "src/**/*.json"],
   "exclude": ["dist"]

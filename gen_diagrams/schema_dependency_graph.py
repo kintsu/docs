@@ -9,10 +9,10 @@ Shows topological ordering of schemas for compilation:
 - Within level: compile concurrently
 """
 
-from diagrams import Cluster, Diagram, Edge
 from diagrams.generic.blank import Blank
-from diagrams.programming.framework import React
+from diagrams.programming.flowchart import Document
 
+from diagrams import Cluster, Diagram, Edge
 from gen_diagrams.common import diag_path
 
 graph_attr = {
@@ -32,18 +32,19 @@ with Diagram(
     graph_attr=graph_attr,
     node_attr=node_attr,
     direction="TB",
+    show=False,
 ):
     with Cluster("Level 0 (No Dependencies)\n[Compile Concurrently]"):
-        level0_a = React("Schema A")
-        level0_b = React("Schema B")
+        level0_a = Document("Schema A")
+        level0_b = Document("Schema B")
 
     with Cluster("Level 1 (Depends on Level 0)\n[Compile Concurrently]"):
-        level1_c = React("Schema C\n(imports: A, B)")
-        level1_d = React("Schema D\n(imports: A)")
+        level1_c = Document("Schema C\n(imports: A, B)")
+        level1_d = Document("Schema D\n(imports: A)")
 
     with Cluster("Level 2 (Depends on Levels 0-1)\n[Compile Concurrently]"):
-        level2_e = React("Schema E\n(imports: C, D)")
-        level2_f = React("Schema F\n(imports: C)")
+        level2_e = Document("Schema E\n(imports: C, D)")
+        level2_f = Document("Schema F\n(imports: C)")
 
     # Dependencies (arrows point from dependency to dependent)
     level0_a >> Edge(label="imported by", style="dashed") >> level1_c

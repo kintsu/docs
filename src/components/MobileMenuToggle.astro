@@ -1,0 +1,31 @@
+---
+import type { Props } from "@astrojs/starlight/props";
+import MobileMenuButton from "./MobileMenuButton.tsx";
+---
+
+<starlight-menu-button class="print:hidden">
+  <MobileMenuButton client:load />
+</starlight-menu-button>
+
+<script>
+  class StarlightMenuButton extends HTMLElement {
+    constructor() {
+      super();
+      
+      // Close the menu when a user presses the escape key
+      const parentNav = this.closest('nav');
+      if (parentNav) {
+        parentNav.addEventListener('keyup', (e: KeyboardEvent) => {
+          if (e.code === 'Escape') {
+            document.body.removeAttribute('data-mobile-menu-expanded');
+            this.querySelector('button')?.focus();
+          }
+        });
+      }
+    }
+  }
+
+  if (!customElements.get('starlight-menu-button')) {
+    customElements.define('starlight-menu-button', StarlightMenuButton);
+  }
+</script>

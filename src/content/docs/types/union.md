@@ -52,7 +52,7 @@ struct Merged {
     name: str,
     description: str,
     tags: str[]
-}
+};
 ```
 
 The field `version` from `Extended` is ignored because `Base.version` appears first.
@@ -69,8 +69,8 @@ struct A {
     z: str // Conflict with B & C union, A wins
 };
 struct B {
-    y: str
-    z: i32,
+    y: str,
+    z: i32
 };
 struct C {
     z: bool // Conflict with B (B wins)
@@ -81,7 +81,7 @@ type Combined = A & (B & C);
 
 Resolution steps:
 
-1. Resolve inner union `(B & C)` → merge fields from B and C
+1. Resolve inner union `(B & C)` -> merge fields from B and C
 2. Merge result with A
 3. Generate final struct `Combined`
 
@@ -92,7 +92,7 @@ struct Combined {
     x: i32,
     y: str,
     z: str
-}
+};
 ```
 
 ### Multi-Way Unions
@@ -157,8 +157,16 @@ Only struct types can be merged. Unions with non-struct types are rejected:
 
 ```kintsu
 // INVALID: cannot merge enum with struct
-enum Status { Active, Inactive }
-struct User { id: i64 }
+
+enum Status { 
+    Active, 
+    Inactive 
+};
+
+struct User { 
+    id: i64 
+};
+
 type Invalid = User & Status;  // ERROR: cannot merge enum
 ```
 

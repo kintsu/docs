@@ -8,12 +8,12 @@ Shows the process of resolving a type reference:
 3. Return first match or error if not found
 """
 
-from diagrams import Diagram, Edge
 from diagrams.generic.compute import Rack
 from diagrams.generic.storage import Storage
-from diagrams.onprem.workflow import Airflow
+from diagrams.programming.flowchart import Action
 from diagrams.programming.language import Rust
 
+from diagrams import Diagram, Edge
 from gen_diagrams.common import OPTS, diag_path
 
 graph_attr = {
@@ -30,8 +30,8 @@ with Diagram(
     **OPTS,
 ):
     parse_ref = Rust("Parse Type Reference\n(Point or geometry::Point)")
-    check_imports = Airflow("Check Imports\n(extract imported names)")
-    local_context = Airflow("Add Local Context\n(current_pkg::current_ns)")
+    check_imports = Action("Check Imports\n(extract imported names)")
+    local_context = Action("Add Local Context\n(current_pkg::current_ns)")
     candidates = Storage(
         "Candidate List\n[shapes::geometry::Point,\n graphics::rendering::Point]"
     )
@@ -42,8 +42,8 @@ with Diagram(
     local_context >> Edge(label="all candidates") >> candidates
 
     acquire_lock = Rack("Acquire Registry Lock")
-    probe_first = Airflow("Probe First Candidate")
-    probe_second = Airflow("Probe Second Candidate")
+    probe_first = Action("Probe First Candidate")
+    probe_second = Action("Probe Second Candidate")
     found = Storage("Return ResolvedType\n(kind + qualified_path)")
     not_found = Storage("Return Error\n(UndefinedType)")
 

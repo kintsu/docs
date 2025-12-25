@@ -7,13 +7,13 @@ import { kintsu } from "@/content/specs/config";
 const kinds = kintsu.spec_kinds;
 
 // Precompute a promise to load each collection; we await this in-template.
-const collectionsPromise = Promise.all(
+const collectionsPromise = await Promise.all(
   kinds.map(async (k: any) => {
     const collectionKey = k.id.toLowerCase();
     const entries = (await getCollection(collectionKey as any)) as any[];
     const sorted = entries.sort((a, b) => a.data.number - b.data.number);
     return { kind: k, collectionKey, entries: sorted };
-  }),
+  })
 );
 
 // We'll load collections in-template to avoid ordering issues during build
@@ -36,14 +36,7 @@ export const frontmatter = {
     </div>
 
     {
-      (await Promise.all(
-        kinds.map(async (k) => {
-          const collectionKey = k.id.toLowerCase();
-          const entries = (await getCollection(collectionKey as any)) as any[];
-          const sorted = entries.sort((a, b) => a.data.number - b.data.number);
-          return { kind: k, collectionKey, entries: sorted };
-        })
-      )).map(({ kind, collectionKey, entries }) => (
+      collectionsPromise.map(({ kind, collectionKey, entries }) => (
         <details class="spec-kind" open>
           <summary class="kind-header">
             <div class="kind-title-row">

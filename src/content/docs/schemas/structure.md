@@ -8,14 +8,14 @@ Schema packages follow a conventional directory layout with `lib.ks` as the entr
 
 ```txts
 my-package/
-├── schema.toml           # Package manifest
-└── schema/               # Schema source directory
-    ├── lib.ks            # Entry point (required)
-    ├── types.ks          # Flat namespace file
-    ├── errors.ks         # Flat namespace file
-    └── api/              # Nested namespace directory
-        ├── users.ks
-        └── auth.ks
+ |--- schema.toml           # Package manifest
+ |--- schema/               # Schema source directory
+     |--- lib.ks            # Entry point (required)
+     |--- types.ks          # Flat namespace file
+     |--- errors.ks         # Flat namespace file
+     |--- api/              # Nested namespace directory
+         |--- users.ks
+         |--- auth.ks
 ```
 
 ## The Entry Point: `lib.ks`
@@ -30,7 +30,8 @@ Every schema package **must** have a `schema/lib.ks` file. This is the entry poi
 `lib.ks` declares the package's root namespace, which matches the package name in snake_case:
 
 ```kintsu
-# In abc-corp package
+# abc-corp/lib.ks
+// In abc-corp package
 namespace abc_corp;
 
 use types;
@@ -40,8 +41,8 @@ use api;
 
 The namespace name must match the package name converted to snake_case:
 
-- Package: `abc-corp` → Namespace: `abc_corp`
-- Package: `my-types` → Namespace: `my_types`
+- Package: `abc-corp` -> Namespace: `abc_corp`
+- Package: `my-types` -> Namespace: `my_types`
 
 Package names are normalized to kebab-case publicly, and snake_case package names are rejected by registries.
 
@@ -60,15 +61,15 @@ namespace config {
 
     struct Settings {
         api_key: str,
-        timeout: i32,
-    }
+        timeout: i32
+    };
 };
 
 namespace utils {
     #![version(1)]
 
     enum StatusCode {
-        Ok = 200,
+        Ok = 200
     };
 };
 ```
@@ -88,9 +89,9 @@ Create a file named after the namespace at the root of `schema/`:
 
 ```txt
 schema/
-├── lib.ks
-├── types.ks    # Defines "types" namespace
-└── errors.ks   # Defines "errors" namespace
+ |--- lib.ks
+ |--- types.ks    # Defines "types" namespace
+ |--- errors.ks   # Defines "errors" namespace
 ```
 
 **`types.ks`:**
@@ -114,7 +115,7 @@ struct Message {
 ```kintsu
 namespace abc_corp;
 
-use types;  # Imports types.ks
+use types;  // Imports types.ks
 ```
 
 **Usage in other files:**
@@ -134,18 +135,19 @@ Create a directory named after the namespace with `.ks` files inside:
 
 ```txt
 schema/
-├── lib.ks
-└── api/              # "api" namespace directory
-    ├── users.ks     # Defines types in "api" namespace
-    ├── auth.ks      # More types in "api" namespace
-    ├── meta.ks      # Consider adding a meta.ks to store your namespace version, error type, etc.
-    └── posts.ks
+ |--- lib.ks
+ |--- api/              # "api" namespace directory
+     |--- users.ks     # Defines types in "api" namespace
+     |--- auth.ks      # More types in "api" namespace
+     |--- meta.ks      # Consider adding a meta.ks to store your namespace version, error type, etc.
+     |--- posts.ks
 
 ```
 
 **`api/meta.ks`**
 
 ```kintsu
+# api/meta.ks
 // all items in our namespace are tagged version 1 unless overridden, and use schema::Error for return types
 #![version(1)]
 #![err(schema::error::Error)]
@@ -184,12 +186,12 @@ operation login(code: str) -> AuthToken!;
 ```kintsu
 namespace abc_corp;
 
-use api;  # Declares the namespace per the files within api/ directory
+use api;  // Declares the namespace per the files within api/ directory
 
-namespace error { # our errors
+namespace error {  // our errors
     error Error {
         LoginError { cause: str },
-        UserNotFound { id: i64 }
+        UserNotFound { id: i64 },
     };
 };
 ```
@@ -211,12 +213,12 @@ The compiler resolves namespaces in this order:
 
 ```txt
 schema/
-├── lib.ks
-├── types.ks          # Flat namespace
-├── errors.ks         # Flat namespace
-└── api/              # Nested namespace
-    ├── users.ks
-    └── posts.ks
+ |--- lib.ks
+ |--- types.ks          # Flat namespace
+ |--- errors.ks         # Flat namespace
+ |--- api/              # Nested namespace
+     |--- users.ks
+     |--- posts.ks
 ```
 
 **`lib.ks`:**
@@ -249,13 +251,13 @@ This creates:
 Each namespace can declare metadata:
 
 ```kintsu
-#![version(1)]                          # Schema version
-#![err(schema::errors::Error)]          # Default error type for operations
+#![version(1)]                          // Schema version
+#![err(schema::errors::Error)]          // Default error type for operations
 namespace api;
 
 struct User {
     id: i64,
-    name: str
+    name: str,
 };
 ```
 
@@ -275,9 +277,9 @@ Use flat namespace files:
 
 ```txt
 schema/
-├── lib.ks
-├── types.ks
-└── errors.ks
+ |--- lib.ks
+ |--- types.ks
+ |--- errors.ks
 ```
 
 ### Medium Packages
@@ -286,11 +288,11 @@ Mix flat files and directories:
 
 ```txt
 schema/
-├── lib.ks
-├── common.ks        # Shared types
-└── api/              # API-specific types
-    ├── v1.ks
-    └── v2.ks
+ |--- lib.ks
+ |--- common.ks        # Shared types
+ |--- api/              # API-specific types
+     |--- v1.ks
+     |--- v2.ks
 ```
 
 ### Large Packages
@@ -299,18 +301,18 @@ Use nested directories with clear organization:
 
 ```txt
 schema/
-├── lib.ks
-├── types/
-│   ├── users.ks
-│   ├── posts.ks
-│   └── comments.ks
-├── api/
-│   ├── users.ks
-│   ├── posts.ks
-│   └── admin.ks
-└── errors/
-    ├── auth.ks
-    └── validation.ks
+ |--- lib.ks
+ |--- types/
+     |--- users.ks
+     |--- posts.ks
+     |--- comments.ks
+ |--- api/
+     |--- users.ks
+     |--- posts.ks
+     |--- admin.ks
+ |--- errors/
+     |--- auth.ks
+     |--- validation.ks
 ```
 
 ## Imports and Visibility
@@ -318,14 +320,14 @@ schema/
 All types defined in a namespace are public and accessible via imports:
 
 ```kintsu
-# From external package
+// From external package
 use abc_corp::types;
 
 struct MyType {
     user: types::User,
 };
 
-# Or import specific types
+// Or import specific types
 use abc_corp::types::User;
 
 struct MyType {

@@ -5,9 +5,9 @@ Shows how import statements are parsed, paths resolved through namespace
 hierarchy, and types validated.
 """
 
-from diagrams import Cluster, Diagram, Edge
 from diagrams.generic.blank import Blank
 
+from diagrams import Cluster, Diagram, Edge
 from gen_diagrams.common import diag_path
 
 graph_attr = {

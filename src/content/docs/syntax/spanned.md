@@ -18,20 +18,14 @@ type Abc = (
     i64
 );
 
-message Foo {
+struct Foo {
     // single tab for brace
     field_a: i32,
-    // double tab for braced -> parenthesized
-    field_b: (
-        oneof
-        abc |
-        u32 |
-        u64 |
-        str
-    )
+    // oneof in field type
+    field_b: oneof abc | u32 | u64 | str
 };
 
 error ServerError {
     Internal(str)
-}
+};
 ```

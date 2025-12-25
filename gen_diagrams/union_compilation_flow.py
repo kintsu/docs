@@ -1,8 +1,8 @@
-from diagrams import Cluster, Diagram, Edge
 from diagrams.generic.storage import Storage
 from diagrams.programming.flowchart import Action
 from diagrams.programming.language import Rust
 
+from diagrams import Cluster, Diagram, Edge
 from gen_diagrams.common import OPTS, diag_path
 
 
@@ -12,16 +12,18 @@ def union_compilation_flow():
     with Cluster("Identification"):
         detect_union = Action("Detect Union\n(A & B)")
         capture_context = Storage("Capture Context\n(namespace, parent, field)")
-        record_union = Rust("Record Union\nfor Processing")
+        record_union = Rust(
+            "UnionRecord {\\nunion_ref: Arc<Union>,\\ncontext_stack,\\nin_oneof}"
+        )
 
     with Cluster("Validation"):
-        check_operands = Action("Check Each\nOperand")
-        lookup_type = Storage("Lookup Type\nin Registry")
-        validate_struct = Action("Validate:\nMust Be Struct")
-        reject_non_struct = Storage("Reject Enum/\nError/OneOf")
+        check_operands = Action("Check Each\\nOperand")
+        lookup_type = Storage("Lookup Type\\nin Registry")
+        validate_struct = Action("resolve_to_struct_type()\\n(recursive async)")
+        reject_non_struct = Storage("Reject Enum/\\nError/OneOf")
 
     with Cluster("Field Merging"):
-        init_working_set = Rust("Initialize\nWorking Set")
+        init_working_set = Rust("UnionWorkingSet {\\nfields: BTreeMap}")
         process_left_to_right = Action("Process Operands\n(left-to-right)")
         merge_fields = Storage("Merge Fields\n(leftmost wins)")
 

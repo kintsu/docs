@@ -167,7 +167,7 @@ operation list_items() -> Item[];
 **Oneof:**
 
 ```kintsu
-operation process(data: oneof str | bytes) -> bool;
+operation process(data: oneof str | binary) -> bool;
 ```
 
 **Optional:**

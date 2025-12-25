@@ -1,6 +1,6 @@
 ---
 import SpecHeader from "../components/SpecHeader.astro";
-import { type SpecSchema, specUpdate } from "../lib/specs";
+import { type SpecSchema } from "../lib/specs";
 
 const { frontmatter, meta = {} } = Astro.props as {
   frontmatter: SpecSchema;
@@ -13,7 +13,7 @@ const canonical =
   meta?.canonical ||
   `/${frontmatter?.kind?.toLowerCase()}/${frontmatter?.number ? `${frontmatter.kind}-${String(frontmatter.number).padStart(4, "0")}` : ""}`;
 
-const jsonLd = {
+export const jsonLd = {
   "@context": "https://schema.org",
   "@type": "TechArticle",
   headline: title,

@@ -1,0 +1,14 @@
+---
+import type { Props } from "@astrojs/starlight/props";
+import Default from "@astrojs/starlight/components/SocialIcons.astro";
+import NavLinkGrid from "./NavLinkGrid.astro";
+---
+
+<NavLinkGrid />
+<Default><slot /></Default>
+
+<style>
+  :global(.social-icons) {
+    gap: 0.5rem;
+  }
+</style>

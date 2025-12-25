@@ -1,6 +1,10 @@
 [tools]
+black = "latest"
+bun = "latest"
 node = "latest"
 prek = "latest"
+python = "latest"
+uv = "latest"
 
 [tasks]
 demos = ["vhs demos/compile.vhs.tape"]

@@ -3,16 +3,16 @@
 Type Registry Structure Diagram
 
 Shows hierarchical organization of the type registry:
-- Global TypeRegistry with thread-safe HashMap
-- Mapping from qualified names (package::namespace::Type) to ResolvedTypes
-- Each ResolvedType contains kind (Struct/Enum/etc) and source location
+- Global TypeRegistry with thread-safe BTreeMap (Mutex-protected)
+- Mapping from NamedItemContext to FromNamedSource<Spanned<ResolvedType>>
+- Each ResolvedType contains kind (Struct/Enum/etc) and qualified_path
 """
 
-from diagrams import Cluster, Diagram, Edge
 from diagrams.generic.storage import Storage
-from diagrams.onprem.database import Cassandra
+from diagrams.programming.flowchart import Database
 from diagrams.programming.language import Rust
 
+from diagrams import Cluster, Diagram, Edge
 from gen_diagrams.common import diag_path
 
 graph_attr = {
@@ -27,8 +27,9 @@ with Diagram(
     outformat="png",
     graph_attr=graph_attr,
     direction="TB",
+    show=False,
 ):
-    registry = Rust("TypeRegistry\n(Arc<Mutex<HashMap>>)")
+    registry = Rust("TypeRegistry\n(Arc<Mutex<BTreeMap>>)")
 
     with Cluster("Qualified Names → ResolvedTypes"):
         with Cluster("shapes package"):
@@ -42,7 +43,9 @@ with Diagram(
         with Cluster("errors package"):
             errors_notfound = Storage("errors::NotFoundError\n→ Error")
 
-    types_map = Cassandra("HashMap<NamedItemContext,\nResolvedType>")
+    types_map = Database(
+        "BTreeMap<NamedItemContext,\\nFromNamedSource<Spanned<ResolvedType>>>"
+    )
 
     registry >> Edge(label="contains") >> types_map
 

@@ -1,9 +1,8 @@
-from diagrams import Cluster, Diagram, Edge
 from diagrams.generic.storage import Storage
-from diagrams.onprem.vcs import Git
 from diagrams.programming.flowchart import Action, Decision, InternalStorage
 from diagrams.programming.language import Rust
 
+from diagrams import Cluster, Diagram, Edge
 from gen_diagrams.common import diag_path, edge_attr, graph_attr, node_attr
 
 with Diagram(
@@ -78,7 +77,7 @@ with Diagram(
                 "Dependency Source Resolution", graph_attr={"bgcolor": "#fef8f8"}
             ):
                 path_dep = Storage("Path: Local\nfilesystem")
-                git_dep = Git("Git: Clone/fetch\nrepository")
+                git_dep = Action("Git: Clone/fetch\nrepository")
                 registry_dep = Storage("Registry: Download\npackage")
 
                 resolve_location >> path_dep
@@ -345,7 +344,7 @@ with Diagram(
     with Cluster("Finalization", graph_attr={"bgcolor": "#f0f8e8"}):
         check_invalidated = Decision("Lockfile\ninvalidated?")
         collect_versions = Action("Collect loaded\nversions from state")
-        generate_lockfile = Git("LockfileManager::\nwrite_lockfile()")
+        generate_lockfile = Action("LockfileManager::\nwrite_lockfile()")
         write_lock = Storage("Write schema.lock\nto filesystem")
 
         update_progress >> check_invalidated

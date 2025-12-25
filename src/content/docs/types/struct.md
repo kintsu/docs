@@ -35,7 +35,7 @@ struct Request {
 
 The compiler validates all field types during compilation. Each field type must resolve to:
 
-- A builtin primitive type (`i8`, `i16`, `i32`, `i64`, `u8`, `u16`, `u32`, `u64`, `f32`, `f64`, `bool`, `str`, `bytes`, `datetime`)
+- A builtin primitive type (`i8`, `i16`, `i32`, `i64`, `u8`, `u16`, `u32`, `u64`, `usize`, `f16`, `f32`, `f64`, `bool`, `str`, `binary`, `base64`, `datetime`, `complex`, `null`, `never`)
 - A named type in the current namespace or imported namespace
 - An array of a valid type
 - A union of valid types
