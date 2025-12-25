@@ -6,13 +6,13 @@ This document contains the help content for the `kintsu` command-line program.
 
 **Command Overview:**
 
-- [`kintsu`↴](#)
-- [` generate`↴](#-generate)
-- [` check`↴](#-check)
-- [` init`↴](#-init)
-- [` fmt`↴](#-fmt)
-- [` registry`↴](#-registry)
-- [` registry publish`↴](#-registry-publish)
+- [`kintsu`↴](#kintsu)
+- [` generate`↴](#generate)
+- [` check`↴](#check)
+- [` init`↴](#init)
+- [` fmt`↴](#fmt)
+- [` registry`↴](#registry)
+- [` registry publish`↴](#registry-publish)
 
 ## `kintsu`
 

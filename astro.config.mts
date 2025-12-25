@@ -62,6 +62,14 @@ export default defineConfig({
   server: {
     port: 3000,
   },
+  image: {
+    service: {
+      entrypoint: "astro/assets/services/sharp",
+      config: {
+        limitInputPixels: false,
+      },
+    },
+  },
   vite: {
     plugins: [tailwindcss()],
   },

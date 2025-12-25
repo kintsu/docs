@@ -61,8 +61,9 @@ Require kintsu
 Set Shell "zsh"
 Set TypingSpeed 80ms
 Set FontSize 22
-Set Width 1300
-Set Height 650
+Set Width 1280
+Set Height 720
+Set Framerate 30
 
 Hide
 
@@ -75,16 +76,16 @@ Type "kintsu check -d ./root-pkg"
 
 Sleep 500ms
 Enter
-Sleep 3s
+Sleep 2s
 
-Type "kintsu registry publish -d ./pkg-5"
-
-Sleep 500ms
-Enter
-Sleep 3s
-
-Type "kintsu fmt -d ./pkg-5"
+Type "kintsu registry publish -d ./pkg-9"
 
 Sleep 500ms
 Enter
-Sleep 3s
+Sleep 2s
+
+Type "kintsu fmt -d ./pkg-9"
+
+Sleep 500ms
+Enter
+Sleep 2s
