@@ -1,8 +1,8 @@
-from diagrams import Cluster, Diagram, Edge
 from diagrams.generic.storage import Storage
 from diagrams.programming.flowchart import Action, InternalStorage
 from diagrams.programming.language import Rust
 
+from diagrams import Cluster, Diagram, Edge
 from gen_diagrams.common import diag_path, edge_attr, graph_attr, node_attr
 
 with Diagram(

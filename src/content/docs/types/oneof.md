@@ -2,28 +2,50 @@
 title: "oneof"
 ---
 
-Represents a discriminated union value that may be one of several types, separated by `|`. The oneof construct creates a tagged union where each variant is explicitly distinguishable.
+Represents a discriminated union value that may be one of several types. Kintsu supports two forms: anonymous oneofs with pipe-separated types, and named oneofs with explicitly named variants.
 
 ## Syntax
 
+### Anonymous Oneof (Type Alias)
+
+Anonymous oneofs use the pipe `|` separator to define variant types:
+
 ```kintsu
-// anonymous oneof in type alias
+// Anonymous oneof in type alias
 type Value = oneof i32 | str | bool;
 
-// in struct field
+// In struct field
 struct Record {
     data: oneof i32 | f32 | str
 };
 
-// with arrays (requires parentheses)
+// With arrays (requires parentheses)
 type Numbers = (oneof i32 | f32)[];
 
-// with named types
+// With named types
 type Response = oneof Success | Error;
 
-// complex variants
+// Complex variants with anonymous structs
 type Complex = oneof { id: i64 } | str | i32;
 ```
+
+### Named Oneof (Explicit Variants)
+
+Named oneofs declare an explicit type with named variants, similar to error types:
+
+```kintsu
+oneof ComplexOneOf {
+    FormA(i32),
+    FormB {
+        desc: str
+    }
+};
+```
+
+**Variant forms:**
+
+- **Tuple variant:** `VariantName(Type)` - wraps an existing type
+- **Struct variant:** `VariantName { field: Type }` - inline anonymous struct
 
 ## Resolution Behavior
 
@@ -80,8 +102,8 @@ type Data = oneof (Base & Extensions) | (Alt & More);
 
 Resolution steps:
 
-1. Resolve union `(Base & Extensions)` → generates `Data1`
-2. Resolve union `(Alt & More)` → generates `Data2`
+1. Resolve union `(Base & Extensions)` -> generates `Data1`
+2. Resolve union `(Alt & More)` -> generates `Data2`
 3. Final oneof: `oneof Data1 | Data2`
 
 ### Nested Oneof

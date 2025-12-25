@@ -5,11 +5,11 @@ Metadata Inheritance Diagram
 Shows how metadata (version and error) flows from namespace level to items.
 """
 
-from diagrams import Cluster, Diagram, Edge
-from diagrams.custom import Custom
-from diagrams.onprem.compute import Server
+from diagrams.generic.storage import Storage
+from diagrams.programming.flowchart import Action
 from diagrams.programming.language import Rust
 
+from diagrams import Cluster, Diagram, Edge
 from gen_diagrams.common import diag_path
 
 with Diagram(
@@ -19,29 +19,29 @@ with Diagram(
     direction="TB",
 ):
     with Cluster("Namespace Level"):
-        namespace = Server("namespace api")
-        inner_version = Custom("#![version(1)]", "./blank.png")
-        inner_error = Custom("#![err(ApiError)]", "./blank.png")
+        namespace = Action("namespace api")
+        inner_version = Storage("#![version(1)]")
+        inner_error = Storage("#![err(ApiError)]")
 
     with Cluster("Type Level"):
         with Cluster("User (inherits)"):
             user_struct = Rust("struct User")
-            user_version = Custom("version: 1 (inherited)", "./blank.png")
+            user_version = Storage("version: 1 (inherited)")
 
         with Cluster("Account (overrides)"):
-            account_outer = Custom("#[version(2)]", "./blank.png")
+            account_outer = Storage("#[version(2)]")
             account_struct = Rust("struct Account")
-            account_version = Custom("version: 2 (explicit)", "./blank.png")
+            account_version = Storage("version: 2 (explicit)")
 
     with Cluster("Operation Level"):
         with Cluster("getUser (inherits)"):
-            get_op = Server("operation getUser()")
-            get_error = Custom("error: ApiError (inherited)", "./blank.png")
+            get_op = Action("operation getUser()")
+            get_error = Storage("error: ApiError (inherited)")
 
         with Cluster("createUser (overrides)"):
-            create_outer = Custom("#[err(ValidationError)]", "./blank.png")
-            create_op = Server("operation createUser()")
-            create_error = Custom("error: ValidationError (explicit)", "./blank.png")
+            create_outer = Storage("#[err(ValidationError)]")
+            create_op = Action("operation createUser()")
+            create_error = Storage("error: ValidationError (explicit)")
 
     # Inheritance flows
     namespace >> Edge(label="declares") >> inner_version

@@ -1,7 +1,7 @@
-from diagrams import Cluster, Diagram, Edge
-from diagrams.custom import Custom
+from diagrams.generic.storage import Storage
 from diagrams.programming.language import Rust
 
+from diagrams import Cluster, Diagram, Edge
 from gen_diagrams.common import diag_path
 
 with Diagram(
@@ -11,9 +11,9 @@ with Diagram(
     direction="TB",
 ):
     with Cluster("Phase 1: Anonymous Struct Extraction"):
-        p1_input = Custom("Input:\nRaw types with\ninline structs", "./blank.png")
+        p1_input = Storage("Input:\nRaw types with\ninline structs")
         p1_process = Rust("Extract &\nName Structs")
-        p1_output = Custom("Output:\nVec<StructDef>", "./blank.png")
+        p1_output = Storage("Output:\nVec<StructDef>")
 
         (
             p1_input
@@ -24,9 +24,9 @@ with Diagram(
         )
 
     with Cluster("Phase 3: Type Alias Resolution"):
-        p3_input = Custom("Input:\nType aliases", "./blank.png")
+        p3_input = Storage("Input:\nType aliases")
         p3_process = Rust("Build Graph\nTopological Sort")
-        p3_output = Custom("Output:\nBTreeMap<Name, Type>", "./blank.png")
+        p3_output = Storage("Output:\nBTreeMap<Name, Type>")
 
         (
             p3_input
@@ -37,9 +37,9 @@ with Diagram(
         )
 
     with Cluster("Phase 5: Union Merging"):
-        p5_input = Custom("Input:\nValidated unions", "./blank.png")
+        p5_input = Storage("Input:\nValidated unions")
         p5_process = Rust("Merge Fields\nLeft-to-Right")
-        p5_output = Custom("Output:\nVec<StructDef>", "./blank.png")
+        p5_output = Storage("Output:\nVec<StructDef>")
 
         (
             p5_input
@@ -50,9 +50,9 @@ with Diagram(
         )
 
     with Cluster("Phase 6: Version Metadata Resolution"):
-        p6_input = Custom("Input:\nTypes + metadata", "./blank.png")
+        p6_input = Storage("Input:\nTypes + metadata")
         p6_process = Rust("Apply Precedence\nItem > Namespace")
-        p6_output = Custom("Output:\nBTreeMap<Name, Version>", "./blank.png")
+        p6_output = Storage("Output:\nBTreeMap<Name, Version>")
 
         (
             p6_input
@@ -63,9 +63,9 @@ with Diagram(
         )
 
     with Cluster("Phase 8: Type Reference Validation"):
-        p8_input = Custom("Input:\nAll type refs", "./blank.png")
+        p8_input = Storage("Input:\nAll type refs")
         p8_process = Rust("Check Registry\nValidate Exists")
-        p8_output = Custom("Output:\nValidation Result", "./blank.png")
+        p8_output = Storage("Output:\nValidation Result")
 
         (
             p8_input

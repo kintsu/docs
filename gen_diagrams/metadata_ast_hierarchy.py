@@ -5,10 +5,10 @@ Metadata AST Hierarchy Diagram
 Shows the logical AST structure for metadata (ignoring spans and tokens).
 """
 
-from diagrams import Cluster, Diagram, Edge
-from diagrams.onprem.compute import Server
+from diagrams.generic.storage import Storage
 from diagrams.programming.language import Rust
 
+from diagrams import Cluster, Diagram, Edge
 from gen_diagrams.common import diag_path
 
 with Diagram(
@@ -19,7 +19,7 @@ with Diagram(
 ):
     with Cluster("ItemMeta"):
         item_meta = Rust("ItemMeta")
-        meta_vec = Server("Vec<ItemMetaItem>")
+        meta_vec = Storage("Vec<ItemMetaItem>")
 
     with Cluster("ItemMetaItem (enum)"):
         version_variant = Rust("Version(VersionMeta)")
@@ -27,15 +27,15 @@ with Diagram(
 
     with Cluster("VersionMeta"):
         version_meta = Rust("Meta<IntToken>")
-        version_name = Server("name: 'version'")
-        version_value = Server("value: i32")
-        version_inner = Server("inner: Option<BangToken>")
+        version_name = Storage("name: 'version'")
+        version_value = Storage("value: i32")
+        version_inner = Storage("inner: Option<BangToken>")
 
     with Cluster("ErrorMeta"):
         error_meta = Rust("Meta<PathOrIdent>")
-        error_name = Server("name: 'err'")
-        error_value = Server("value: PathOrIdent")
-        error_inner = Server("inner: Option<BangToken>")
+        error_name = Storage("name: 'err'")
+        error_value = Storage("value: PathOrIdent")
+        error_inner = Storage("inner: Option<BangToken>")
 
     # Structure relationships
     item_meta >> Edge(label="contains") >> meta_vec

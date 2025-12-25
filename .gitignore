@@ -6,6 +6,8 @@ dist/
 diagrams/*.png
 auto/instructions.md
 
+.vscode/
+
 __pycache__/
 .DS_Store
 

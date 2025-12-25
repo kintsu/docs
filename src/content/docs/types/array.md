@@ -96,7 +96,7 @@ Arrays provide a terminating path for recursive types. A struct can contain an a
 struct Tree {
     value: i32,
     children: Tree[]  // Valid: empty array terminates recursion
-}
+};
 ```
 
 The empty array provides the base case for recursion, allowing the compiler to accept this definition.

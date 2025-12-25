@@ -54,6 +54,8 @@ export async function getStaticPaths() {
       const qid = qualifiedId(entry.data.kind, entry.data.number);
       const { Content, headings } = await render(entry);
 
+      // Generate both uppercase and lowercase routes for case-insensitive matching
+      // e.g., TSY-0001 and tsy-0001 both resolve to the same spec
       paths.push({
         params: { kind: collectionKey, id: qid },
         props: {
@@ -63,6 +65,20 @@ export async function getStaticPaths() {
           qid,
         },
       });
+
+      // Add lowercase variant if different from uppercase
+      const lowerId = qid.toLowerCase();
+      if (lowerId !== qid) {
+        paths.push({
+          params: { kind: collectionKey, id: lowerId },
+          props: {
+            entry: entry.data,
+            Content,
+            headings,
+            qid,
+          },
+        });
+      }
     }
   }
 
@@ -122,23 +138,24 @@ const starlightFrontmatter = {
   }
 
   .spec-content :global(code) {
-    background: #f3f4f6;
+    background: var(--sl-color-bg-inline-code);
     padding: 0.125rem 0.375rem;
-    border-radius: 4px;
+    border-radius: 0.25rem;
     font-size: 0.9em;
+    font-family: var(--sl-font-mono);
   }
 
   .spec-content :global(pre) {
     margin: 1.5rem 0;
     padding: 1rem;
-    background: #1e293b;
-    border-radius: 8px;
+    background: var(--sl-color-gray-6);
+    border-radius: 0.5rem;
     overflow-x: auto;
   }
 
   .spec-content :global(pre code) {
     background: transparent;
     padding: 0;
-    color: #e2e8f0;
+    color: var(--sl-color-gray-1);
   }
 </style>

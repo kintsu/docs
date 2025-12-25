@@ -1,6 +1,7 @@
-from diagrams import Cluster, Diagram, Edge
-from diagrams.custom import Custom
+from diagrams.generic.blank import Blank
+from diagrams.generic.storage import Storage
 
+from diagrams import Cluster, Diagram, Edge
 from gen_diagrams.common import OPTS, diag_path
 
 with Diagram(
@@ -10,29 +11,22 @@ with Diagram(
     **OPTS,
 ):
     with Cluster("Source Schema"):
-        source = Custom(
-            "OneOf Declaration\n\ntype Response =\n  oneof Success\n    | Error\n    | Timeout",
-            None,
+        source = Storage(
+            "OneOf Declaration\n\ntype Response =\n  oneof Success\n    | Error\n    | Timeout"
         )
 
     with Cluster("Variant Types"):
-        from diagrams.generic.blank import Blank
-
         variant1 = Blank("Success\n(variant 0)")
         variant2 = Blank("Error\n(variant 1)")
         variant3 = Blank("Timeout\n(variant 2)")
 
     with Cluster("Generated Discriminated Union"):
-        from diagrams.generic.blank import Blank
-
         discriminant = Blank("Discriminant Field\n(tag/enum)")
         union_type = Blank(
             "Response Union\n{\n  discriminant: enum,\n  Success | Error | Timeout\n}"
         )
 
     with Cluster("Runtime Representation"):
-        from diagrams.generic.blank import Blank
-
         active_variant = Blank(
             "Active Variant\n(one at a time)\n\n+ discriminant value"
         )

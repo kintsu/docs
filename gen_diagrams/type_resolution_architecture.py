@@ -1,8 +1,8 @@
-from diagrams import Cluster, Diagram, Edge
-from diagrams.custom import Custom
-from diagrams.onprem.compute import Server
+from diagrams.generic.storage import Storage
+from diagrams.programming.flowchart import Action
 from diagrams.programming.language import Rust
 
+from diagrams import Cluster, Diagram, Edge
 from gen_diagrams.common import diag_path
 
 with Diagram(
@@ -16,36 +16,36 @@ with Diagram(
 
     with Cluster("TypeResolver Pipeline"):
         with Cluster("Phase 1"):
-            phase1 = Server("Anonymous Struct\nExtraction")
-            phase1_out = Custom("Vec<StructDef>", "./blank.png")
+            phase1 = Action("Anonymous Struct\nExtraction")
+            phase1_out = Storage("Vec<StructDef>")
 
         with Cluster("Phase 2"):
-            phase2 = Server("Union\nIdentification")
-            phase2_out = Custom("Vec<UnionRecord>", "./blank.png")
+            phase2 = Action("Union\nIdentification")
+            phase2_out = Storage("Vec<UnionRecord>")
 
         with Cluster("Phase 3"):
-            phase3 = Server("Type Alias\nResolution")
-            phase3_out = Custom("BTreeMap<Name, Type>", "./blank.png")
+            phase3 = Action("Type Alias\nResolution")
+            phase3_out = Storage("BTreeMap<Name, Type>")
 
         with Cluster("Phase 4"):
-            phase4 = Server("Union\nValidation")
-            phase4_out = Custom("Validation Result", "./blank.png")
+            phase4 = Action("Union\nValidation")
+            phase4_out = Storage("Validation Result")
 
         with Cluster("Phase 5"):
-            phase5 = Server("Union\nMerging")
-            phase5_out = Custom("Vec<StructDef>", "./blank.png")
+            phase5 = Action("Union\nMerging")
+            phase5_out = Storage("Vec<StructDef>")
 
         with Cluster("Phase 6"):
-            phase6 = Server("Version Metadata\nResolution")
-            phase6_out = Custom("BTreeMap<Name, Version>", "./blank.png")
+            phase6 = Action("Version Metadata\nResolution")
+            phase6_out = Storage("BTreeMap<Name, Version>")
 
         with Cluster("Phase 7"):
-            phase7 = Server("Error Metadata\nResolution")
-            phase7_out = Custom("BTreeMap<Name, ErrorType>", "./blank.png")
+            phase7 = Action("Error Metadata\nResolution")
+            phase7_out = Storage("BTreeMap<Name, ErrorType>")
 
         with Cluster("Phase 8"):
-            phase8 = Server("Type Reference\nValidation")
-            phase8_out = Custom("Validation Result", "./blank.png")
+            phase8 = Action("Type Reference\nValidation")
+            phase8_out = Storage("Validation Result")
 
     with Cluster("Output"):
         namespace_resolution = Rust("NamespaceResolution")

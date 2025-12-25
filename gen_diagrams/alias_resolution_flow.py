@@ -1,8 +1,8 @@
-from diagrams import Cluster, Diagram, Edge
 from diagrams.generic.storage import Storage
 from diagrams.programming.flowchart import Action
 from diagrams.programming.language import Rust
 
+from diagrams import Cluster, Diagram, Edge
 from gen_diagrams.common import OPTS, diag_path
 
 
@@ -11,7 +11,10 @@ def alias_resolution_flow():
 
     with Cluster("Dependency Analysis"):
         extract_deps = Action("Extract\nDependencies")
-        build_graph = Storage("Build Alias\nDependency Graph")
+        build_graph = Storage("Build AliasEntry\\nDependency Graph")
+
+    with Cluster("AliasEntry Structure"):
+        alias_entry = Storage("AliasEntry {\\ntarget_type,\\nsource,\\ndependencies}")
 
     with Cluster("Cycle Detection"):
         dfs_check = Action("DFS Cycle\nDetection")
@@ -31,6 +34,7 @@ def alias_resolution_flow():
     # Main flow
     parse_aliases >> Edge(label="extract") >> extract_deps
     extract_deps >> Edge(label="build") >> build_graph
+    extract_deps >> Edge(label="create") >> alias_entry
     build_graph >> Edge(label="check") >> dfs_check
     dfs_check >> Edge(label="if cycle") >> report_cycle
     dfs_check >> Edge(label="no cycle") >> compute_indegree

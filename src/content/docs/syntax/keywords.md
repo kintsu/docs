@@ -2,14 +2,27 @@
 title: "Keywords"
 ---
 
-| Token       | Description                                                                                 |
-| :---------- | :------------------------------------------------------------------------------------------ |
-| `schema`    | keyword `schema`. used to reference types within the same package.                          |
-| `namespace` | keyword `namespace`. should precede an identifier.                                          |
-| `use`       | keyword `use`. should precede a namespace to be used.                                       |
-| `struct`    | keyword `struct`. used to declare a struct.                                                 |
-| `enum`      | keyword `enum`. used to declare an enumeration.                                             |
-| `type`      | keyword `type`. used to declare a type alias.                                               |
-| `oneof`     | keyword `oneof`. used to declare a sequence of type variants or named enumeration of types. |
-| `error`     | keyword `error`. used to declare an error type.                                             |
-| `operation` | keyword `operation`. used to declare an operation.                                          |
+## Type Declaration Keywords
+
+| Token       | Description                                                                          |
+| :---------- | :----------------------------------------------------------------------------------- |
+| `namespace` | Declares a namespace scope. Should precede an identifier.                            |
+| `use`       | Imports types from another namespace. Should precede a namespace path.               |
+| `struct`    | Declares a struct type with named fields.                                            |
+| `enum`      | Declares an enumeration with named variants and optional discriminant values.        |
+| `type`      | Declares a type alias.                                                               |
+| `oneof`     | Declares a tagged union - a sequence of type variants or named enumeration of types. |
+| `error`     | Declares an error type with variants (struct, tuple, or unit).                       |
+| `operation` | Declares an operation (RPC method) with arguments and return type.                   |
+
+## Reference Keywords
+
+| Token    | Description                                                                             |
+| :------- | :-------------------------------------------------------------------------------------- |
+| `schema` | References types within the same package. Use `schema::path::Type` for self-references. |
+
+## Literal Keywords
+
+| Token  | Description                                                                  |
+| :----- | :--------------------------------------------------------------------------- |
+| `null` | The null literal, representing absence of a value. Used with nullable types. |

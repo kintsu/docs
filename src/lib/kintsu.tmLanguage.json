@@ -1,0 +1,294 @@
+{
+  "$schema": "https://raw.githubusercontent.com/martinring/tmlanguage/master/tmlanguage.json",
+  "name": "Kintsu",
+  "scopeName": "source.kintsu",
+  "fileTypes": ["ks", "kintsu", "ktsu"],
+  "patterns": [
+    { "include": "#comments" },
+    { "include": "#meta" },
+    { "include": "#strings" },
+    { "include": "#keywords" },
+    { "include": "#qualified-path" },
+    { "include": "#array-type" },
+    { "include": "#builtin-types" },
+    { "include": "#numbers" },
+    { "include": "#operators" },
+    { "include": "#punctuation" },
+    { "include": "#type-identifier" },
+    { "include": "#field-identifier" }
+  ],
+  "repository": {
+    "comments": {
+      "patterns": [
+        {
+          "name": "comment.line.double-slash.kintsu",
+          "match": "//.*$"
+        },
+        {
+          "name": "comment.block.kintsu",
+          "begin": "/\\*",
+          "end": "\\*/",
+          "patterns": [{ "include": "#comments" }]
+        }
+      ]
+    },
+    "meta": {
+      "patterns": [
+        {
+          "name": "meta.attribute.inner.kintsu",
+          "begin": "#!\\[",
+          "end": "\\]",
+          "beginCaptures": {
+            "0": { "name": "punctuation.definition.attribute.kintsu" }
+          },
+          "endCaptures": {
+            "0": { "name": "punctuation.definition.attribute.kintsu" }
+          },
+          "patterns": [
+            {
+              "name": "entity.name.function.attribute.kintsu",
+              "match": "\\b(version|err)\\b"
+            },
+            { "include": "#strings" },
+            { "include": "#numbers" },
+            { "include": "#type-identifier" }
+          ]
+        },
+        {
+          "name": "meta.attribute.outer.kintsu",
+          "begin": "#\\[",
+          "end": "\\]",
+          "beginCaptures": {
+            "0": { "name": "punctuation.definition.attribute.kintsu" }
+          },
+          "endCaptures": {
+            "0": { "name": "punctuation.definition.attribute.kintsu" }
+          },
+          "patterns": [
+            {
+              "name": "entity.name.function.attribute.kintsu",
+              "match": "\\b(version|err|deprecated|doc)\\b"
+            },
+            { "include": "#strings" },
+            { "include": "#numbers" },
+            { "include": "#type-identifier" }
+          ]
+        }
+      ]
+    },
+    "strings": {
+      "patterns": [
+        {
+          "name": "string.quoted.double.kintsu",
+          "begin": "\"",
+          "end": "\"",
+          "patterns": [
+            {
+              "name": "constant.character.escape.kintsu",
+              "match": "\\\\."
+            }
+          ]
+        }
+      ]
+    },
+    "numbers": {
+      "patterns": [
+        {
+          "name": "constant.numeric.float.kintsu",
+          "match": "\\b-?[0-9]+\\.[0-9]+\\b"
+        },
+        {
+          "name": "constant.numeric.integer.kintsu",
+          "match": "\\b-?[0-9]+\\b"
+        }
+      ]
+    },
+    "keywords": {
+      "patterns": [
+        {
+          "name": "keyword.control.import.kintsu",
+          "match": "\\b(namespace|use)\\b"
+        },
+        {
+          "name": "keyword.declaration.kintsu",
+          "match": "\\b(struct|enum|type|oneof|error|operation)\\b"
+        },
+        {
+          "name": "keyword.other.schema.kintsu",
+          "match": "\\b(schema)\\b"
+        },
+        {
+          "name": "constant.language.kintsu",
+          "match": "\\b(true|false)\\b"
+        }
+      ]
+    },
+    "builtin-types": {
+      "patterns": [
+        {
+          "comment": "Primitive boolean",
+          "name": "support.type.primitive.bool.kintsu",
+          "match": "\\bbool\\b"
+        },
+        {
+          "comment": "Primitive string",
+          "name": "support.type.primitive.string.kintsu",
+          "match": "\\bstr\\b"
+        },
+        {
+          "comment": "Signed integers",
+          "name": "support.type.primitive.integer.signed.kintsu",
+          "match": "\\b(i8|i16|i32|i64)\\b"
+        },
+        {
+          "comment": "Unsigned integers",
+          "name": "support.type.primitive.integer.unsigned.kintsu",
+          "match": "\\b(u8|u16|u32|u64|usize)\\b"
+        },
+        {
+          "comment": "Floating point types",
+          "name": "support.type.primitive.float.kintsu",
+          "match": "\\b(f16|f32|f64|complex)\\b"
+        },
+        {
+          "comment": "Special types",
+          "name": "support.type.primitive.special.kintsu",
+          "match": "\\b(datetime|never|null)\\b"
+        },
+        {
+          "comment": "Binary types",
+          "name": "support.type.primitive.binary.kintsu",
+          "match": "\\b(binary|base64)\\b"
+        }
+      ]
+    },
+    "qualified-path": {
+      "patterns": [
+        {
+          "comment": "Qualified path like foo::bar::Baz or schema::Type",
+          "match": "\\b([a-z_][a-z0-9_]*)\\s*(::)\\s*([a-z_][a-z0-9_]*|[A-Z][a-zA-Z0-9_]*)(?:\\s*(::)\\s*([A-Z][a-zA-Z0-9_]*))?",
+          "captures": {
+            "1": { "name": "entity.name.namespace.kintsu" },
+            "2": { "name": "punctuation.separator.namespace.kintsu" },
+            "3": { "name": "entity.name.namespace.kintsu" },
+            "4": { "name": "punctuation.separator.namespace.kintsu" },
+            "5": { "name": "entity.name.type.kintsu" }
+          }
+        }
+      ]
+    },
+    "array-type": {
+      "patterns": [
+        {
+          "comment": "Fixed-size array like u8[16] or Type[10]",
+          "match": "\\b([A-Z][a-zA-Z0-9_]*|[a-z][a-z0-9]*)\\s*(\\[)\\s*([0-9]+)\\s*(\\])",
+          "captures": {
+            "1": { "name": "support.type.kintsu" },
+            "2": { "name": "punctuation.section.brackets.begin.kintsu" },
+            "3": { "name": "constant.numeric.integer.kintsu" },
+            "4": { "name": "punctuation.section.brackets.end.kintsu" }
+          }
+        },
+        {
+          "comment": "Dynamic array like str[] or Type[]",
+          "match": "\\b([A-Z][a-zA-Z0-9_]*|[a-z][a-z0-9]*)\\s*(\\[)(\\])",
+          "captures": {
+            "1": { "name": "support.type.kintsu" },
+            "2": { "name": "punctuation.section.brackets.begin.kintsu" },
+            "3": { "name": "punctuation.section.brackets.end.kintsu" }
+          }
+        }
+      ]
+    },
+    "operators": {
+      "patterns": [
+        {
+          "name": "keyword.operator.arrow.kintsu",
+          "match": "->"
+        },
+        {
+          "name": "keyword.operator.namespace.kintsu",
+          "match": "::"
+        },
+        {
+          "name": "keyword.operator.type.union.kintsu",
+          "match": "\\|"
+        },
+        {
+          "name": "keyword.operator.type.intersection.kintsu",
+          "match": "&"
+        },
+        {
+          "name": "keyword.operator.optional.kintsu",
+          "match": "\\?"
+        },
+        {
+          "name": "keyword.operator.fallible.kintsu",
+          "match": "!"
+        },
+        {
+          "name": "keyword.operator.assignment.kintsu",
+          "match": "="
+        }
+      ]
+    },
+    "punctuation": {
+      "patterns": [
+        {
+          "name": "punctuation.separator.colon.kintsu",
+          "match": ":"
+        },
+        {
+          "name": "punctuation.terminator.kintsu",
+          "match": ";"
+        },
+        {
+          "name": "punctuation.separator.comma.kintsu",
+          "match": ","
+        },
+        {
+          "name": "punctuation.section.braces.begin.kintsu",
+          "match": "\\{"
+        },
+        {
+          "name": "punctuation.section.braces.end.kintsu",
+          "match": "\\}"
+        },
+        {
+          "name": "punctuation.section.parens.begin.kintsu",
+          "match": "\\("
+        },
+        {
+          "name": "punctuation.section.parens.end.kintsu",
+          "match": "\\)"
+        },
+        {
+          "name": "punctuation.section.brackets.begin.kintsu",
+          "match": "\\["
+        },
+        {
+          "name": "punctuation.section.brackets.end.kintsu",
+          "match": "\\]"
+        }
+      ]
+    },
+    "type-identifier": {
+      "patterns": [
+        {
+          "comment": "PascalCase type names",
+          "name": "entity.name.type.kintsu",
+          "match": "\\b[A-Z][a-zA-Z0-9_]*\\b"
+        }
+      ]
+    },
+    "field-identifier": {
+      "patterns": [
+        {
+          "comment": "Field names, parameters, and lowercase identifiers",
+          "name": "variable.other.member.kintsu",
+          "match": "\\b[a-z_][a-zA-Z0-9_]*\\b"
+        }
+      ]
+    }
+  }
+}

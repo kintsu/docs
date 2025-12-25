@@ -1,0 +1,297 @@
+---
+import type { Props } from "@astrojs/starlight/props";
+import MobileMenuFooter from 'virtual:starlight/components/MobileMenuFooter';
+import SidebarPersister from '@astrojs/starlight/components/SidebarPersister.astro';
+import { ChevronRight } from "@lucide/astro";
+
+const { sidebar } = Astro.locals.starlightRoute;
+
+// Utility to check if any item in a group is current
+function hasCurrentItem(entries: any[]): boolean {
+  return entries.some(entry => {
+    if (entry.type === 'link') return entry.isCurrent;
+    if (entry.entries) return hasCurrentItem(entry.entries);
+    return false;
+  });
+}
+---
+
+<SidebarPersister>
+  <nav class="sidebar-nav" aria-label="Main navigation">
+    <ul class="sidebar-list top-level">
+      {sidebar.map((entry) => (
+        <li class="sidebar-item">
+          {entry.type === 'link' ? (
+            <a
+              href={entry.href}
+              aria-current={entry.isCurrent && 'page'}
+              class:list={['sidebar-link', 'top-link', { active: entry.isCurrent }]}
+            >
+              <span class="link-text">{entry.label}</span>
+            </a>
+          ) : (
+            <details
+              class="sidebar-group"
+              open={hasCurrentItem(entry.entries) || !entry.collapsed}
+            >
+              <summary class="sidebar-group-header">
+                <span class="group-label">{entry.label}</span>
+                <ChevronRight class="caret-icon" />
+              </summary>
+              <ul class="sidebar-sublist">
+                {entry.entries.map((subEntry: any) => (
+                  <li class="sidebar-subitem">
+                    {subEntry.type === 'link' ? (
+                      <a
+                        href={subEntry.href}
+                        aria-current={subEntry.isCurrent && 'page'}
+                        class:list={['sidebar-link', { active: subEntry.isCurrent }]}
+                      >
+                        <span class="link-text">{subEntry.label}</span>
+                      </a>
+                    ) : (
+                      <details
+                        class="sidebar-nested-group"
+                        open={hasCurrentItem(subEntry.entries) || !subEntry.collapsed}
+                      >
+                        <summary class="sidebar-nested-header">
+                          <span class="nested-label">{subEntry.label}</span>
+                          <ChevronRight class="caret-icon small" />
+                        </summary>
+                        <ul class="sidebar-nested-list">
+                          {subEntry.entries.map((nestedEntry: any) => (
+                            <li class="sidebar-nested-item">
+                              <a
+                                href={nestedEntry.href}
+                                aria-current={nestedEntry.isCurrent && 'page'}
+                                class:list={['sidebar-link', 'nested-link', { active: nestedEntry.isCurrent }]}
+                              >
+                                <span class="link-text">{nestedEntry.label}</span>
+                              </a>
+                            </li>
+                          ))}
+                        </ul>
+                      </details>
+                    )}
+                  </li>
+                ))}
+              </ul>
+            </details>
+          )}
+        </li>
+      ))}
+    </ul>
+  </nav>
+</SidebarPersister>
+
+<div class="md:sl-hidden mobile-footer">
+  <MobileMenuFooter />
+</div>
+
+<style>
+  .sidebar-nav {
+    padding: 0.5rem 0;
+  }
+
+  .sidebar-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+
+  .top-level {
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+  }
+
+  .sidebar-item {
+    overflow-wrap: anywhere;
+  }
+
+  /* Group headers (collapsible sections) */
+  .sidebar-group {
+    margin-block: 0.25rem;
+  }
+
+  .sidebar-group-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0.5rem 0.75rem;
+    border-radius: 0.5rem;
+    cursor: pointer;
+    user-select: none;
+    font-size: var(--sl-text-sm);
+    font-weight: 600;
+    color: var(--sl-color-white);
+    transition: background-color 0.15s ease;
+  }
+
+  .sidebar-group-header:hover {
+    background-color: var(--sl-color-gray-6);
+  }
+
+  .sidebar-group-header::marker,
+  .sidebar-group-header::-webkit-details-marker {
+    display: none;
+  }
+
+  .group-label {
+    flex: 1;
+    min-width: 0;
+  }
+
+  /* Caret icon */
+  .caret-icon {
+    width: 1rem;
+    height: 1rem;
+    flex-shrink: 0;
+    color: var(--sl-color-gray-3);
+    transition: transform 0.2s ease;
+  }
+
+  .caret-icon.small {
+    width: 0.875rem;
+    height: 0.875rem;
+  }
+
+  [open] > .sidebar-group-header .caret-icon,
+  [open] > .sidebar-nested-header .caret-icon {
+    transform: rotate(90deg);
+  }
+
+  /* Sublist */
+  .sidebar-sublist {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    padding-inline-start: 0.75rem;
+    border-inline-start: 1px solid var(--sl-color-gray-5);
+    margin-inline-start: 0.75rem;
+    margin-block: 0.25rem;
+  }
+
+  .sidebar-subitem {
+    margin-block: 0.125rem;
+  }
+
+  /* Links */
+  .sidebar-link {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.375rem 0.75rem;
+    border-radius: 0.5rem;
+    text-decoration: none;
+    font-size: var(--sl-text-sm);
+    color: var(--sl-color-gray-2);
+    transition: all 0.15s ease;
+    line-height: 1.4;
+  }
+
+  .sidebar-link:hover {
+    background-color: var(--sl-color-gray-6);
+    color: var(--sl-color-white);
+  }
+
+  .sidebar-link.top-link {
+    font-weight: 600;
+    color: var(--sl-color-white);
+  }
+
+  .sidebar-link.active,
+  .sidebar-link[aria-current='page'] {
+    background-color: var(--sl-color-accent-low);
+    color: var(--sl-color-accent-high);
+    font-weight: 500;
+  }
+
+  .sidebar-link.active:hover,
+  .sidebar-link[aria-current='page']:hover {
+    background-color: var(--sl-color-accent-low);
+  }
+
+  .link-text {
+    flex: 1;
+    min-width: 0;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  /* Nested groups (3rd level) */
+  .sidebar-nested-group {
+    margin-block: 0.125rem;
+  }
+
+  .sidebar-nested-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0.375rem 0.75rem;
+    border-radius: 0.5rem;
+    cursor: pointer;
+    user-select: none;
+    font-size: var(--sl-text-sm);
+    font-weight: 500;
+    color: var(--sl-color-gray-2);
+    transition: background-color 0.15s ease;
+  }
+
+  .sidebar-nested-header:hover {
+    background-color: var(--sl-color-gray-6);
+    color: var(--sl-color-white);
+  }
+
+  .sidebar-nested-header::marker,
+  .sidebar-nested-header::-webkit-details-marker {
+    display: none;
+  }
+
+  .nested-label {
+    flex: 1;
+    min-width: 0;
+  }
+
+  .sidebar-nested-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    padding-inline-start: 0.75rem;
+    border-inline-start: 1px solid var(--sl-color-gray-5);
+    margin-inline-start: 0.75rem;
+    margin-block: 0.25rem;
+  }
+
+  .sidebar-nested-item {
+    margin-block: 0.125rem;
+  }
+
+  .nested-link {
+    font-size: var(--sl-text-xs);
+    padding: 0.25rem 0.625rem;
+  }
+
+  /* Mobile footer */
+  .mobile-footer {
+    margin-top: auto;
+    padding-top: 1rem;
+    border-top: 1px solid var(--sl-color-gray-5);
+  }
+
+  /* Responsive adjustments */
+  @media (min-width: 50rem) {
+    .sidebar-group-header {
+      padding: 0.375rem 0.625rem;
+    }
+
+    .sidebar-link {
+      padding: 0.3rem 0.625rem;
+    }
+
+    .sidebar-nested-header {
+      padding: 0.3rem 0.625rem;
+    }
+  }
+</style>

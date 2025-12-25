@@ -31,10 +31,10 @@ Package name in **kebab-case** (e.g., `abc-corp`, `my-types`). Must be 2-128 cha
 > Package names use **kebab-case** in manifests but **snake_case** in imports. The compiler handles this conversion automatically.
 >
 > ```kintsu
-> # Manifest uses kebab-case
+> // Manifest uses kebab-case
 > name = "abc-corp"
 >
-> # Imports use snake_case
+> // Imports use snake_case
 > use abc_corp::types;
 > ```
 
@@ -114,7 +114,7 @@ std-types = { version = "^1.0.0", registry = "https://registry.example.com" }
 
 The compiler will enforce compatibility guarantees based on version changes:
 
-#### **Patch Version** (`1.0.0` → `1.0.1`)
+#### **Patch Version** (`1.0.0` -> `1.0.1`)
 
 - **Allowed**: documentation, internal refactoring
 - **Not Allowed**: Any schema changes
@@ -125,7 +125,7 @@ Examples of valid patches:
 - Performance optimizations
 - Internal implementation changes
 
-#### **Minor Version** (`1.0.0` → `1.1.0`)
+#### **Minor Version** (`1.0.0` -> `1.1.0`)
 
 - **Allowed**: Backward-compatible additions
 - **Not Allowed**: Breaking changes
@@ -133,54 +133,54 @@ Examples of valid patches:
 Examples of valid minor updates:
 
 ```kintsu
-# YES - Adding optional fields
+// YES - Adding optional fields
 struct Message {
     id: i64,
     name: str,
-    email?: str,  # New optional field
-}
+    email?: str,  // New optional field
+};
 
-# YES - Adding new types
+// YES - Adding new types
 enum Status {
     Active = 1,
     Inactive = 2,
-    Pending = 3,  # New variant
-}
+    Pending = 3,  // New variant
+};
 
-# YES - Adding new operations
-operation CreateUser { ... }
-operation UpdateUser { ... }  # New operation
+// YES - Adding new operations
+operation create_user(name: str) -> User;
+operation update_user(id: i64, name: str) -> User;  // New operation
 ```
 
-#### **Major Version** (`1.0.0` → `2.0.0`)
+#### **Major Version** (`1.0.0` -> `2.0.0`)
 
 - **Allowed**: Any changes, including breaking changes
 
 Examples requiring major version bump:
 
 ```kintsu
-# NO - Removing fields
+// NO - Removing fields
 struct Message {
     id: i64,
-    # name: str,  # REMOVED - breaking change
-}
+    // name: str,  // REMOVED - breaking change
+};
 
-# NO - Changing field types
+// NO - Changing field types
 struct Message {
-    id: str,  # Was i64 - breaking change
-}
+    id: str,  // Was i64 - breaking change
+};
 
-# NO - Making optional fields required
+// NO - Making optional fields required
 struct Message {
     id: i64,
-    email: str,  # Was email?: str - breaking change
-}
+    email: str,  // Was email?: str - breaking change
+};
 
-# NO - Removing enum variants
+// NO - Removing enum variants
 enum Status {
     Active = 1,
-    # Inactive = 2,  # REMOVED - breaking change
-}
+    // Inactive = 2,  // REMOVED - breaking change
+};
 ```
 
 > [!WARNING]

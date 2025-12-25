@@ -28,7 +28,7 @@ type B = A;
 type C = B;
 ```
 
-Resolution chain: `C → B → A → i64`
+Resolution chain: `C -> B -> A -> i64`
 
 The final resolved type for `C` is `i64`.
 
@@ -111,9 +111,9 @@ Type aliases can reference any valid type expression:
 
 **Builtins:**
 
-- Integers: `i8`, `i16`, `i32`, `i64`, `u8`, `u16`, `u32`, `u64`
-- Floats: `f32`, `f64`
-- Other: `bool`, `str`, `bytes`, `datetime`
+- Integers: `i8`, `i16`, `i32`, `i64`, `u8`, `u16`, `u32`, `u64`, `usize`
+- Floats: `f16`, `f32`, `f64`, `complex`
+- Other: `bool`, `str`, `binary`, `base64`, `datetime`, `null`, `never`
 
 **Named Types:**
 

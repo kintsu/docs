@@ -5,9 +5,9 @@ Shows the complete pipeline from discovering namespace files to executing
 type resolution stages.
 """
 
-from diagrams import Cluster, Diagram, Edge
 from diagrams.generic.blank import Blank
 
+from diagrams import Cluster, Diagram, Edge
 from gen_diagrams.common import diag_path
 
 graph_attr = {

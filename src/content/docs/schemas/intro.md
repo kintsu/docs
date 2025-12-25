@@ -20,13 +20,13 @@ Schemas can be published and consumed as packages, similar to modules in other l
 
 The compiler performs automatic tree shaking to include only the definitions actually used by your project:
 
-```plaintext
-# In your schema
+```kintsu
+// In your schema
 use bar_corp::baz;
 
 struct MyMessage {
-    value: baz::BazOrString,  # Only BazOrString is included
-}
+    value: baz::BazOrString,  // Only BazOrString is included
+};
 ```
 
 Only `BazOrString` and its transitive dependencies are compiled. Unused types from `bar_corp` are excluded, reducing compilation time and generated code size.
@@ -46,7 +46,7 @@ Dependencies are resolved at compile time:
 
 ## Lockfile
 
-A `schema.lock` file (planned) will ensure reproducible builds by pinning:
+A `schema.lock.toml` file (planned) will ensure reproducible builds by pinning:
 
 - Exact versions of all transitive dependencies
 - Content checksums for integrity verification
@@ -59,27 +59,27 @@ This enables:
 - Detection of breaking changes in dependencies
 
 > [!IMPORTANT]
-> When implemented, always commit `schema.lock` to version control to ensure all team members and CI/CD pipelines use identical dependency versions.
+> When implemented, always commit `schema.lock.toml` to version control to ensure all team members and CI/CD pipelines use identical dependency versions.
 
 ## Example Ecosystem
 
 ```
 abc-corp/              # Your package
-├── schema.toml        # Manifest
-└── schema/
-    └── lib.ks        # Entry point
+ |--- schema.toml        # Manifest
+ |--- schema/
+     |--- lib.ks        # Entry point
 
 bar-corp/              # Dependency
-├── schema.toml
-└── schema/
-    └── lib.ks
+ |--- schema.toml
+ |--- schema/
+     |--- lib.ks
 
 your-project/
-├── schema.toml        # Depends on abc-corp
-└── schema/
-    ├── lib.ks
-    └── types/
-        └── messages.ks
+ |--- schema.toml        # Depends on abc-corp
+ |--- schema/
+     |--- lib.ks
+     |--- types/
+         |--- messages.ks
 ```
 
 Each package is independently versioned and can be developed, tested, and distributed separately.

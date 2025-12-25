@@ -54,18 +54,31 @@
 #   Hide                            Hide the subsequent commands from the output
 #   Show                            Show the subsequent commands in the output
 
-Output docs/src/assets/compile.vhs.gif
+Output ../kintsu-docs/src/assets/compile.vhs.gif
 
-Require define
+Require kintsu
 
-Set Shell "bash"
+Set Shell "zsh"
 Set TypingSpeed 80ms
 Set FontSize 22
 Set Width 1300
 Set Height 650
 
-Type "kintsu check -d parser/samples/abc-corp"
+Hide
+
+Type "cd ./test-suite/tmp/compile_linear_100_dependency_chain"
+Enter
+
+Show
+
+Type "kintsu check -d ./root-pkg"
 
 Sleep 500ms
 Enter
-Sleep 5s
+Sleep 2s
+
+Type "kintsu registry publish -d ./pkg-2"
+
+Sleep 500ms
+Enter
+Sleep 2s

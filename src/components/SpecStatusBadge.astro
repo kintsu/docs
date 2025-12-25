@@ -1,36 +1,7 @@
 ---
+import SpecStatusBadgeReact from "./SpecStatusBadge.tsx";
+
 const { status = "draft" } = Astro.props as { status?: string };
-
-// Map status to color and accessible labels
-const statuses = {
-  draft: { label: "Draft", color: "#9faabeff" },
-  proposed: { label: "Proposed", color: "#dfa33bff" },
-  accepted: { label: "Accepted", color: "#10b959ff" },
-  rejected: { label: "Rejected", color: "#EF4444" },
-  unstable: { label: "Unstable", color: "#e897ddff" },
-  stable: { label: "Stable", color: "#06B6D4" },
-  deprecated: { label: "Deprecated", color: "#6B7280" },
-};
-
-const meta = statuses[(status || "").toLowerCase()] || {
-  label: status || "Unknown",
-  color: "#6B7280",
-};
 ---
 
-<span class="spec-status" role="status" aria-label={`Specification status: ${meta.label}`} title={`Status: ${meta.label}`} style={`--badge-color: ${meta.color}`}>
-  {meta.label}
-</span>
-
-<style>
-.spec-status{
-  display:inline-block;
-  padding:0.25rem 0.6rem;
-  border-radius:999px;
-  font-size:0.85rem;
-  font-weight:600;
-  color:#fff;
-  background:var(--badge-color);
-  box-shadow:0 6px 18px rgba(11,15,30,0.06);
-}
-</style>
+<SpecStatusBadgeReact status={status} client:load />

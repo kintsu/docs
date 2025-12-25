@@ -1,0 +1,53 @@
+---
+import type { Props } from "@astrojs/starlight/props";
+import ThemeToggle from "./ThemeToggle.tsx";
+---
+
+<starlight-theme-select>
+  <ThemeToggle client:load />
+</starlight-theme-select>
+
+{/* Keep compatibility with Starlight's theme provider */}
+<script is:inline>
+  if (typeof StarlightThemeProvider !== 'undefined') {
+    StarlightThemeProvider.updatePickers();
+  }
+</script>
+
+<script>
+  type Theme = 'auto' | 'dark' | 'light';
+
+  const storageKey = 'starlight-theme';
+
+  const parseTheme = (theme: unknown): Theme =>
+    theme === 'auto' || theme === 'dark' || theme === 'light' ? theme : 'auto';
+
+  const loadTheme = (): Theme =>
+    parseTheme(typeof localStorage !== 'undefined' && localStorage.getItem(storageKey));
+
+  const getPreferredColorScheme = (): Theme =>
+    matchMedia('(prefers-color-scheme: light)').matches ? 'light' : 'dark';
+
+  function onThemeChange(theme: Theme): void {
+    if (typeof StarlightThemeProvider !== 'undefined') {
+      StarlightThemeProvider.updatePickers(theme);
+    }
+    document.documentElement.dataset.theme = theme === 'auto' ? getPreferredColorScheme() : theme;
+  }
+
+  // React to changes in system color scheme
+  matchMedia(`(prefers-color-scheme: light)`).addEventListener('change', () => {
+    if (loadTheme() === 'auto') onThemeChange('auto');
+  });
+
+  class StarlightThemeSelect extends HTMLElement {
+    constructor() {
+      super();
+      onThemeChange(loadTheme());
+    }
+  }
+  
+  if (!customElements.get('starlight-theme-select')) {
+    customElements.define('starlight-theme-select', StarlightThemeSelect);
+  }
+</script>

@@ -6,6 +6,9 @@ import { join } from "node:path";
 import starlightHeadingBadges from "starlight-heading-badges";
 import starlightGitHubAlerts from "starlight-github-alerts";
 import kintsuSpec from "./src/assets/kintsu.json" with { type: "json" };
+import tailwindcss from "@tailwindcss/vite";
+
+import react from "@astrojs/react";
 
 // Generate nested sidebar items for specs
 function generateSpecSidebarItems() {
@@ -59,19 +62,31 @@ export default defineConfig({
   server: {
     port: 3000,
   },
+  vite: {
+    plugins: [tailwindcss()],
+  },
   // langs: [
   //   kintsu,
   // ],
   integrations: [
     starlight({
       title: "Kintsu Docs",
-      social: [
-        {
-          icon: "github",
-          label: "GitHub",
-          href: "https://github.com/kintsu/kintsu",
-        },
-      ],
+      customCss: ["./src/styles/custom.css", "./src/styles/global.css"],
+      expressiveCode: {
+        styleOverrides: { codeFontFamily: "'Fira Code', monospace" },
+      },
+      components: {
+        SiteTitle: "./src/components/SiteTitle.astro",
+        SocialIcons: "./src/components/SocialIcons.astro",
+        ThemeSelect: "./src/components/ThemeSelect.astro",
+        MobileMenuToggle: "./src/components/MobileMenuToggle.astro",
+        Pagination: "./src/components/Pagination.astro",
+        EditLink: "./src/components/EditLink.astro",
+        Search: "./src/components/Search.astro",
+        Sidebar: "./src/components/Sidebar.astro",
+        Header: "./src/components/Header.astro",
+      },
+      social: [],
       plugins: [
         // starlightVersions({
         //   versions: [{ slug: "0.1.0", label: "wip" }],
@@ -88,6 +103,15 @@ export default defineConfig({
             { label: "Keywords", slug: "syntax/keywords" },
             { label: "Spanned Statements", slug: "syntax/spanned" },
             { label: "Naming", slug: "syntax/naming" },
+          ],
+        },
+        {
+          label: "Tooling and Schemas",
+          items: [
+            { label: "Schemas", slug: "schemas/intro" },
+            { label: "Schema Manifest", slug: "schemas/manifest" },
+            { label: "Schema Structure", slug: "schemas/structure" },
+            { label: "Kintsu CLI", slug: "reference/cli" },
           ],
         },
         {
@@ -109,5 +133,6 @@ export default defineConfig({
         },
       ],
     }),
+    react(),
   ],
 });

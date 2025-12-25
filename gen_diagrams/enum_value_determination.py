@@ -1,8 +1,8 @@
-from diagrams import Diagram
 from diagrams.generic.storage import Storage
 from diagrams.programming.flowchart import Action
 from diagrams.programming.language import Rust
 
+from diagrams import Diagram
 from gen_diagrams.common import OPTS, diag_path
 
 

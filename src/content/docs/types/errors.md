@@ -185,7 +185,7 @@ The error type specified in `#[err(...)]` must be the path to the error as defin
 ```kintsu
 error MyError {
     Unknown { report_id: str }
-}
+};
 
 #[err(MyError)]
 operation test() -> i64!;
