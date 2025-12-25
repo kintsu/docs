@@ -64,7 +64,7 @@ use bar;
 
 Public imports make the imported namespaces available to consumers of `myschema`. This is typically used to define the public API surface of a schema.
 
-## Resolution Behavior
+## Resolution Behaviour
 
 ### Import Resolution Order
 

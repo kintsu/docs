@@ -37,7 +37,7 @@ struct Packet {
 
 The size must be a compile-time constant integer. Variable-length expressions are not supported.
 
-## Resolution Behavior
+## Resolution Behaviour
 
 ### Element Type Validation
 

@@ -30,7 +30,7 @@ enum Status {
 };
 ```
 
-## Resolution Behavior
+## Resolution Behaviour
 
 ### Variant Value Inference
 

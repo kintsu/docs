@@ -16,7 +16,7 @@ type Combined = User & Permissions;  // union
 type Items = (oneof i32 | f32)[];    // array of oneof
 ```
 
-## Resolution Behavior
+## Resolution Behaviour
 
 ### Alias Resolution
 

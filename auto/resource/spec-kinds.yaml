@@ -3,131 +3,55 @@
   description: High-level architectural decisions and design principles for Kintsu.
   category: core
   references: [AD, SPEC, TSY, CG, PERF, INTEG, UNIT, E2E]
-  sections:
+  sections: [
     # - name: Overview
     #   description: Provide a high-level overview of the architectural decision.
-    [
-      "Overview",
-      "Motivation",
-      "Architecture",
-      "Design Principles",
-      "Implications",
-      "References",
-    ]
+    "Overview", "Motivation", "Architecture", "Design Principles", "Implications", "References"]
 - id: RFC
   name: Request for Comment
   description: Proposals for new features or changes to existing features in Kintsu.
   category: core
   references: [AD, SPEC, TSY, CG, PERF, INTEG, UNIT, E2E]
-  sections:
-    [
-      "Abstract",
-      "Motivation",
-      "Specification",
-      "Rationale",
-      "Acceptance Criteria",
-      "Backwards Compatibility",
-      "References",
-    ]
+  sections: ["Abstract", "Motivation", "Specification", "Rationale", "Acceptance Criteria", "Backwards Compatibility", "References"]
 - id: SPEC
   name: Technical Specification
   description: Detailed technical specifications for Kintsu features and modules.
   category: core
   references: [AD, RFC, TSY, CG, PERF, INTEG, UNIT, E2E]
-  sections:
-    [
-      "Overview",
-      "Motivation",
-      "Architecture",
-      "Design Principles",
-      "Implications",
-      "References",
-    ]
+  sections: ["Overview", "Motivation", "Architecture", "Design Principles", "Implications", "References"]
 - id: TSY
   name: Type System
   description: Specifications related to the type system in Kintsu.
   category: core
   references: [AD, RFC, SPEC, CG, PERF, INTEG, UNIT, E2E]
-  sections:
-    [
-      "Overview",
-      "Motivation",
-      "Design Principles",
-      "Implications",
-      "References",
-    ]
+  sections: ["Overview", "Motivation", "Design Principles", "Implications", "References"]
 - id: CG
   name: Code Generation
   description: Specifications for the code generation process in Kintsu.
   category: core
   references: [AD, RFC, SPEC, TSY, PERF, INTEG, UNIT, E2E]
-  sections:
-    [
-      "Overview",
-      "Motivation",
-      "Design Principles",
-      "Implications",
-      "References",
-    ]
+  sections: ["Overview", "Motivation", "Design Principles", "Implications", "References"]
 - id: PERF
   name: Performance
-  description:
-    Specifications focused on performance optimizations and benchmarks
-    for Kintsu.
+  description: Specifications focused on performance optimizations and benchmarks for Kintsu.
   category: core
   references: [AD, RFC, SPEC, TSY, CG]
-  sections:
-    [
-      "Overview",
-      "Motivation",
-      "Benchmarks",
-      "Optimizations",
-      "Implications",
-      "References",
-    ]
+  sections: ["Overview", "Motivation", "Benchmarks", "Optimizations", "Implications", "References"]
 - id: INTEG
   name: Integration Testing
-  description:
-    Specifications for integration tests covering multiple components of
-    Kintsu.
+  description: Specifications for integration tests covering multiple components of Kintsu.
   category: test
   references: [AD, RFC, SPEC, TSY, CG]
-  sections:
-    [
-      "Overview",
-      "Motivation",
-      "Test Cases",
-      "Setup",
-      "Implications",
-      "References",
-    ]
+  sections: ["Overview", "Motivation", "Test Cases", "Setup", "Implications", "References"]
 - id: UNIT
   name: Unit Testing
   description: Specifications for unit tests targeting individual components of Kintsu.
   category: test
   references: [AD, RFC, SPEC, TSY, CG]
-  sections:
-    [
-      "Overview",
-      "Motivation",
-      "Test Cases",
-      "Setup",
-      "Implications",
-      "References",
-    ]
+  sections: ["Overview", "Motivation", "Test Cases", "Setup", "Implications", "References"]
 - id: E2E
   name: End-to-End Testing
-  description:
-    Specifications for end-to-end tests validating complete workflows in
-    Kintsu.
+  description: Specifications for end-to-end tests validating complete workflows in Kintsu.
   category: test
   references: [AD, RFC, SPEC, TSY, CG]
-  sections:
-    [
-      "Overview",
-      "Motivation",
-      "Test Cases",
-      "Setup",
-      "Implications",
-      "References",
-    ]
+  sections: ["Overview", "Motivation", "Test Cases", "Setup", "Implications", "References"]

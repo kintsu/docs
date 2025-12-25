@@ -47,7 +47,7 @@ oneof ComplexOneOf {
 - **Tuple variant:** `VariantName(Type)` - wraps an existing type
 - **Struct variant:** `VariantName { field: Type }` - inline anonymous struct
 
-## Resolution Behavior
+## Resolution Behaviour
 
 ### Variant Ordering
 

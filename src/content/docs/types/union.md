@@ -21,7 +21,7 @@ struct Request {
 };
 ```
 
-## Resolution Behavior
+## Resolution Behaviour
 
 ### Field Merging
 

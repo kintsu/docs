@@ -29,7 +29,7 @@ operation get_user(id: i64) -> User!;
 operation search(query: str, limit?: i32) -> SearchResult[];
 ```
 
-## Resolution Behavior
+## Resolution Behaviour
 
 ### Parameter Types
 

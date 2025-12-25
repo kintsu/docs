@@ -43,7 +43,7 @@ error ServerError {
 };
 ```
 
-## Resolution Behavior
+## Resolution Behaviour
 
 ### Variant Types
 

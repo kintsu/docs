@@ -147,7 +147,7 @@ std-types = { version = "^1.0.0", registry = "https://registry.example.com" }
 ## Versioning and Compatibility
 
 > [!NOTE]
-> Breaking change detection is planned but not yet implemented. The rules below describe the intended behavior.
+> Breaking change detection is planned but not yet implemented. The rules below describe the intended behaviour.
 
 ### Semantic Versioning Rules
 

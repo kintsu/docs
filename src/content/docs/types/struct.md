@@ -29,7 +29,7 @@ struct Request {
 };
 ```
 
-## Resolution Behavior
+## Resolution Behaviour
 
 ### Field Types
 
