@@ -28,7 +28,7 @@ SPEC_CATEGORIES = RSC / "spec-categories.yaml"
 SPEC_KINDS = RSC / "spec-kinds.yaml"
 VERSIONS = RSC / "versions.yaml"
 
-SPEC_DIR = DOCS_ROOT / "src" / "content" / "docs"
+SPEC_DIR = DOCS_ROOT / "src" / "content" / "specs"
 
 
 class SpecStatus(StrEnum):

@@ -5,6 +5,7 @@ import { join } from "node:path";
 
 import starlightHeadingBadges from "starlight-heading-badges";
 import starlightGitHubAlerts from "starlight-github-alerts";
+import remarkGithubAlerts from "remark-github-blockquote-alert";
 import kintsuSpec from "./src/assets/kintsu.json" with { type: "json" };
 import tailwindcss from "@tailwindcss/vite";
 
@@ -62,6 +63,9 @@ export default defineConfig({
   server: {
     port: 3000,
   },
+  markdown: {
+    remarkPlugins: [remarkGithubAlerts],
+  },
   image: {
     service: {
       entrypoint: "astro/assets/services/sharp",
@@ -99,8 +103,8 @@ export default defineConfig({
         // starlightVersions({
         //   versions: [{ slug: "0.1.0", label: "wip" }],
         // }),
-        starlightGitHubAlerts(),
         starlightHeadingBadges(),
+        starlightGitHubAlerts(),
       ],
       sidebar: [
         {
