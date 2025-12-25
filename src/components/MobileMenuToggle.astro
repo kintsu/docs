@@ -3,7 +3,7 @@ import type { Props } from "@astrojs/starlight/props";
 import MobileMenuButton from "./MobileMenuButton.tsx";
 ---
 
-<starlight-menu-button class="print:hidden">
+<starlight-menu-button class="print:hidden" aria-expanded="false">
   <MobileMenuButton client:load />
 </starlight-menu-button>
 
@@ -17,11 +17,16 @@ import MobileMenuButton from "./MobileMenuButton.tsx";
       if (parentNav) {
         parentNav.addEventListener('keyup', (e: KeyboardEvent) => {
           if (e.code === 'Escape') {
-            document.body.removeAttribute('data-mobile-menu-expanded');
+            this.setExpanded(false);
             this.querySelector('button')?.focus();
           }
         });
       }
+    }
+
+    setExpanded(expanded: boolean) {
+      this.setAttribute('aria-expanded', String(expanded));
+      document.body.toggleAttribute('data-mobile-menu-expanded', expanded);
     }
   }
 

@@ -6,7 +6,6 @@ import Search from 'virtual:starlight/components/Search';
 import SiteTitle from 'virtual:starlight/components/SiteTitle';
 import SocialIcons from 'virtual:starlight/components/SocialIcons';
 import ThemeSelect from 'virtual:starlight/components/ThemeSelect';
-import { Menu } from "@lucide/astro";
 
 /**
  * Render the `Search` component if Pagefind is enabled or the default search component has been overridden.
@@ -15,46 +14,20 @@ const shouldRenderSearch =
 	config.pagefind || config.components.Search !== '@astrojs/starlight/components/Search.astro';
 ---
 
-<div class="header">
-	<div class="left-group sl-flex">
-		<button 
-			class="sidebar-toggle sl-hidden md:sl-flex" 
-			aria-label="Toggle sidebar"
-			data-toggle-sidebar
-		>
-			<Menu class="menu-icon" />
-		</button>
-		<div class="title-wrapper sl-flex">
-			<SiteTitle />
-		</div>
+<div class="header sl-flex">
+	<div class="sl-flex left-group">
+		<SiteTitle />
 	</div>
-	<div class="search-wrapper sl-flex print:hidden">
-		{shouldRenderSearch && <Search />}
-	</div>
-	<div class="sl-hidden md:sl-flex print:hidden right-group">
-		<div class="sl-flex social-icons">
-			<SocialIcons />
-		</div>
+	{shouldRenderSearch && <Search />}
+	<div class="sl-hidden md:sl-flex right-group sl-gap-1">
+		<SocialIcons />
 		<ThemeSelect />
 		<LanguageSelect />
 	</div>
 </div>
 
-<script>
-	// Sidebar toggle functionality
-	document.addEventListener('DOMContentLoaded', () => {
-		const toggleBtn = document.querySelector('[data-toggle-sidebar]');
-		if (toggleBtn) {
-			toggleBtn.addEventListener('click', () => {
-				document.documentElement.toggleAttribute('data-sidebar-collapsed');
-			});
-		}
-	});
-</script>
-
 <style>
 	.header {
-		display: flex;
 		gap: var(--sl-nav-gap);
 		justify-content: space-between;
 		align-items: center;
@@ -64,76 +37,10 @@ const shouldRenderSearch =
 	.left-group {
 		align-items: center;
 		gap: 0.5rem;
-		flex-shrink: 0;
 	}
 
-	.sidebar-toggle {
-		display: flex;
-		align-items: center;
-		justify-content: center;
-		width: 2.5rem;
-		height: 2.5rem;
-		padding: 0;
-		border: none;
-		border-radius: 0.5rem;
-		background: transparent;
-		color: var(--sl-color-gray-2);
-		cursor: pointer;
-		transition: all 0.15s ease;
-	}
-
-	.sidebar-toggle:hover {
-		background-color: var(--sl-color-gray-5);
-		color: var(--sl-color-white);
-	}
-
-	.menu-icon {
-		width: 1.25rem;
-		height: 1.25rem;
-	}
-
-	.title-wrapper {
-		/* Prevent long titles overflowing and covering the search and menu buttons on narrow viewports. */
-		overflow: clip;
-		/* Avoid clipping focus ring around link inside title wrapper. */
-		padding: 0.25rem;
-		margin: -0.25rem;
-		min-width: 0;
-	}
-
-	.search-wrapper {
-		flex: 1;
-		justify-content: flex-start;
-		padding-inline-start: 1rem;
-	}
-
-	.right-group,
-	.social-icons {
+	.right-group {
 		gap: 1rem;
 		align-items: center;
 	}
-
-	.social-icons::after {
-		content: '';
-		height: 2rem;
-		border-inline-end: 1px solid var(--sl-color-gray-5);
-	}
-
-	@media (min-width: 50rem) {
-		.header {
-			display: flex;
-			align-items: center;
-			gap: 1rem;
-		}
-
-		.search-wrapper {
-			flex: 1;
-			max-width: 32rem;
-		}
-
-		.right-group {
-			margin-inline-start: auto;
-		}
-	}
 </style>
-

@@ -101,15 +101,19 @@ import { Github } from "@lucide/astro";
     max-width: 100px;
     opacity: 1;
   }
+</style>
 
-  :global([data-theme='light']) .nav-link-emphasized {
-    background: var(--sl-color-black);
-    color: var(--sl-color-white);
-    border-color: var(--sl-color-black);
-    box-shadow: 0 0 15px rgba(0, 0, 0, 0.15);
+<style is:global>
+  :root[data-theme='light'] .nav-link-emphasized {
+    background: #000 !important;
+    color: #fff !important;
+    border-color: #000 !important;
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.15) !important;
   }
 
-  :global([data-theme='light']) .nav-link-emphasized:hover {
-    box-shadow: 0 0 20px rgba(0, 0, 0, 0.25);
+  :root[data-theme='light'] .nav-link-emphasized:hover {
+    background: #000 !important;
+    color: #fff !important;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.25) !important;
   }
 </style>

@@ -265,15 +265,26 @@ header.header {
 .sidebar-pane {
   border-inline-end: 1px solid var(--sl-color-hairline);
   transition:
-    transform 0.2s ease,
-    opacity 0.15s ease;
+    transform 0.3s cubic-bezier(0.4, 0, 0.2, 1),
+    visibility 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* Mobile sidebar slide animation */
+@media (max-width: 49.99rem) {
+  .sidebar-pane {
+    transform: translateX(-100%);
+  }
+
+  [aria-expanded="true"] ~ .sidebar-pane {
+    transform: translateX(0);
+  }
 }
 
 /* Sidebar collapse functionality for desktop */
 @media (min-width: 50rem) {
   :root[data-sidebar-collapsed] .sidebar-pane {
     transform: translateX(-100%);
-    opacity: 0;
+    visibility: hidden;
     pointer-events: none;
   }
 
@@ -290,4 +301,47 @@ header.header {
 
 .right-sidebar-panel {
   border-inline-start: 1px solid var(--sl-color-hairline);
+}
+
+/* Position mobile menu button on the left side of header */
+@media (max-width: 49.99rem) {
+  starlight-menu-button {
+    position: fixed;
+    top: calc((var(--sl-nav-height) - var(--sl-menu-button-size, 2.5rem)) / 2);
+    inset-inline-start: var(--sl-nav-pad-x);
+    z-index: var(--sl-z-index-navbar);
+  }
+
+  /* Remove extra header padding since button is on left now */
+  :root[data-has-sidebar] .page > header.header {
+    padding-inline-start: calc(
+      var(--sl-nav-pad-x) +
+      var(--sl-menu-button-size, 2.5rem) +
+      0.5rem
+    ) !important;
+    padding-inline-end: var(--sl-nav-pad-x) !important;
+  }
+}
+
+/* Mobile TOC bar styling to match header */
+mobile-starlight-toc > nav {
+  background-color: oklch(0.145 0 0 / 0.95);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+}
+
+@supports (backdrop-filter: blur(8px)) {
+  mobile-starlight-toc > nav {
+    background-color: oklch(0.145 0 0 / 0.6);
+  }
+}
+
+:root[data-theme="light"] mobile-starlight-toc > nav {
+  background-color: oklch(1 0 0 / 0.95);
+}
+
+@supports (backdrop-filter: blur(8px)) {
+  :root[data-theme="light"] mobile-starlight-toc > nav {
+    background-color: oklch(1 0 0 / 0.6);
+  }
 }

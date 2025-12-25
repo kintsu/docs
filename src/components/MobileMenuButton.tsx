@@ -24,17 +24,32 @@ export function MobileMenuButton() {
   const toggleExpanded = () => {
     const newState = !expanded;
     setExpanded(newState);
-    document.body.toggleAttribute("data-mobile-menu-expanded", newState);
+
+    // Set aria-expanded on parent starlight-menu-button (for Starlight CSS sibling selector)
+    const parent = document.querySelector("starlight-menu-button");
+    if (
+      parent &&
+      "setExpanded" in parent &&
+      typeof parent.setExpanded === "function"
+    ) {
+      (parent as any).setExpanded(newState);
+    } else {
+      // Fallback if custom element not ready
+      document.body.toggleAttribute("data-mobile-menu-expanded", newState);
+      if (parent) {
+        parent.setAttribute("aria-expanded", String(newState));
+      }
+    }
   };
 
   return (
     <Button
-      variant="outline"
+      variant="ghost"
       size="icon"
       onClick={toggleExpanded}
       aria-expanded={expanded}
       aria-controls="starlight__sidebar"
-      className="md:hidden fixed top-[calc((var(--sl-nav-height,3.5rem)-2.5rem)/2)] right-[var(--sl-nav-pad-x,1rem)] z-[var(--sl-z-index-navbar,10)] rounded-full shadow-md"
+      className="shrink-0 md:sl-hidden"
     >
       {expanded ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
     </Button>
