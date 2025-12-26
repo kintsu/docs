@@ -5,13 +5,7 @@ hero:
   tagline: Welcome to kintsu docs
   image:
     file: ../../assets/compile.vhs.gif
-  actions:
-    - text: Syntax
-      link: /syntax
-      icon: right-arrow
-    - text: Types
-      link: /types
-      icon: right-arrow
+  actions: []
 ---
 
 import { Card, CardGrid } from "@astrojs/starlight/components";
@@ -59,17 +53,17 @@ This site documents the syntax, the type system, and the design decisions behind
   </Card>
 </CardGrid>
 
-### Small example
+### Quick taste
 
-Here is a compact example to show Kintsu's flavour. The site includes syntax highlighting for `kintsu` sources.
+A compact example to show Kintsu's flavour. The site includes syntax highlighting for `kintsu` sources.
 
-```kintsu
+```kintsu title="api.ks"
 namespace demo;
 
 struct User {
-	id: i64,
-	name: str,
-	email: str,
+  id: i64,
+  name: str,
+  email: str
 };
 
 error UserError {
@@ -80,15 +74,137 @@ error UserError {
 operation get_user(id: i64) -> User!;
 ```
 
+### Powerful composition
+
+Kintsu shines with **union types** and **type expressions** for DRY, modular schemas.
+
+```kintsu title="composition.ks" "User & Timestamps" "Partial[User, name | email]" "oneof"
+namespace api;
+
+// Reusable field groups
+struct Timestamps {
+  created_at: datetime,
+  updated_at: datetime
+};
+
+struct User {
+  id: i64,
+  name: str,
+  email: str
+};
+
+struct Success {
+  data: str
+};
+
+struct NotFound {
+  resource: str
+};
+
+// Union merges fields from both structs
+type FullUser = User & Timestamps;
+/*
+  FullUser {
+    id: i64,
+    name: str,
+    email: str,
+    created_at: datetime,
+    updated_at: datetime
+  }
+*/
+
+// Type expressions derive new types
+type UserPatch = Partial[User, name | email];
+
+// Discriminated unions for responses
+type Response = oneof Success | NotFound;
+```
+
+### Flexible serialization
+
+Control how variants serialize with **tagging attributes**—match JSON-RPC, Serde, Protobuf, or use Kintsu's runtime type hints.
+
+```kintsu title="tagging.ks" "#[tag(external)]" "#[tag(name" "type_hint"
+namespace api;
+
+struct Success {
+  data: str
+};
+
+struct Error { code: i32, reason: str };
+
+// External: { "success": { "data": "..." } }
+#[tag(external)]
+type ResponseA = oneof Success | Error;
+
+// Internal: { "kind": "success", "data": "..." }
+#[tag(name = "kind")]
+type ResponseB = oneof Success | Error;
+
+// Default: add @kintsu marker for runtime type identification / introspection
+#[tag(type_hint)]
+type ResponseC = oneof Success | Error;
+```
+
+### Derive with type expressions
+
+Avoid manual duplication—**Pick**, **Omit**, **Partial**, **Exclude** transform types at compile time.
+
+```kintsu title="derivations.ks" "Pick[User" "Omit[User" "Exclude[ApiResponse" "User::email"
+namespace api;
+
+struct User {
+  id: i64,
+  name: str,
+  email: str,
+  password_hash: str
+};
+
+struct Success {
+  data: str
+};
+
+struct NotFound {
+  resource: str
+};
+
+struct ServerError {
+  code: i32
+};
+
+type UserSummary = Pick[User, id | name];
+/*
+  UserSummary { id: i64, name: str }
+*/
+
+type PublicUser = Omit[User, password_hash];
+/*
+  PublicUser { id: i64, name: str, email: str }
+*/
+
+type ApiResponse = oneof Success | NotFound | ServerError;
+
+type SafeResponse = Exclude[ApiResponse, ServerError];
+/*
+  SafeResponse = oneof Success | NotFound
+*/
+
+// Field projection
+type EmailType = User::email;  // str
+```
+
 ### Why Kintsu?
 
-- Concise syntax for types and operations.
-- Strong documentation and specification-driven development.
-- Designed for readable RFCs and machine-friendly compilation.
+- **Concise syntax** for types, operations, and contracts.
+- **Composable** via unions (`&`, `&|`) and type expressions.
+- **Flexible serialization** with configurable variant tagging.
+- **Specification-driven** development with readable RFCs.
 
 ### Quick links
 
-- Syntax - Builtin types - [Syntax overview](/syntax)
-- Types · Structs - Enums - [Type system](/types)
-- RFCs & Specs - [Specs](/summary)
-- CLI - [Reference](/reference/cli)
+| Topic                 | Description                     |
+| --------------------- | ------------------------------- |
+| [Syntax](/syntax)     | Builtin types, tokens, keywords |
+| [Types](/types)       | Structs, enums, oneof, errors   |
+| [Specs](/summary)     | RFCs, architecture decisions    |
+| [CLI](/reference/cli) | Command-line reference          |
