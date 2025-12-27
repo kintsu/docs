@@ -65,14 +65,14 @@ jobs:
         uses: withastro/action@v3
 
       - name: Upload PDF Documentation
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v6
         with:
           name: Kintsu-Documentation-PDFs
           path: |
             ./dist/*.pdf
 
       - name: Upload Kinstu specs yaml
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v6
         with:
           name: Kintsu-Specs-JSON
           path: |
