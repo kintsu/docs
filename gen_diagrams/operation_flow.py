@@ -1,5 +1,5 @@
 """
-Diagram: Operation flow showing parameters → processing → return type/error
+Diagram: Operation flow showing parameters -> processing -> return type/error
 
 Shows how operation definitions flow through the system with
 parameter types, processing, and result/error returns.
@@ -32,9 +32,9 @@ with Diagram(
         param_types = Blank("Resolved Types\n\nid: i64")
 
     with Cluster("Processing"):
-        fallibility = Blank("Fallibility Detection\n\nType::Result → fallible")
+        fallibility = Blank("Fallibility Detection\n\nType::Result -> fallible")
         error_resolution = Blank(
-            "Error Type Resolution\n\n#[err(ApiError)]\n→ ApiError"
+            "Error Type Resolution\n\n#[err(ApiError)]\n-> ApiError"
         )
 
     with Cluster("Return Types"):

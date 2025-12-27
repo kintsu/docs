@@ -1,5 +1,5 @@
 """
-Diagram: Namespace hierarchy showing package → namespace → types organization
+Diagram: Namespace hierarchy showing package -> namespace -> types organization
 
 Shows how packages contain namespaces which contain type definitions.
 """

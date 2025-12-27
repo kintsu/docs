@@ -1,5 +1,5 @@
 """
-Diagram: Import resolution flow showing use statement → path resolution → type lookup
+Diagram: Import resolution flow showing use statement -> path resolution -> type lookup
 
 Shows how import statements are parsed, paths resolved through namespace
 hierarchy, and types validated.

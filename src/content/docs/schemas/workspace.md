@@ -170,21 +170,21 @@ If `version-resolver` is not specified, inter-workspace dependencies use the exa
 
 ```text title="Workspace structure"
 my-workspace/
-├── schema.toml           # Single manifest with all definitions
-├── schema.lock.toml      # Unified lockfile
-├── README.md
-├── LICENSE
-├── common/               # Default path for "common" alias
-│   └── schema/
-│       └── *.ks
-├── packages/
-│   ├── api/              # Custom path for "api" package
-│   │   └── schema/
-│   │       └── *.ks
-│   └── internal/
-│       └── schema/
-│           └── *.ks
-└── target/               # Build artifacts
+ |--- schema.toml           # Single manifest with all definitions
+ |--- schema.lock.toml      # Unified lockfile
+ |--- README.md
+ |--- LICENSE
+ |--- common/               # Default path for "common" alias
+ |    |--- schema/
+ |        |--- *.ks
+ |--- packages/
+ |    |--- api/              # Custom path for "api" package
+ |    |    |--- schema/
+ |    |        |--- *.ks
+ |    |--- internal/
+ |        |--- schema/
+ |            |--- *.ks
+ |--- target/               # Build artifacts
 ```
 
 > **Note:** There are no `schema.toml` files in subdirectories. The workspace manifest is the single source of truth.

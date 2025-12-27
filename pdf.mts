@@ -6,6 +6,8 @@ import { rm } from "node:fs/promises";
 import { fileURLToPath } from "node:url";
 import { join } from "node:path";
 
+import packageJson from "./package.json" with { type: "json" };
+
 // --- PDF Outline Types ---
 
 type PDFOutlineTo =
@@ -426,7 +428,7 @@ export function kintsuPdf(options: KintsuPdfOptions) {
           }
 
           await completeMerger.setMetadata({
-            title: "Kintsu Documentation - Complete",
+            title: `Kintsu v${packageJson.version} Documentation`,
             author: "Kintsu Project",
           });
           await completeMerger.save(
@@ -584,7 +586,7 @@ export function kintsuPdf(options: KintsuPdfOptions) {
           }
 
           await specsMerger.setMetadata({
-            title: "Kintsu Specifications",
+            title: `Kintsu v${packageJson.version} Specifications`,
             author: "Kintsu Project",
           });
           await specsMerger.save(

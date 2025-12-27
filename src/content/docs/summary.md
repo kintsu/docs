@@ -1,7 +1,3 @@
----
-title: "Specs"
----
-
 - Architecture Decision
   - [AD-0001 - Type Resolution Architecture](/specs/ad/AD-0001)
   - [AD-0002 - Parallel Compilation Architecture](/specs/ad/AD-0002)
@@ -36,6 +32,8 @@ title: "Specs"
   - [RFC-0027 - CLI Inspection Commands](/specs/rfc/RFC-0027)
   - [RFC-0028 - CLI Publishing Commands](/specs/rfc/RFC-0028)
   - [RFC-0029 - CLI Scaffolding Commands](/specs/rfc/RFC-0029)
+  - [RFC-0030 - Type Introspection](/specs/rfc/RFC-0030)
+  - [RFC-0031 - Versioning Guarantees](/specs/rfc/RFC-0031)
 
 - Technical Specification
   - [SPEC-0001 - Builtin Type Resolution](/specs/spec/SPEC-0001)
@@ -94,3 +92,4 @@ title: "Specs"
   - [ERR-0014 - Internal Errors](/specs/err/ERR-0014)
   - [ERR-0015 - Workspace Errors](/specs/err/ERR-0015)
   - [ERR-0016 - CLI Errors](/specs/err/ERR-0016)
+  - [ERR-0017 - Compatibility Errors](/specs/err/ERR-0017)

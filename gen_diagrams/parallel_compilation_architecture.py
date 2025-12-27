@@ -35,7 +35,7 @@ with Diagram(
 
         state = Storage("SharedCompilationState\n(BTreeMap)")
 
-    # Flow: scheduler → task queue → workers
+    # Flow: scheduler -> task queue -> workers
     scheduler >> Edge(label="enqueue\ninitial tasks") >> task_queue
 
     for i, worker in enumerate(workers):
@@ -48,9 +48,9 @@ with Diagram(
             >> completion
         )
 
-    # Flow: workers → result queue → coordinator
+    # Flow: workers -> result queue -> coordinator
     result_queue >> Edge(label="recv()") >> coordinator
     completion >> Edge(label="track pending") >> coordinator
 
-    # Flow: coordinator → state
+    # Flow: coordinator -> state
     coordinator >> Edge(label="register\ndependencies") >> state

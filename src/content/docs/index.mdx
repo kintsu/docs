@@ -193,12 +193,29 @@ type SafeResponse = Exclude[ApiResponse, ServerError];
 type EmailType = User::email;  // str
 ```
 
+### Rich Developer Experience
+
+Kintsu prioritises developer experience with clear diagnostics, powerful tooling, and safety guarantees.
+
+![Error diagnostics showing duplicate field detection with source locations and help text](../../assets/error_diags.png)
+
+**Actionable error messages** pinpoint issues with source spans, related locations, and suggestions for fixes.
+
+**Type introspection** lets you query dependencies, resolve type chains, and compute diffs between schema versions—catch breaking changes before they reach production.
+
+**Versioning guarantees** enforce semver at publish time. Breaking changes are blocked automatically, protecting downstream consumers from runtime failures.
+
+**Reproducible builds** via lockfiles ensure identical dependency trees across environments.
+
 ### Why Kintsu?
 
-- **Concise syntax** for types, operations, and contracts.
-- **Composable** via unions (`&`, `&|`) and type expressions.
-- **Flexible serialization** with configurable variant tagging.
-- **Specification-driven** development with readable RFCs.
+- **Concise syntax** for types, operations, and contracts
+- **Composable** via unions (`&`, `&|`) and type expressions (`Pick`, `Omit`, `Partial`)
+- **Flexible serialization** with configurable variant tagging
+- **Type introspection** to track dependencies across packages
+- **Semver enforcement** blocks breaking changes at publish time
+- **Rich diagnostics** with source spans and actionable suggestions
+- **Specification-driven** development with readable RFCs
 
 ### Quick links
 

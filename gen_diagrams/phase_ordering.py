@@ -25,6 +25,6 @@ with Diagram(
 
     # Sequential flow
     for i in range(len(phases) - 1):
-        phases[i] >> Edge(label="→") >> phases[i + 1]
+        phases[i] >> Edge(label="->") >> phases[i + 1]
 
 print("Generated phase_ordering.png")

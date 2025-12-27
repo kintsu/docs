@@ -24,6 +24,11 @@ jobs:
         with:
           python-version: "3.13"
 
+      - name: Refresh Spec Summaries
+        run: |
+          python -m auto.doc collect-specs
+          python -m auto.doc spec-guide
+
       - name: Install dependencies
         run: |
           sudo apt install graphviz
@@ -58,6 +63,20 @@ jobs:
 
       - name: Install, build, and upload your site
         uses: withastro/action@v3
+
+      - name: Upload PDF Documentation
+        uses: actions/upload-artifact@v3
+        with:
+          name: Kintsu-Documentation-PDFs
+          path: |
+            ./dist/*.pdf
+
+      - name: Upload Kinstu specs yaml
+        uses: actions/upload-artifact@v3
+        with:
+          name: Kintsu-Specs-JSON
+          path: |
+            ./auto/kintsu.yaml
 
   deploy:
     needs: build

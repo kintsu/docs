@@ -1,5 +1,5 @@
 """
-Diagram: Namespace compilation flow showing discovery → loading → ordering → compilation
+Diagram: Namespace compilation flow showing discovery -> loading -> ordering -> compilation
 
 Shows the complete pipeline from discovering namespace files to executing
 type resolution stages.

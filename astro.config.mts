@@ -17,7 +17,7 @@ import { kintsuPdf, type DocOrderEntry } from "./pdf.mts";
 // Production site URL for PDF link generation
 const SITE_URL = "https://docs.kintsu.dev";
 
-// Spec kinds ordered for logical reading (Architecture → Design → Implementation → Type System)
+// Spec kinds ordered for logical reading (Architecture -> Design -> Implementation -> Type System)
 const SPEC_KIND_ORDER = [
   "ad",
   "rfc",

@@ -31,17 +31,17 @@ with Diagram(
 ):
     registry = Rust("TypeRegistry\n(Arc<Mutex<BTreeMap>>)")
 
-    with Cluster("Qualified Names → ResolvedTypes"):
+    with Cluster("Qualified Names -> ResolvedTypes"):
         with Cluster("shapes package"):
-            shapes_point = Storage("shapes::geometry::Point\n→ Struct")
-            shapes_circle = Storage("shapes::geometry::Circle\n→ Struct")
+            shapes_point = Storage("shapes::geometry::Point\n-> Struct")
+            shapes_circle = Storage("shapes::geometry::Circle\n-> Struct")
 
         with Cluster("graphics package"):
-            graphics_drawable = Storage("graphics::rendering::Drawable\n→ Struct")
-            graphics_color = Storage("graphics::types::Color\n→ Enum")
+            graphics_drawable = Storage("graphics::rendering::Drawable\n-> Struct")
+            graphics_color = Storage("graphics::types::Color\n-> Enum")
 
         with Cluster("errors package"):
-            errors_notfound = Storage("errors::NotFoundError\n→ Error")
+            errors_notfound = Storage("errors::NotFoundError\n-> Error")
 
     types_map = Database(
         "BTreeMap<NamedItemContext,\\nFromNamedSource<Spanned<ResolvedType>>>"

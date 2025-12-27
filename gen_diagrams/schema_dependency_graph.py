@@ -57,4 +57,4 @@ with Diagram(
 
     # Compilation order note
     note = Blank("")
-    note.label = "Topological Order:\nLevel 0 → Level 1 → Level 2\n\nParallelism:\nWithin each level, compile concurrently"
+    note.label = "Topological Order:\nLevel 0 -> Level 1 -> Level 2\n\nParallelism:\nWithin each level, compile concurrently"

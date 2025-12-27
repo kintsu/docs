@@ -18,10 +18,10 @@ When resolved, the following directory structure is created:
 
 ```text title="KINTSU_HOME structure"
 $KINTSU_HOME/
-├── kintsu.toml          # User configuration
-├── cache/               # Downloaded packages
-├── templates/           # Custom scaffolding templates
-└── credentials/         # Keychain fallback (if OS keychain unavailable)
+ |--- kintsu.toml          # User configuration
+ |--- cache/               # Downloaded packages
+ |--- templates/           # Custom scaffolding templates
+ |--- credentials/         # Keychain fallback (if OS keychain unavailable)
 ```
 
 When `KINTSU_HOME` is explicitly set via environment variable, it overrides the platform default:
@@ -147,12 +147,12 @@ Cache directory is resolved in precedence order:
 
 ```text title="Cache structure"
 ~/.cache/kintsu/
-├── git/
-│   └── {host}-{owner}-{repo}/
-│       └── {commit-sha}/             # Git checkout at specific commit
-│           └── schema/
-│               └── *.ks
-└── packages.db                       # SQLite database for registry packages
+ |--- git/
+|    |--- {host}-{owner}-{repo}/
+|        |--- {commit-sha}/             # Git checkout at specific commit
+|            |--- schema/
+|                |--- *.ks
+ |--- packages.db                       # SQLite database for registry packages
 ```
 
 Registry packages are stored in a SQLite database (`packages.db`) for efficient lookups. Git dependencies are checked out to the filesystem.

@@ -31,6 +31,12 @@
       "name": "Parser",
       "description": "The module that handles parsing of Kintsu ast streams.",
       "code": "P"
+    },
+    {
+      "id": "registry",
+      "name": "Registry",
+      "description": "Kintsu registries (public and private) for managing schema packages.",
+      "code": "R"
     }
   ],
   "spec_kinds": [
