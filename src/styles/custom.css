@@ -262,6 +262,14 @@ header.header {
   }
 }
 
+/* Allow sidebar link text to wrap instead of truncating with ellipsis */
+.sidebar-content a span,
+.sidebar-content summary span {
+  white-space: normal;
+  word-break: break-word;
+  overflow-wrap: anywhere;
+}
+
 .sidebar-pane {
   border-inline-end: 1px solid var(--sl-color-hairline);
   transition:
@@ -303,24 +311,28 @@ header.header {
   border-inline-start: 1px solid var(--sl-color-hairline);
 }
 
-/* Position mobile menu button on the left side of header */
-@media (max-width: 49.99rem) {
-  starlight-menu-button {
-    position: fixed;
-    top: calc((var(--sl-nav-height) - var(--sl-menu-button-size, 2.5rem)) / 2);
-    inset-inline-start: var(--sl-nav-pad-x);
-    z-index: var(--sl-z-index-navbar);
-  }
+/* Position menu button on the left side of header - same on mobile and desktop */
+starlight-menu-button {
+  position: fixed;
+  top: calc((var(--sl-nav-height) - var(--sl-menu-button-size, 2.5rem)) / 2);
+  inset-inline-start: var(--sl-nav-pad-x);
+  z-index: var(--sl-z-index-navbar);
+  display: block !important;
+}
 
-  /* Remove extra header padding since button is on left now */
-  :root[data-has-sidebar] .page > header.header {
-    padding-inline-start: calc(
-      var(--sl-nav-pad-x) +
-      var(--sl-menu-button-size, 2.5rem) +
-      0.5rem
-    ) !important;
-    padding-inline-end: var(--sl-nav-pad-x) !important;
-  }
+/* Ensure the button inside is always visible */
+starlight-menu-button button {
+  display: flex !important;
+}
+
+/* Add header padding to accommodate the menu button */
+:root[data-has-sidebar] .page > header.header {
+  padding-inline-start: calc(
+    var(--sl-nav-pad-x) +
+    var(--sl-menu-button-size, 2.5rem) +
+    0.5rem
+  ) !important;
+  padding-inline-end: var(--sl-nav-pad-x) !important;
 }
 
 /* Mobile TOC bar styling to match header */
