@@ -13,7 +13,7 @@ version = "v1"
 name = "abc-corp"
 version = "0.1.0"
 description = "Core types for ABC Corporation"
-authors = [{ name = "alice", email = "alice@example.com" }]
+authors = [{ name = "Alice Glass", email = "alice@example.com" }]
 license = "MIT"
 homepage = "https://github.com/abc-corp/schemas"
 
@@ -69,10 +69,13 @@ List of package maintainers with optional email addresses:
 
 ```toml title="Authors Field"
 authors = [
-    { name = "Alice", email = "alice@example.com" },
-    { name = "Bob" }
+    { name = "Alice Glass", email = "alice@example.com" },
+    { name = "Bob Smith" }
 ]
 ```
+
+> [!NOTE]
+> To receive attributions in the registry, authors must include an `email` field. Authors without email are displayed by name only without public profile tracking.
 
 ### `homepage`
 
@@ -86,12 +89,12 @@ SPDX license identifier (e.g., `MIT`, `Apache-2.0`):
 license = "MIT"
 ```
 
-### `license_text`
+### `license-text`
 
 Optional custom license text for non-standard licenses:
 
 ```toml title="Custom License Text"
-license_text = """
+license-text = """
 Custom license terms...
 """
 ```

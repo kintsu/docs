@@ -7,6 +7,7 @@ import matter from "gray-matter";
 import starlightHeadingBadges from "starlight-heading-badges";
 import starlightGitHubAlerts from "starlight-github-alerts";
 import remarkGithubAlerts from "remark-github-blockquote-alert";
+import remarkGfm from "remark-gfm";
 import kintsuSpec from "./src/assets/kintsu.json" with { type: "json" };
 import tailwindcss from "@tailwindcss/vite";
 
@@ -62,7 +63,10 @@ const DOCS_ORDER: DocOrderEntry[] = [
 // Generate nested sidebar items for specs
 function generateSpecSidebarItems() {
   const specsBasePath = "./src/content/specs";
-  const items = [{ label: "Overview", link: "/specs" }, { label: "Summary", link: "/summary" }];
+  const items = [
+    { label: "Overview", link: "/specs" },
+    { label: "Summary", link: "/summary" },
+  ];
 
   for (const kind of kintsuSpec.spec_kinds) {
     const kindId = kind.id.toLowerCase();
@@ -116,7 +120,7 @@ export default defineConfig({
     port: 3000,
   },
   markdown: {
-    remarkPlugins: [remarkGithubAlerts],
+    remarkPlugins: [remarkGfm, remarkGithubAlerts],
   },
   image: {
     service: {
@@ -136,6 +140,9 @@ export default defineConfig({
     starlight({
       title: "Kintsu Docs",
       customCss: ["./src/styles/custom.css", "./src/styles/global.css"],
+      editLink: {
+        baseUrl: "https://github.com/kintsu/docs/edit/main/",
+      },
       expressiveCode: {
         styleOverrides: { codeFontFamily: "'Fira Code', monospace" },
       },

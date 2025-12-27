@@ -72,12 +72,16 @@ The `[workspace]` table contains workspace-wide configuration:
 | Field              | Type               | Required | Description                                  |
 | ------------------ | ------------------ | -------- | -------------------------------------------- |
 | `name`             | string             | No       | Workspace name for display purposes          |
-| `description`      | string             | No       | Workspace description                        |
+| `description`      | string             | No       | Workspace description (not inheritable)      |
 | `version`          | string             | No       | Inheritable version for members              |
 | `version-resolver` | string             | No       | Version requirement for inter-workspace deps |
 | `readme`           | string or { path } | No       | Inheritable readme                           |
 | `license`          | string             | No       | Inheritable license identifier               |
 | `license-text`     | string or { path } | No       | Inheritable license text                     |
+| `authors`          | array              | No       | Inheritable authors list                     |
+| `keywords`         | array              | No       | Inheritable keywords                         |
+| `homepage`         | string             | No       | Inheritable homepage URL                     |
+| `repository`       | string             | No       | Inheritable repository URL                   |
 
 ## Package Members
 
@@ -105,8 +109,10 @@ path = "packages/api"
 | `license`      | string or inherit | No       | License identifier or `.workspace = true`                |
 | `license-text` | string or inherit | No       | License text or `.workspace = true`                      |
 | `readme`       | string or inherit | No       | Readme content/path or `.workspace = true`               |
-| `repository`   | string            | No       | Repository URL                                           |
-| `keywords`     | array             | No       | Package keywords                                         |
+| `authors`      | array or inherit  | No       | Authors array or `.workspace = true`                     |
+| `keywords`     | array or inherit  | No       | Keywords array or `.workspace = true`                    |
+| `homepage`     | string or inherit | No       | Homepage URL or `.workspace = true`                      |
+| `repository`   | string or inherit | No       | Repository URL or `.workspace = true`                    |
 
 ## Workspace Inheritance
 
@@ -117,15 +123,25 @@ Members can inherit fields from the workspace using `.workspace = true`:
 version = "1.0.0"
 license = "MIT"
 readme = { path = "./README.md" }
+authors = [{ name = "ACME Team", email = "team@acme.corp" }]
+keywords = ["api", "enterprise"]
+homepage = "https://acme.corp/schemas"
+repository = "https://github.com/acme/schemas"
 
 [api.package]
 name = "api"
 version.workspace = true      # Inherits "1.0.0"
 license.workspace = true      # Inherits "MIT"
 readme.workspace = true       # Inherits { path = "./README.md" }
+authors.workspace = true      # Inherits authors array
+keywords.workspace = true     # Inherits keywords
+homepage.workspace = true     # Inherits homepage
+repository.workspace = true   # Inherits repository
 ```
 
 > **Note:** `description` is **not inheritable** and must be specified per-package.
+
+> **Path Resolution:** File-based fields (`readme`, `license-text` with `{ path = "..." }`) resolve paths relative to **workspace root**, not the package directory.
 
 ## Package Dependencies
 
@@ -165,6 +181,47 @@ api.workspace = true
 ```
 
 If `version-resolver` is not specified, inter-workspace dependencies use the exact inherited version.
+
+## File Configuration
+
+The `[workspace.files]` table defines default file exclusions applied to all packages. Patterns are resolved relative to each package's root directory.
+
+```toml title="schema.toml"
+[workspace.files]
+exclude = ["*.dev.ks", "drafts/**"]
+```
+
+Members can inherit, extend, or override file configuration:
+
+```toml title="schema.toml"
+# Inherit workspace defaults
+[api.package]
+name = "api"
+version = "1.0.0"
+files.workspace = true
+
+# Extend workspace defaults
+[internal.package]
+name = "internal"
+version = "1.0.0"
+
+[internal.files.extend]
+exclude = ["internal-only.ks"]
+
+# Override workspace defaults
+[experimental.package]
+name = "experimental"
+version = "1.0.0"
+
+[experimental.files]
+exclude = ["deprecated/**"]  # Replaces workspace defaults entirely
+```
+
+| Syntax                   | Behaviour                              |
+| ------------------------ | -------------------------------------- |
+| `files.workspace = true` | Inherit `[workspace.files]` exactly    |
+| `[alias.files.extend]`   | Extend workspace defaults              |
+| `[alias.files]`          | Override workspace defaults completely |
 
 ## Directory Structure
 

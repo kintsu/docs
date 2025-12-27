@@ -219,3 +219,410 @@ spec_categories:
   - id: test
     name: Testing Specifications
     description: Specifications related to testing strategies and practices for Kintsu implementations.
+references:
+  ad-0001:
+    - rfc-0003
+    - rfc-0006
+    - rfc-0007
+    - rfc-0012
+    - rfc-0013
+    - spec-0013
+  ad-0002:
+    - ad-0001
+    - rfc-0014
+    - spec-0014
+  err-0001:
+    - err-0002
+    - err-0003
+    - err-0004
+    - err-0005
+    - err-0006
+    - err-0007
+    - err-0008
+    - err-0009
+    - err-0010
+    - err-0011
+    - err-0012
+    - err-0013
+    - err-0014
+    - err-0015
+    - err-0016
+    - rfc-0023
+    - spec-0022
+  err-0002:
+    - err-0001
+    - rfc-0023
+    - spec-0022
+  err-0003:
+    - err-0001
+    - rfc-0023
+    - tsy-0010
+  err-0004:
+    - err-0001
+    - rfc-0023
+    - spec-0007
+    - spec-0015
+    - spec-0022
+    - tsy-0001
+  err-0005:
+    - err-0001
+    - rfc-0009
+    - rfc-0023
+    - spec-0010
+    - spec-0011
+    - spec-0012
+    - spec-0022
+    - tsy-0002
+    - tsy-0007
+    - tsy-0009
+  err-0006:
+    - err-0001
+    - rfc-0023
+    - spec-0007
+    - spec-0010
+    - spec-0011
+    - spec-0022
+    - tsy-0008
+  err-0007:
+    - err-0001
+    - rfc-0023
+    - spec-0007
+    - spec-0012
+    - spec-0022
+    - tsy-0007
+    - tsy-0009
+  err-0008:
+    - err-0001
+    - rfc-0023
+    - spec-0012
+    - spec-0015
+    - spec-0022
+    - tsy-0005
+    - tsy-0011
+  err-0009:
+    - err-0001
+    - rfc-0023
+    - spec-0016
+    - spec-0022
+    - tsy-0013
+  err-0010:
+    - err-0001
+    - rfc-0023
+    - spec-0017
+    - spec-0022
+    - tsy-0014
+  err-0011:
+    - err-0001
+    - rfc-0019
+    - rfc-0020
+  err-0012:
+    - err-0001
+    - rfc-0019
+    - rfc-0021
+    - rfc-0022
+  err-0013:
+    - err-0001
+    - rfc-0023
+    - spec-0022
+  err-0014:
+    - err-0001
+    - rfc-0023
+    - spec-0022
+  err-0015:
+    - err-0001
+    - rfc-0019
+    - rfc-0024
+  err-0016:
+    - err-0001
+    - rfc-0025
+    - rfc-0026
+    - rfc-0027
+    - rfc-0028
+    - rfc-0029
+  err-0017:
+    - err-0001
+    - rfc-0030
+    - rfc-0031
+  rfc-0001:
+    - tsy-0001
+  rfc-0006:
+    - spec-0006
+    - tsy-0002
+    - tsy-0006
+    - tsy-0007
+  rfc-0007:
+    - rfc-0008
+    - spec-0007
+    - tsy-0002
+    - tsy-0007
+  rfc-0008:
+    - rfc-0007
+    - spec-0008
+    - tsy-0003
+    - tsy-0008
+  rfc-0009:
+    - rfc-0005
+    - spec-0009
+    - tsy-0005
+    - tsy-0009
+  rfc-0010:
+    - rfc-0011
+    - spec-0010
+    - tsy-0010
+    - tsy-0011
+  rfc-0011:
+    - rfc-0010
+    - spec-0011
+    - tsy-0010
+    - tsy-0011
+  rfc-0012:
+    - rfc-0005
+    - rfc-0009
+    - rfc-0010
+    - spec-0012
+    - tsy-0012
+  rfc-0013:
+    - ad-0001
+    - rfc-0003
+    - rfc-0006
+    - rfc-0007
+    - rfc-0012
+    - spec-0013
+  rfc-0014:
+    - ad-0002
+    - rfc-0013
+    - spec-0014
+  rfc-0015:
+    - ad-0002
+    - rfc-0013
+    - rfc-0014
+    - spec-0015
+  rfc-0016:
+    - rfc-0007
+  rfc-0017:
+    - rfc-0005
+    - rfc-0008
+    - rfc-0012
+    - rfc-0016
+    - spec-0016
+    - tsy-0013
+  rfc-0018:
+    - rfc-0006
+    - rfc-0007
+    - rfc-0008
+    - rfc-0016
+    - spec-0017
+    - tsy-0006
+    - tsy-0014
+  rfc-0019:
+    - rfc-0011
+    - rfc-0020
+    - rfc-0024
+    - spec-0018
+    - spec-0023
+  rfc-0021:
+    - rfc-0019
+    - rfc-0020
+    - spec-0020
+  rfc-0022:
+    - rfc-0019
+    - rfc-0020
+    - spec-0021
+  rfc-0023:
+    - err-0001
+    - spec-0022
+  rfc-0024:
+    - err-0015
+    - rfc-0011
+    - rfc-0019
+    - rfc-0020
+    - spec-0018
+    - spec-0023
+  rfc-0025:
+    - err-0011
+    - err-0012
+    - rfc-0019
+    - rfc-0020
+    - rfc-0024
+  rfc-0026:
+    - err-0012
+    - rfc-0021
+    - rfc-0022
+  rfc-0027:
+    - err-0011
+    - err-0012
+    - rfc-0019
+    - rfc-0020
+    - rfc-0024
+  rfc-0028:
+    - err-0011
+    - err-0012
+    - rfc-0019
+    - rfc-0021
+    - rfc-0026
+  rfc-0029:
+    - err-0016
+    - rfc-0019
+    - rfc-0024
+  rfc-0030:
+    - rfc-0018
+    - rfc-0021
+    - rfc-0031
+  rfc-0031:
+    - err-0017
+    - rfc-0019
+    - rfc-0030
+  spec-0006:
+    - rfc-0006
+    - spec-0001
+    - spec-0002
+    - spec-0003
+    - spec-0007
+    - tsy-0006
+  spec-0007:
+    - rfc-0007
+    - spec-0002
+    - spec-0003
+    - spec-0006
+    - tsy-0007
+  spec-0008:
+    - rfc-0008
+    - spec-0002
+    - spec-0003
+    - spec-0007
+    - tsy-0008
+  spec-0009:
+    - rfc-0005
+    - rfc-0009
+    - spec-0005
+    - tsy-0009
+  spec-0010:
+    - rfc-0010
+    - spec-0003
+    - spec-0006
+    - spec-0007
+    - spec-0009
+    - tsy-0010
+  spec-0011:
+    - rfc-0010
+    - rfc-0011
+    - spec-0010
+    - tsy-0011
+  spec-0012:
+    - rfc-0012
+    - spec-0005
+    - spec-0009
+    - spec-0010
+    - tsy-0012
+  spec-0013:
+    - ad-0001
+    - rfc-0003
+    - rfc-0006
+    - rfc-0007
+    - rfc-0012
+    - rfc-0013
+  spec-0014:
+    - ad-0002
+    - rfc-0014
+    - spec-0013
+  spec-0015:
+    - ad-0002
+    - rfc-0014
+    - rfc-0015
+    - spec-0014
+  spec-0016:
+    - err-0009
+    - rfc-0005
+    - rfc-0008
+    - rfc-0012
+    - rfc-0017
+    - spec-0005
+    - spec-0008
+    - tsy-0013
+  spec-0017:
+    - err-0010
+    - rfc-0018
+    - spec-0006
+    - spec-0007
+    - spec-0008
+    - tsy-0014
+  spec-0018:
+    - rfc-0019
+    - rfc-0024
+    - spec-0019
+    - spec-0023
+  spec-0019:
+    - rfc-0020
+    - spec-0018
+    - spec-0020
+  spec-0020:
+    - rfc-0021
+    - spec-0018
+    - spec-0019
+  spec-0021:
+    - rfc-0022
+    - spec-0018
+    - spec-0019
+  spec-0022:
+    - err-0001
+    - rfc-0023
+  spec-0023:
+    - err-0015
+    - rfc-0019
+    - rfc-0024
+    - spec-0018
+  tsy-0006:
+    - rfc-0006
+    - spec-0006
+    - tsy-0002
+    - tsy-0003
+    - tsy-0007
+  tsy-0007:
+    - rfc-0007
+    - spec-0007
+    - tsy-0002
+    - tsy-0003
+    - tsy-0008
+  tsy-0008:
+    - rfc-0007
+    - rfc-0008
+    - spec-0008
+    - tsy-0003
+    - tsy-0007
+  tsy-0009:
+    - rfc-0005
+    - rfc-0009
+    - spec-0009
+    - tsy-0005
+  tsy-0010:
+    - rfc-0010
+    - rfc-0011
+    - spec-0010
+    - tsy-0011
+  tsy-0011:
+    - rfc-0010
+    - rfc-0011
+    - spec-0011
+    - tsy-0010
+  tsy-0012:
+    - rfc-0012
+    - spec-0012
+    - tsy-0005
+    - tsy-0009
+    - tsy-0010
+  tsy-0013:
+    - rfc-0005
+    - rfc-0008
+    - rfc-0012
+    - rfc-0017
+    - spec-0016
+    - tsy-0005
+    - tsy-0008
+  tsy-0014:
+    - err-0010
+    - rfc-0018
+    - spec-0017
+    - tsy-0006
+    - tsy-0007
+    - tsy-0008
+    - tsy-0013
