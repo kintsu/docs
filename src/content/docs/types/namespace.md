@@ -206,3 +206,9 @@ The compiler enforces:
 > - Use nested namespaces to organize related types hierarchically
 > - Inner metadata (`#![...]`) sets defaults for all items in the namespace
 > - Namespaces are compiled in dependency order, with parallelism at each depth level
+
+## References
+
+- [RFC-0010](/specs/rfc/RFC-0010) - Namespace System
+- [TSY-0010](/specs/tsy/TSY-0010) - Namespaces
+- [SPEC-0010](/specs/spec/SPEC-0010) - Namespace Compilation

@@ -409,3 +409,9 @@ This structure creates:
 - Error `abc_corp::errors::AbcCorpError`
 - Operation `abc_corp::api::get_user`
 - Type alias `abc_corp::internal::InternalId`
+
+## References
+
+- [RFC-0019](/specs/rfc/RFC-0019) - Package Manifest Format
+- [RFC-0010](/specs/rfc/RFC-0010) - Namespace System
+- [SPEC-0010](/specs/spec/SPEC-0010) - Namespace Compilation

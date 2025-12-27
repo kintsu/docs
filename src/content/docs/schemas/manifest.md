@@ -294,3 +294,9 @@ The manifest is validated on load:
 - All required fields must be present
 
 Validation errors are reported with clear messages pointing to the specific issue.
+
+## References
+
+- [RFC-0019](/specs/rfc/RFC-0019) - Package Manifest Format
+- [SPEC-0018](/specs/spec/SPEC-0018) - Package Manifest Implementation
+- [ERR-0011](/specs/err/ERR-0011) - Package Errors

@@ -217,3 +217,9 @@ The compiler enforces:
 > - Private imports (in `.ks` files) are namespace-scoped
 > - Public imports (in `lib.ks`) re-export namespaces
 > - Cross-schema imports require dependency declarations in schema manifest
+
+## References
+
+- [RFC-0011](/specs/rfc/RFC-0011) - Import System
+- [TSY-0011](/specs/tsy/TSY-0011) - Imports
+- [SPEC-0011](/specs/spec/SPEC-0011) - Import Resolution

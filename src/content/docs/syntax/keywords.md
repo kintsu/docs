@@ -26,3 +26,8 @@ title: "Keywords"
 | Token  | Description                                                                  |
 | :----- | :--------------------------------------------------------------------------- |
 | `null` | The null literal, representing absence of a value. Used with nullable types. |
+
+## References
+
+- [RFC-0001](/specs/rfc/RFC-0001) - Builtin Type System Design
+- [TSY-0001](/specs/tsy/TSY-0001) - Builtin Types

@@ -2,6 +2,7 @@ import { defineEcConfig } from "astro-expressive-code";
 import fs from "node:fs";
 import { fileURLToPath } from "node:url";
 import { dirname, join } from "node:path";
+import { pluginCollapsibleSections } from "@expressive-code/plugin-collapsible-sections";
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
@@ -12,6 +13,7 @@ const kintsuGrammar = JSON.parse(
 );
 
 export default defineEcConfig({
+  plugins: [pluginCollapsibleSections()],
   styleOverrides: {
     codeFontFamily: "'Fira Code', monospace",
   },

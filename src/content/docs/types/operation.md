@@ -210,3 +210,9 @@ The compiler enforces:
 > - You must provide the error type either as a namespace meta attribute (`#![err(MyError)]`) or an item attribute (`#[err(MyError)]`)
 > - Operations with result return types (`T!`) are fallible and must have error types
 > - Operation names are converted to PascalCase for error metadata storage
+
+## References
+
+- [RFC-0009](/specs/rfc/RFC-0009) - Operation Design
+- [TSY-0009](/specs/tsy/TSY-0009) - Operations
+- [SPEC-0009](/specs/spec/SPEC-0009) - Operation Compilation

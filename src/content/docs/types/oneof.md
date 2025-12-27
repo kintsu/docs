@@ -180,3 +180,9 @@ The compiler enforces:
 > - Variants are parsed in order and preserved; trailing pipes aren't allowed.
 > - Parentheses group complex variants when combining with arrays or other constructs.
 > - Anonymous structs and unions in variants are automatically extracted and named.
+
+## References
+
+- [RFC-0008](/specs/rfc/RFC-0008) - OneOf Type Design
+- [TSY-0008](/specs/tsy/TSY-0008) - OneOf Types
+- [SPEC-0008](/specs/spec/SPEC-0008) - OneOf Compilation

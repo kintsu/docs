@@ -46,3 +46,9 @@ title: "Builtins"
 | :------- | :------------------------------------------------------------------------------------------------------------- |
 | `binary` | A raw binary stream. Distinct from `[u8]` - may use language-specific types for efficient binary manipulation. |
 | `base64` | A base64-encoded binary string. Useful for serialization contexts where raw binary is not supported.           |
+
+## References
+
+- [RFC-0001](/specs/rfc/RFC-0001) - Builtin Type System Design
+- [TSY-0001](/specs/tsy/TSY-0001) - Builtin Types
+- [SPEC-0001](/specs/spec/SPEC-0001) - Builtin Type Resolution

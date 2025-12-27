@@ -1,7 +1,8 @@
 import { defineConfig } from "astro/config";
 import starlight from "@astrojs/starlight";
-import { readdirSync } from "node:fs";
+import { readdirSync, readFileSync } from "node:fs";
 import { join } from "node:path";
+import matter from "gray-matter";
 
 import starlightHeadingBadges from "starlight-heading-badges";
 import starlightGitHubAlerts from "starlight-github-alerts";
@@ -42,6 +43,7 @@ const DOCS_ORDER: DocOrderEntry[] = [
   // Schemas
   { path: "/schemas/intro/", title: "Schemas", section: "Getting Started" },
   { path: "/schemas/manifest/", title: "Schema Manifest" },
+  { path: "/schemas/workspace/", title: "Schema Workspace" },
   { path: "/schemas/structure/", title: "Schema Structure" },
   // Reference
   { path: "/reference/cli/", title: "Kintsu CLI", section: "Reference" },
@@ -72,15 +74,19 @@ function generateSpecSidebarItems() {
         .filter((f) => f.endsWith(".md"))
         .sort();
 
-      // Extract spec numbers and create links
+      // Extract spec numbers, titles, and create links
       const specItems = files
         .map((file) => {
           const match = file.match(/^([A-Z]+)-(\d+)\.md$/);
           if (match) {
             const [, kindCode, number] = match;
             const qid = `${kindCode}-${number.padStart(4, "0")}`;
+            const filePath = join(kindPath, file);
+            const content = readFileSync(filePath, "utf-8");
+            const { data } = matter(content);
+            const title = data.title || qid;
             return {
-              label: qid,
+              label: `${number.padStart(4, "0")} - ${title}`,
               link: `/specs/${kindId}/${qid}`,
             };
           }
@@ -170,8 +176,9 @@ export default defineConfig({
           label: "Getting Started",
           items: [
             { label: "Schemas", slug: "schemas/intro" },
-            { label: "Schema Manifest", slug: "schemas/manifest" },
             { label: "Schema Structure", slug: "schemas/structure" },
+            { label: "Schema Manifest", slug: "schemas/manifest" },
+            { label: "Schema Workspaces", slug: "schemas/workspace" },
           ],
         },
         {

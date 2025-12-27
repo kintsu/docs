@@ -217,3 +217,9 @@ The compiler enforces:
 > - Fields use the same rules as struct fields, including optional `?`.
 > - Anonymous struct variants are automatically extracted and named.
 > - Use `#[err(...)]` at operation or namespace level to associate errors with operations.
+
+## References
+
+- [RFC-0005](/specs/rfc/RFC-0005) - Error Type Design
+- [TSY-0005](/specs/tsy/TSY-0005) - Error Types
+- [SPEC-0005](/specs/spec/SPEC-0005) - Error Compilation

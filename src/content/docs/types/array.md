@@ -154,3 +154,9 @@ The compiler enforces:
 
 > [!CAUTION]
 > Some generation targets may not support exact sizing - we will pass the metadata wherever possible but due to the constraints of certain languages this is not always type-enforced
+
+## References
+
+- [RFC-0018](/specs/rfc/RFC-0018) - Type Expression Design
+- [TSY-0014](/specs/tsy/TSY-0014) - Type Expression Rules
+- [SPEC-0017](/specs/spec/SPEC-0017) - Type Expression Compilation

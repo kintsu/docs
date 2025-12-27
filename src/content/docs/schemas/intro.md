@@ -82,3 +82,9 @@ your-project/
 ```
 
 Each package is independently versioned and can be developed, tested, and distributed separately.
+
+## References
+
+- [RFC-0019](/specs/rfc/RFC-0019) - Package Manifest Format
+- [RFC-0020](/specs/rfc/RFC-0020) - Lockfile Format
+- [SPEC-0018](/specs/spec/SPEC-0018) - Package Manifest Implementation

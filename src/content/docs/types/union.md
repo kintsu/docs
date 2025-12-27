@@ -194,3 +194,9 @@ The compiler enforces:
 > - Each side is an identifier or a parenthesized union.
 > - `&` binds left-to-right; use parentheses to control grouping.
 > - Only ONE struct declaration is generated for the entire union expression.
+
+## References
+
+- [RFC-0007](/specs/rfc/RFC-0007) - Union Type Support
+- [TSY-0007](/specs/tsy/TSY-0007) - Union Types
+- [SPEC-0007](/specs/spec/SPEC-0007) - Union Type Compilation

@@ -179,3 +179,9 @@ The compiler enforces:
 > - Parentheses are required when combining complex types with arrays: `(oneof A | B)[]`
 > - Type aliases can simplify complex type expressions and improve code documentation
 > - Union and anonymous struct aliases generate actual struct definitions
+
+## References
+
+- [RFC-0006](/specs/rfc/RFC-0006) - Type Alias Design
+- [TSY-0006](/specs/tsy/TSY-0006) - Type Aliases
+- [SPEC-0006](/specs/spec/SPEC-0006) - Type Alias Compilation

@@ -141,3 +141,9 @@ The compiler enforces:
 - All field types must resolve to valid types
 - Recursive references must include a terminating path
 - Field types cannot create non-terminating dependency cycles
+
+## References
+
+- [RFC-0002](/specs/rfc/RFC-0002) - Struct Type Design
+- [TSY-0002](/specs/tsy/TSY-0002) - Struct Types
+- [SPEC-0002](/specs/spec/SPEC-0002) - Struct Compilation

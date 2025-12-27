@@ -141,3 +141,9 @@ The compiler enforces:
 > - Variants are separated by commas, trailing comma allowed.
 > - Values can be integers or strings; the enum's kind is inferred from its variants.
 > - Value types must be contiguous across the same enum (i.e. all numbers or all strings).
+
+## References
+
+- [RFC-0004](/specs/rfc/RFC-0004) - Enum Type Design
+- [TSY-0004](/specs/tsy/TSY-0004) - Enum Types
+- [SPEC-0004](/specs/spec/SPEC-0004) - Enum Compilation
