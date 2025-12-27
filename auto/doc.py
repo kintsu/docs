@@ -6,6 +6,22 @@ from typing import Dict
 
 from auto.types import ROOT, SPEC_DIR, RSC, Language, Spec, DOCS_ROOT, ISSUE_TEMPLATES_MARKDOWN, GITHUB_ISSUE_TEMPLATE_DIR, SpecStatus
 from yaml import safe_dump as write_yaml
+import yaml
+
+
+# Custom string class to force YAML literal block scalar style (|)
+class literal_str(str):
+    """String subclass that renders as YAML literal block scalar"""
+    pass
+
+
+def literal_str_representer(dumper, data):
+    """Representer that forces literal block scalar style for multi-line strings"""
+    return dumper.represent_scalar('tag:yaml.org,2002:str', data, style='|')
+
+
+# Register the custom representer
+yaml.add_representer(literal_str, literal_str_representer, Dumper=yaml.SafeDumper)
 
 app = typer.Typer(
     name="doc-manager",
@@ -468,7 +484,8 @@ def _build_template_yml(template, lang: Language) -> str:
             # Load markdown content from file
             md_path = ISSUE_TEMPLATES_MARKDOWN / section.markdown_file
             markdown_content = md_path.read_text().strip()
-            field["attributes"] = {"value": markdown_content}
+            # Use literal block scalar for multi-line content
+            field["attributes"] = {"value": literal_str(markdown_content)}
         else:
             field["attributes"] = {}
 
@@ -480,9 +497,15 @@ def _build_template_yml(template, lang: Language) -> str:
             # Handle placeholder - either from markdown file or static
             if section.markdown_placeholder:
                 placeholder_path = ISSUE_TEMPLATES_MARKDOWN / section.markdown_placeholder
-                field["attributes"]["placeholder"] = placeholder_path.read_text().strip()
+                placeholder_content = placeholder_path.read_text().strip()
+                # Use literal block scalar for multi-line placeholders
+                field["attributes"]["placeholder"] = literal_str(placeholder_content)
             elif section.placeholder:
-                field["attributes"]["placeholder"] = section.placeholder
+                # Check if placeholder has newlines
+                if '\n' in section.placeholder:
+                    field["attributes"]["placeholder"] = literal_str(section.placeholder)
+                else:
+                    field["attributes"]["placeholder"] = section.placeholder
 
             if section.render:
                 field["attributes"]["render"] = section.render

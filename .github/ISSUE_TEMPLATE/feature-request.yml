@@ -8,7 +8,17 @@ body:
   - type: markdown
     id: intro
     attributes:
-      value: 'Thank you for proposing a new feature! This template follows a light RFC structure to help maintainers understand your proposal. #magic___^_^___line #magic___^_^___line **What happens next:** #magic___^_^___line #magic___^_^___line 1. Maintainers review your proposal #magic___^_^___line 2. If accepted, maintainers will create a draft RFC specification on a dedicated branch #magic___^_^___line 3. You''ll be granted permissions to collaboratively edit the specification #magic___^_^___line 4. A tracking issue will be created to monitor RFC progress through review #magic___^_^___line 5. Once approved, additional specifications (TSY, SPEC, ERR) will be generated as needed #magic___^_^___line 6. This issue will remain open as the high-level tracker for all related specifications (RFC, TSY, SPEC, ERR)'
+      value: |-
+        Thank you for proposing a new feature! This template follows a light RFC structure to help maintainers understand your proposal.
+
+        **What happens next:**
+
+        1. Maintainers review your proposal
+        2. If accepted, maintainers will create a draft RFC specification on a dedicated branch
+        3. You'll be granted permissions to collaboratively edit the specification
+        4. A tracking issue will be created to monitor RFC progress through review
+        5. Once approved, additional specifications (TSY, SPEC, ERR) will be generated as needed
+        6. This issue will remain open as the high-level tracker for all related specifications (RFC, TSY, SPEC, ERR)
   - type: textarea
     id: problem
     attributes:
@@ -22,7 +32,10 @@ body:
     attributes:
       label: Motivation
       description: Why is this feature important? What use cases does it enable?
-      placeholder: '- Who benefits from this feature? #magic___^_^___line - What use cases does it enable? #magic___^_^___line - How does it improve the developer experience? #magic___^_^___line '
+      placeholder: |
+        - Who benefits from this feature?
+        - What use cases does it enable?
+        - How does it improve the developer experience?
     validations:
       required: true
   - type: textarea
@@ -38,7 +51,13 @@ body:
     attributes:
       label: Examples
       description: Provide concrete examples demonstrating the feature
-      placeholder: "```kintsu\n// Example code showing the proposed feature\nstruct Example {{\n    field: str\n}};\n```\n"
+      placeholder: |
+        ```kintsu
+        // Example code showing the proposed feature
+        struct Example {{
+            field: str
+        }};
+        ```
       render: markdown
     validations:
       required: true
@@ -55,7 +74,13 @@ body:
     attributes:
       label: Impact Analysis
       description: What is the impact of this feature on existing functionality?
-      placeholder: '- Does this benefit users? #magic___^_^___line - Does this make the language easier to adopt? #magic___^_^___line - Does this introduce breaking changes? #magic___^_^___line - What components are affected (compiler, parser, code generators)? #magic___^_^___line - Are there performance implications? #magic___^_^___line - Are there soundness implications with respect to the type system?'
+      placeholder: |-
+        - Does this benefit users?
+        - Does this make the language easier to adopt?
+        - Does this introduce breaking changes?
+        - What components are affected (compiler, parser, code generators)?
+        - Are there performance implications?
+        - Are there soundness implications with respect to the type system?
     validations:
       required: false
   - type: dropdown

@@ -7,7 +7,13 @@ body:
   - type: markdown
     id: intro
     attributes:
-      value: 'This issue tracks the progress of a specification through review, approval, and implementation. #magic___^_^___line #magic___^_^___line **Specification Lifecycle:** #magic___^_^___line - **draft** -> **proposed** -> **accepted**/rejected -> **unstable** -> **stable** #magic___^_^___line #magic___^_^___line Link this issue to the original feature request that initiated this specification.'
+      value: |-
+        This issue tracks the progress of a specification through review, approval, and implementation.
+
+        **Specification Lifecycle:**
+        - **draft** -> **proposed** -> **accepted**/rejected -> **unstable** -> **stable**
+
+        Link this issue to the original feature request that initiated this specification.
   - type: input
     id: spec-id
     attributes:
@@ -135,7 +141,10 @@ body:
     attributes:
       label: Implementation Notes
       description: Notes about implementation status or dependencies
-      placeholder: '- Implementation started in PR #XXX #magic___^_^___line - Depends on RFC-XXXX being implemented first #magic___^_^___line - Blocked by: ...'
+      placeholder: |-
+        - Implementation started in PR #XXX
+        - Depends on RFC-XXXX being implemented first
+        - Blocked by: ...
     validations:
       required: false
   - type: textarea
@@ -143,7 +152,11 @@ body:
     attributes:
       label: Timeline
       description: Expected timeline for completion
-      placeholder: '- Draft complete: YYYY-MM-DD #magic___^_^___line - Proposed: YYYY-MM-DD #magic___^_^___line - Accepted: YYYY-MM-DD #magic___^_^___line - Implementation: YYYY-MM-DD'
+      placeholder: |-
+        - Draft complete: YYYY-MM-DD
+        - Proposed: YYYY-MM-DD
+        - Accepted: YYYY-MM-DD
+        - Implementation: YYYY-MM-DD
     validations:
       required: false
   - type: textarea
