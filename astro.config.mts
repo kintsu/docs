@@ -62,7 +62,7 @@ const DOCS_ORDER: DocOrderEntry[] = [
 // Generate nested sidebar items for specs
 function generateSpecSidebarItems() {
   const specsBasePath = "./src/content/specs";
-  const items = [{ label: "Overview", link: "/specs" }];
+  const items = [{ label: "Overview", link: "/specs" }, { label: "Summary", link: "/summary" }];
 
   for (const kind of kintsuSpec.spec_kinds) {
     const kindId = kind.id.toLowerCase();

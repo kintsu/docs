@@ -1,3 +1,7 @@
+---
+title: Specifications
+---
+
 - Architecture Decision
   - [AD-0001 - Type Resolution Architecture](/specs/ad/AD-0001)
   - [AD-0002 - Parallel Compilation Architecture](/specs/ad/AD-0002)

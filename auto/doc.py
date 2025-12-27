@@ -67,7 +67,7 @@ def collect_specs():
     lang = Language.get()
     specs = lang.specs()
 
-    summary = "\n"
+    summary = "---\ntitle: Specifications\n---\n\n"
     by_category: dict[str, list[Spec]] = {}
     for spec in specs:
         if spec.kind in by_category:
