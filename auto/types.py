@@ -2,6 +2,7 @@ from dataclasses import asdict, dataclass
 from datetime import date
 from enum import StrEnum
 from json import dumps as write_json
+import os
 from pathlib import Path
 from shutil import copy2
 from typing import Callable, ParamSpec, TypeVar
@@ -16,7 +17,7 @@ ROOT = Path(__file__).parent
 DOCS_ROOT = Path(__file__).parent.parent
 
 # simple assert for runtime sanity check
-assert DOCS_ROOT.name == "kintsu-docs"
+assert DOCS_ROOT.name == "kintsu-docs" or (DOCS_ROOT.name == "docs" if "CI" in os.environ else False)
 
 RSC = ROOT / "resource"
 
