@@ -1,0 +1,209 @@
+# Issue template definitions
+# Markdown fragments are loaded from ./markdown/ directory
+# All paths are relative to auto/resource/issue-templates/
+
+templates:
+  - id: feature-request
+    name: Feature Request
+    description: Propose a new feature or change to Kintsu
+    title_prefix: "[Feature Request]: "
+    labels:
+      - feature-request
+      - needs-triage
+    sections:
+      - type: markdown
+        id: intro
+        markdown_file: feature-request-intro.md
+
+      - type: textarea
+        id: problem
+        label: Problem Statement
+        description: What problem does this feature solve? Why is it needed?
+        placeholder: Describe the problem or limitation in the current system that motivates this feature.
+        required: true
+
+      - type: textarea
+        id: motivation
+        label: Motivation
+        description: Why is this feature important? What use cases does it enable?
+        placeholder: |
+          - Who benefits from this feature?
+          - What use cases does it enable?
+          - How does it improve the developer experience?
+        required: true
+
+      - type: textarea
+        id: proposal
+        label: Proposed Solution
+        description: Describe your proposed solution at a high level
+        placeholder: How should this feature work? What would the API/syntax look like?
+        required: true
+
+      - type: textarea
+        id: examples
+        label: Examples
+        description: Provide concrete examples demonstrating the feature
+        placeholder: |
+          ```kintsu
+          // Example code showing the proposed feature
+          struct Example {{
+              field: str
+          }};
+          ```
+        render: markdown
+        required: true
+
+      - type: textarea
+        id: alternatives
+        label: Alternatives Considered
+        description: What other approaches did you consider? Why is your proposal better?
+        placeholder: Describe alternative solutions and why they were not chosen
+        required: false
+
+      - type: textarea
+        id: impact
+        label: Impact Analysis
+        description: What is the impact of this feature on existing functionality?
+        markdown_placeholder: impact-placeholder.md
+        required: false
+
+      - type: dropdown
+        id: components
+        label: Affected Components
+        description: Which components of Kintsu does this feature affect?
+        source: components
+        format: "{id}"
+        multiple: true
+        required: true
+
+      - type: checkboxes
+        id: specifications
+        label: Specification Requirements
+        description: Which specifications will be needed? (Maintainers will create these if accepted)
+        source: spec_kinds
+        format: "{ID} - {description}"
+        prefix_label: true
+
+      - type: textarea
+        id: additional
+        label: Additional Context
+        description: Any other information that would help evaluate this proposal
+        placeholder: Links to related issues, external resources, or implementation notes
+        required: false
+
+  - id: spec-tracking
+    name: Specification Tracking
+    description: Track the progress of a specification (RFC, TSY, SPEC, ERR, AD) through review and implementation
+    title_prefix: "[Spec Tracking]: "
+    labels:
+      - spec-tracking
+    sections:
+      - type: markdown
+        id: intro
+        markdown_file: spec-tracking-intro.md
+
+      - type: input
+        id: spec-id
+        label: Specification ID
+        description: The specification identifier (e.g., RFC-0032, SPEC-0024, TSY-0015)
+        placeholder: "RFC-0032"
+        required: true
+
+      - type: input
+        id: feature-issue
+        label: Related Feature Request
+        description: Link to the original feature request issue
+        placeholder: "#123"
+        required: true
+
+      - type: dropdown
+        id: spec-type
+        label: Specification Type
+        description: What type of specification is this?
+        source: spec_kinds
+        format: "{ID} ({name})"
+        required: true
+
+      - type: dropdown
+        id: status
+        label: Current Status
+        description: What is the current status of this specification?
+        source: spec_status
+        format: "{value}"
+        default: 0
+        required: true
+
+      - type: textarea
+        id: summary
+        label: Specification Summary
+        description: Brief summary of what this specification defines
+        placeholder: This RFC defines the design and rationale for...
+        required: true
+
+      - type: input
+        id: branch
+        label: Working Branch
+        description: The branch where this specification is being developed
+        placeholder: "feature/rfc-0032-new-feature"
+        required: false
+
+      - type: input
+        id: pr
+        label: Pull Request
+        description: Link to the PR for this specification (if opened)
+        placeholder: "#124"
+        required: false
+
+      - type: checkboxes
+        id: review-checklist
+        label: Review Checklist
+        description: Items that must be completed before advancing to 'proposed' status
+        options:
+          - label: Specification follows the template structure for its type
+          - label: All required sections are complete
+          - label: Examples are comprehensive and correct
+          - label: Cross-references to related specs are included
+          - label: Frontmatter is complete (author, components, version_after, etc.)
+          - label: Specification uses Canadian English spelling
+          - label: No emojis in specification content
+          - label: Code blocks use expressive-code markers where appropriate
+
+      - type: checkboxes
+        id: approval-checklist
+        label: Approval Checklist
+        description: Items that must be completed before advancing to 'accepted' status
+        options:
+          - label: At least two maintainer approvals
+          - label: Community feedback period completed (if applicable)
+          - label: All review comments addressed
+          - label: Related specifications identified (TSY, SPEC, ERR)
+          - label: Implementation plan documented
+
+      - type: checkboxes
+        id: related-specs
+        label: Related Specifications
+        description: Which companion specifications are needed?
+        source: spec_kinds
+        format: "{ID} - {description}"
+        prefix_label: true
+
+      - type: textarea
+        id: implementation-notes
+        label: Implementation Notes
+        description: Notes about implementation status or dependencies
+        markdown_placeholder: implementation-notes-placeholder.md
+        required: false
+
+      - type: textarea
+        id: timeline
+        label: Timeline
+        description: Expected timeline for completion
+        markdown_placeholder: timeline-placeholder.md
+        required: false
+
+      - type: textarea
+        id: notes
+        label: Additional Notes
+        description: Any other relevant information
+        placeholder: Notes about design decisions, open questions, or blockers
+        required: false

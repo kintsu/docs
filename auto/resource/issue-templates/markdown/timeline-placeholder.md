@@ -1,0 +1,4 @@
+- Draft complete: YYYY-MM-DD
+- Proposed: YYYY-MM-DD
+- Accepted: YYYY-MM-DD
+- Implementation: YYYY-MM-DD

@@ -1,0 +1,8 @@
+blank_issues_enabled: false
+contact_links:
+  - name: Documentation
+    url: https://docs.kintsu.dev
+    about: View the official Kintsu documentation
+  - name: Kintsu Compiler Repository
+    url: https://github.com/kintsu/kintsu
+    about: Report compiler bugs or implementation issues in the main Kintsu repository

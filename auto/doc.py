@@ -2,8 +2,9 @@ import re
 import typer
 import difflib
 from pathlib import Path
+from typing import Dict
 
-from auto.types import ROOT, SPEC_DIR, RSC, Language, Spec, DOCS_ROOT
+from auto.types import ROOT, SPEC_DIR, RSC, Language, Spec, DOCS_ROOT, ISSUE_TEMPLATES_MARKDOWN, GITHUB_ISSUE_TEMPLATE_DIR, SpecStatus
 from yaml import safe_dump as write_yaml
 
 app = typer.Typer(
@@ -288,6 +289,390 @@ def collect_specs():
     summary_path = SPEC_DIR / "../docs" / "summary.md"
     summary_path.write_text(summary)
     print(f"Wrote spec summary to {summary_path}")
+
+
+@app.command()
+def generate_issue_templates():
+    """Generate GitHub issue templates from kintsu.yaml definitions"""
+    lang = Language.get()
+
+    # Ensure output directory exists
+    GITHUB_ISSUE_TEMPLATE_DIR.mkdir(parents=True, exist_ok=True)
+
+    print(f"Generating {len(lang.issue_templates)} issue templates...")
+
+    for template in lang.issue_templates:
+        yml_content = _build_template_yml(template, lang)
+        output_path = GITHUB_ISSUE_TEMPLATE_DIR / f"{template.id}.yml"
+        output_path.write_text(yml_content)
+        print(f"  Generated {template.id}.yml")
+
+    print(f"\nSuccessfully generated {len(lang.issue_templates)} issue templates")
+    print(f"Output directory: {GITHUB_ISSUE_TEMPLATE_DIR}")
+
+
+def _build_template_yml(template, lang: Language) -> str:
+    """Build GitHub issue template YAML from template definition"""
+    data = {
+        "name": template.name,
+        "description": template.description,
+        "title": template.title_prefix,
+        "labels": template.labels,
+        "body": []
+    }
+
+    for section in template.sections:
+        field = {"type": section.type}
+
+        if section.type != "markdown":
+            field["id"] = section.id
+        else:
+            field["id"] = section.id
+
+        if section.type == "markdown":
+            # Load markdown content from file
+            if not section.markdown_file:
+                raise ValueError(f"Template {template.id}, section {section.id}: markdown type requires markdown_file")
+
+            md_path = ISSUE_TEMPLATES_MARKDOWN / section.markdown_file
+            markdown_content = md_path.read_text()
+            field["attributes"] = {"value": markdown_content}
+        else:
+            # Build attributes for other field types
+            field["attributes"] = {}
+            if section.label:
+                field["attributes"]["label"] = section.label
+            if section.description:
+                field["attributes"]["description"] = section.description
+
+            # Handle placeholder (static or from markdown file)
+            if section.markdown_placeholder:
+                md_path = ISSUE_TEMPLATES_MARKDOWN / section.markdown_placeholder
+                placeholder_content = md_path.read_text()
+                field["attributes"]["placeholder"] = placeholder_content
+            elif section.placeholder:
+                field["attributes"]["placeholder"] = section.placeholder
+
+            if section.render:
+                field["attributes"]["render"] = section.render
+
+            # Handle dynamic sources
+            if section.source:
+                options = _build_options_from_source(section.source, section.format, lang, section.prefix_label)
+                if section.type == "dropdown":
+                    field["attributes"]["options"] = options
+                    if section.multiple:
+                        field["attributes"]["multiple"] = section.multiple
+                    if section.default is not None:
+                        field["attributes"]["default"] = section.default
+                elif section.type == "checkboxes":
+                    field["attributes"]["options"] = [{"label": opt} for opt in options]
+            elif section.options:
+                # Static options
+                if section.type == "checkboxes":
+                    field["attributes"]["options"] = [{"label": opt.label} for opt in section.options]
+                else:
+                    field["attributes"]["options"] = [opt.label for opt in section.options]
+
+            # Add validations
+            field["validations"] = {"required": section.required}
+
+        data["body"].append(field)
+
+    return write_yaml(data, sort_keys=False, default_flow_style=False)
+
+
+def _build_options_from_source(source: str, format_str: str | None, lang: Language, prefix_label: bool = False) -> list[str]:
+    """Build dropdown/checkbox options from Language data source"""
+    if source == "components":
+        items = lang.components
+    elif source == "spec_kinds":
+        items = lang.spec_kinds
+    elif source == "spec_status":
+        items = [type('obj', (), {'value': s.value})() for s in SpecStatus]
+    else:
+        raise ValueError(f"Unknown source: {source}")
+
+    if not format_str:
+        # Default formats
+        if source == "components":
+            format_str = "{id}"
+        elif source == "spec_kinds":
+            format_str = "{id.upper()} ({name})"
+        elif source == "spec_status":
+            format_str = "{value}"
+
+    options = []
+    for item in items:
+        # Build namespace for format string evaluation
+        ns = {}
+        for attr in ['id', 'name', 'description', 'value', 'code', 'category']:
+            if hasattr(item, attr):
+                val = getattr(item, attr)
+                ns[attr] = val
+                # Support .upper() and .lower() method calls in format strings
+                if isinstance(val, str):
+                    ns[attr] = type('str_with_methods', (), {
+                        '__str__': lambda self=val: self,
+                        '__repr__': lambda self=val: self,
+                        'upper': lambda self=val: self.upper(),
+                        'lower': lambda self=val: self.lower(),
+                    })()
+
+        try:
+            # Evaluate format string
+            formatted = eval(f"f\"{format_str}\"", {"__builtins__": {}}, ns)
+            if prefix_label and source == "spec_kinds":
+                options.append(formatted)
+            else:
+                options.append(str(formatted))
+        except Exception as e:
+            raise ValueError(f"Error formatting with '{format_str}' for {source}: {e}")
+
+    return options
+
+
+@app.command()
+def generate_issue_templates():
+    """Generate GitHub issue templates from resource definitions"""
+    lang = Language.get()
+
+    # Ensure output directory exists
+    GITHUB_ISSUE_TEMPLATE_DIR.mkdir(parents=True, exist_ok=True)
+
+    generated_count = 0
+    for template in lang.issue_templates:
+        yml_content = _build_template_yml(template, lang)
+        output_path = GITHUB_ISSUE_TEMPLATE_DIR / f"{template.id}.yml"
+        output_path.write_text(yml_content)
+        print(f"Generated {output_path.relative_to(DOCS_ROOT)}")
+        generated_count += 1
+
+    print(f"\nSuccessfully generated {generated_count} issue template(s)")
+
+
+def _build_template_yml(template, lang: Language) -> str:
+    """Build GitHub issue template YAML from template definition"""
+    data = {
+        "name": template.name,
+        "description": template.description,
+        "title": template.title_prefix,
+        "labels": template.labels,
+        "body": []
+    }
+
+    for section in template.sections:
+        field = {"type": section.type, "id": section.id}
+
+        if section.type == "markdown":
+            # Load markdown content from file
+            md_path = ISSUE_TEMPLATES_MARKDOWN / section.markdown_file
+            markdown_content = md_path.read_text().strip()
+            field["attributes"] = {"value": markdown_content}
+        else:
+            field["attributes"] = {}
+
+            if section.label:
+                field["attributes"]["label"] = section.label
+            if section.description:
+                field["attributes"]["description"] = section.description
+
+            # Handle placeholder - either from markdown file or static
+            if section.markdown_placeholder:
+                placeholder_path = ISSUE_TEMPLATES_MARKDOWN / section.markdown_placeholder
+                field["attributes"]["placeholder"] = placeholder_path.read_text().strip()
+            elif section.placeholder:
+                field["attributes"]["placeholder"] = section.placeholder
+
+            if section.render:
+                field["attributes"]["render"] = section.render
+
+            # Handle dynamic sources and static options
+            if section.source:
+                options = _generate_options(section, lang)
+                if section.type == "dropdown":
+                    field["attributes"]["options"] = options
+                    if section.multiple:
+                        field["attributes"]["multiple"] = section.multiple
+                elif section.type == "checkboxes":
+                    field["attributes"]["options"] = [{"label": opt} for opt in options]
+            elif section.options:
+                # Static options for checkboxes
+                field["attributes"]["options"] = [{"label": opt.label} for opt in section.options]
+
+            # Add default for dropdowns
+            if section.type == "dropdown" and section.default is not None:
+                field["attributes"]["default"] = section.default
+
+            # Validation
+            field["validations"] = {"required": section.required}
+
+        data["body"].append(field)
+
+    return write_yaml(data, sort_keys=False, default_flow_style=False)
+
+
+def _generate_options(section, lang: Language) -> list[str]:
+    """Generate options from Language data sources"""
+    options = []
+
+    if section.source == "components":
+        source_data = lang.components
+    elif section.source == "spec_kinds":
+        source_data = lang.spec_kinds
+    elif section.source == "spec_status":
+        source_data = list(SpecStatus)
+    else:
+        raise ValueError(f"Unknown source: {section.source}")
+
+    for item in source_data:
+        if section.format:
+            # Build namespace for format string evaluation
+            if section.source == "spec_status":
+                ns = {"value": item.value}
+            else:
+                # Provide both regular and uppercase versions of string attributes
+                ns = {
+                    "id": item.id,
+                    "ID": item.id.upper() if hasattr(item.id, 'upper') else item.id,
+                    "name": item.name,
+                    "NAME": item.name.upper() if hasattr(item.name, 'upper') else item.name,
+                    "description": getattr(item, 'description', ''),
+                    "DESCRIPTION": getattr(item, 'description', '').upper() if hasattr(getattr(item, 'description', ''), 'upper') else getattr(item, 'description', ''),
+                    "code": getattr(item, 'code', ''),
+                    "CODE": getattr(item, 'code', '').upper() if hasattr(getattr(item, 'code', ''), 'upper') else getattr(item, 'code', ''),
+                    "category": getattr(item, 'category', ''),
+                    "CATEGORY": getattr(item, 'category', '').upper() if hasattr(getattr(item, 'category', ''), 'upper') else getattr(item, 'category', ''),
+                }
+
+            try:
+                formatted = section.format.format(**ns)
+                options.append(formatted)
+            except KeyError as e:
+                raise ValueError(f"Format string '{section.format}' missing key {e} for {section.source}")
+        else:
+            # Default format
+            if section.source == "components":
+                options.append(item.id)
+            elif section.source == "spec_kinds":
+                options.append(f"{item.id.upper()} ({item.name})")
+            elif section.source == "spec_status":
+                options.append(item.value)
+
+    return options
+
+
+@app.command()
+def normalize_ascii(
+    dry_run: bool = typer.Option(False, "--dry-run", help="Show what would be changed without modifying files"),
+    path: str = typer.Option(None, "--path", help="Specific file or directory to process (default: all markdown)")
+):
+    """
+    Normalize Unicode box-drawing and special characters to ASCII equivalents in markdown files.
+
+    This ensures maximum compatibility across editors, terminals, and documentation systems.
+    """
+    # Character replacement mapping
+    REPLACEMENTS: Dict[str, str] = {
+        # Box drawing characters
+        '├': '|--',
+        '│': '|',
+        '└': '`--',
+        '─': '-',
+        '┤': '--|',
+        '┬': '--+',
+        '┴': '--+',
+        '┼': '--+',
+        '┌': ',--',
+        '┐': '--.',
+        '╭': ',--',
+        '╮': '--.',
+        '╰': '`--',
+        '╯': '--\'',
+
+        # Arrows
+        '→': '->',
+        '←': '<-',
+        '↑': '^',
+        '↓': 'v',
+        '⇒': '=>',
+        '⇐': '<=',
+
+        # Bullets
+        '•': '*',
+        '◦': '-',
+        '▪': '*',
+        '▫': '-',
+    }
+
+    # Determine which files to process
+    if path:
+        target_path = Path(path)
+        if not target_path.is_absolute():
+            target_path = DOCS_ROOT / target_path
+        if target_path.is_file():
+            markdown_files = [target_path]
+        elif target_path.is_dir():
+            markdown_files = list(target_path.rglob("*.md"))
+        else:
+            typer.echo(f"Error: Path {path} does not exist", err=True)
+            raise typer.Exit(1)
+    else:
+        # Process all markdown files in the repository
+        markdown_files = list(DOCS_ROOT.rglob("*.md"))
+
+    files_modified = 0
+    total_replacements = 0
+
+    for md_file in markdown_files:
+        # Skip certain directories
+        if any(skip in md_file.parts for skip in ['.git', 'node_modules', 'dist', '.next']):
+            continue
+
+        try:
+            content = md_file.read_text(encoding='utf-8')
+            original_content = content
+
+            # Track replacements for this file
+            file_replacements = []
+
+            # Apply all replacements
+            for unicode_char, ascii_equiv in REPLACEMENTS.items():
+                if unicode_char in content:
+                    count = content.count(unicode_char)
+                    if count > 0:
+                        file_replacements.append((unicode_char, ascii_equiv, count))
+                        content = content.replace(unicode_char, ascii_equiv)
+
+            # Only process if changes were made
+            if content != original_content:
+                files_modified += 1
+
+                # Get relative path for display
+                try:
+                    display_path = md_file.relative_to(DOCS_ROOT)
+                except ValueError:
+                    display_path = md_file
+
+                if dry_run:
+                    typer.echo(f"\n{display_path}:")
+                    for unicode_char, ascii_equiv, count in file_replacements:
+                        total_replacements += count
+                        typer.echo(f"  {unicode_char!r} -> {ascii_equiv!r} ({count} occurrence{'s' if count > 1 else ''})")
+                else:
+                    md_file.write_text(content, encoding='utf-8')
+                    typer.echo(f"✓ Normalized {display_path}")
+                    for unicode_char, ascii_equiv, count in file_replacements:
+                        total_replacements += count
+
+        except Exception as e:
+            typer.echo(f"Error processing {md_file}: {e}", err=True)
+
+    if dry_run:
+        typer.echo(f"\nDry run complete: {total_replacements} replacements in {files_modified} file(s)")
+        typer.echo("Run without --dry-run to apply changes")
+    else:
+        typer.echo(f"\nNormalized {files_modified} file(s) with {total_replacements} total replacements")
 
 
 if __name__ == "__main__":

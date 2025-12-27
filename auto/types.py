@@ -29,8 +29,12 @@ SPEC_CATEGORIES = RSC / "spec-categories.yaml"
 SPEC_KINDS = RSC / "spec-kinds.yaml"
 VERSIONS = RSC / "versions.yaml"
 REFERENCES = RSC / "references.yaml"
+ISSUE_TEMPLATES_DIR = RSC / "issue-templates"
+ISSUE_TEMPLATES = ISSUE_TEMPLATES_DIR / "templates.yaml"
+ISSUE_TEMPLATES_MARKDOWN = ISSUE_TEMPLATES_DIR / "markdown"
 
 SPEC_DIR = DOCS_ROOT / "src" / "content" / "specs"
+GITHUB_ISSUE_TEMPLATE_DIR = DOCS_ROOT / ".github" / "ISSUE_TEMPLATE"
 
 
 class SpecStatus(StrEnum):
@@ -45,6 +49,8 @@ class SpecStatus(StrEnum):
     Stable = "stable"
 
     Deprecated = "deprecated"
+
+    Superseded = "superseded"
 
 
 class Serde:
@@ -146,6 +152,134 @@ def list_write(data) -> list[str]:
 
 
 @dataclass
+class IssueTemplateCheckboxOption(Serde):
+    label: str
+
+
+@dataclass
+class IssueTemplateSection(Serde):
+    type: str  # markdown, textarea, input, dropdown, checkboxes
+    id: str
+    label: str | None = None
+    description: str | None = None
+    markdown_file: str | None = None  # For markdown type - relative to markdown/
+    markdown_placeholder: str | None = None  # For textarea - placeholder from markdown file
+    placeholder: str | None = None  # Static placeholder
+    required: bool = False
+    multiple: bool = False
+    render: str | None = None  # markdown, etc
+    source: str | None = None  # Reference to Language data: components, spec_kinds, spec_status
+    format: str | None = None  # Python format string for options: "{id}", "{name}", "{id.upper()}"
+    default: int | None = None  # Default index for dropdown
+    prefix_label: bool = False  # For checkboxes - whether to use label prefix
+    options: list[IssueTemplateCheckboxOption] | None = None  # Static checkbox options
+
+    def validate(self, markdown_dir: Path, lang: "Language"):
+        """Validate this section's configuration"""
+        # Validate markdown file exists
+        if self.markdown_file:
+            md_path = markdown_dir / self.markdown_file
+            if not md_path.exists():
+                raise ValueError(f"Section {self.id}: markdown file not found: {md_path}")
+
+        # Validate markdown placeholder exists
+        if self.markdown_placeholder:
+            md_path = markdown_dir / self.markdown_placeholder
+            if not md_path.exists():
+                raise ValueError(f"Section {self.id}: markdown placeholder file not found: {md_path}")
+
+        # Validate source references
+        if self.source:
+            valid_sources = ["components", "spec_kinds", "spec_status"]
+            if self.source not in valid_sources:
+                raise ValueError(f"Section {self.id}: invalid source '{self.source}'. Must be one of: {', '.join(valid_sources)}")
+
+            # Validate format string if provided
+            if self.format:
+                self._validate_format_string(lang)
+
+        # Validate type-specific requirements
+        if self.type == "markdown" and not self.markdown_file:
+            raise ValueError(f"Section {self.id}: markdown type requires markdown_file")
+
+        if self.type == "dropdown" and not self.source and not self.options:
+            raise ValueError(f"Section {self.id}: dropdown type requires source or static options")
+
+        if self.type == "checkboxes" and not self.source and not self.options:
+            raise ValueError(f"Section {self.id}: checkboxes type requires source or static options")
+
+    def _validate_format_string(self, lang: "Language"):
+        """Validate format string against actual data"""
+        try:
+            if self.source == "components":
+                # Test with first component if available
+                if lang.components:
+                    test_obj = lang.components[0]
+                    self.format.format(
+                        id=test_obj.id, ID=test_obj.id.upper(),
+                        name=test_obj.name, NAME=test_obj.name.upper(),
+                        description=test_obj.description, DESCRIPTION=test_obj.description.upper(),
+                        code=test_obj.code, CODE=test_obj.code.upper()
+                    )
+            elif self.source == "spec_kinds":
+                # Test with first spec kind if available
+                if lang.spec_kinds:
+                    test_obj = lang.spec_kinds[0]
+                    self.format.format(
+                        id=test_obj.id, ID=test_obj.id.upper(),
+                        name=test_obj.name, NAME=test_obj.name.upper(),
+                        description=test_obj.description, DESCRIPTION=test_obj.description.upper(),
+                        category=test_obj.category, CATEGORY=test_obj.category.upper()
+                    )
+            elif self.source == "spec_status":
+                # Test with first status value
+                test_value = list(SpecStatus)[0]
+                self.format.format(value=test_value.value)
+        except (KeyError, AttributeError, IndexError) as e:
+            raise ValueError(f"Section {self.id}: invalid format string '{self.format}': {e}")
+
+
+@dataclass
+class IssueTemplate(Serde):
+    id: str
+    name: str
+    description: str
+    title_prefix: str
+    labels: list[str]
+    sections: list[IssueTemplateSection]
+
+    def validate(self, markdown_dir: Path, lang: "Language"):
+        """Validate entire template configuration"""
+        # Validate all sections
+        for section in self.sections:
+            section.validate(markdown_dir, lang)
+
+        # Validate no duplicate section IDs
+        section_ids = [s.id for s in self.sections]
+        if len(section_ids) != len(set(section_ids)):
+            duplicates = [sid for sid in section_ids if section_ids.count(sid) > 1]
+            raise ValueError(f"Template {self.id}: duplicate section IDs: {duplicates}")
+
+    @staticmethod
+    def load_from_dict(data: dict) -> "IssueTemplate":
+        """Custom loader to handle nested objects"""
+        sections_data = data.pop("sections", [])
+        sections = []
+        for sec_data in sections_data:
+            options_data = sec_data.pop("options", None)
+            options = None
+            if options_data:
+                options = [IssueTemplateCheckboxOption(**opt) for opt in options_data]
+            sections.append(IssueTemplateSection(**sec_data, options=options))
+
+        return IssueTemplate(**data, sections=sections)
+
+
+def list_write(data) -> list[str]:
+    return data
+
+
+@dataclass
 class Language:
     current_version: str
 
@@ -154,6 +288,7 @@ class Language:
     spec_kinds: list[SpecKind]
     spec_categories: list[SpecCategory]
     references: dict[str, list[str]]
+    issue_templates: list[IssueTemplate]
 
     def get_spec_kind(self, kind_id: str) -> SpecKind | None:
         for k in self.spec_kinds:
@@ -201,6 +336,19 @@ class Language:
     write_spec_categories = write_handle(SPEC_CATEGORIES, SpecCategory.dump_many)
 
     @staticmethod
+    def load_issue_templates() -> list[IssueTemplate]:
+        if not ISSUE_TEMPLATES.exists():
+            return []
+        data = load_yaml(ISSUE_TEMPLATES.read_text())
+        templates_data = data.get("templates", [])
+        return [IssueTemplate.load_from_dict(t) for t in templates_data]
+
+    @staticmethod
+    def write_issue_templates(templates: list[IssueTemplate]):
+        data = {"templates": [asdict(t) for t in templates]}
+        Language.dump(ISSUE_TEMPLATES, data, lambda x: x)
+
+    @staticmethod
     def load_references() -> dict[str, list[str]]:
         if REFERENCES.exists():
             data = load_yaml(REFERENCES.read_text())
@@ -218,6 +366,10 @@ class Language:
                 raise ValueError(
                     f"SpecKind {kind.id} has unknown category {kind.category}"
                 )
+
+        # Validate issue templates
+        for template in self.issue_templates:
+            template.validate(ISSUE_TEMPLATES_MARKDOWN, self)
 
     def validate_spec(self, spec: "Spec"):
         kind_ids = {k.id for k in self.spec_kinds}
@@ -240,6 +392,7 @@ class Language:
             spec_categories=Language.load_spec_categories(),
             components=Language.load_components(),
             references=Language.load_references(),
+            issue_templates=Language.load_issue_templates(),
         )
         kintsu.validate()
         return kintsu
@@ -250,6 +403,7 @@ class Language:
         Language.write_components(self.components)
         Language.write_spec_categories(self.spec_categories)
         Language.write_references(self.references)
+        Language.write_issue_templates(self.issue_templates)
         self.write_spec()
 
     def write_spec(self):

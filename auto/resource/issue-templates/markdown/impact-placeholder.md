@@ -1,0 +1,6 @@
+- Does this benefit users?
+- Does this make the language easier to adopt?
+- Does this introduce breaking changes?
+- What components are affected (compiler, parser, code generators)?
+- Are there performance implications?
+- Are there soundness implications with respect to the type system?

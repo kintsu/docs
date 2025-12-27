@@ -72,6 +72,22 @@ depends = [
     "type-registry-structure-diagram",
 ]
 
+[tasks.normalize-ascii]
+description = "Normalize Unicode characters to ASCII in markdown files"
+run = "python -m auto.doc normalize-ascii"
+
+[tasks.regenerate]
+description = "Regenerate all documentation, references, and issue templates"
+run = [
+    { task = "normalize-ascii" },
+    "python -m auto.doc collect-refs",
+    "python -m auto.doc spec-guide",
+    "python -m auto.doc reference-tables",
+    "python -m auto.doc collect-specs",
+    "python -m auto.doc generate-issue-templates",
+    "bun md-format",
+]
+
 [tasks.prep-docs]
 run = [
     "cargo run -p kintsu-parser --bin emit --features emit",

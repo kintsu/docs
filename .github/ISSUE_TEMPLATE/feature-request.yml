@@ -1,0 +1,101 @@
+name: Feature Request
+description: Propose a new feature or change to Kintsu
+title: '[Feature Request]: '
+labels:
+  - feature-request
+  - needs-triage
+body:
+  - type: markdown
+    id: intro
+    attributes:
+      value: 'Thank you for proposing a new feature! This template follows a light RFC structure to help maintainers understand your proposal. #magic___^_^___line #magic___^_^___line **What happens next:** #magic___^_^___line #magic___^_^___line 1. Maintainers review your proposal #magic___^_^___line 2. If accepted, maintainers will create a draft RFC specification on a dedicated branch #magic___^_^___line 3. You''ll be granted permissions to collaboratively edit the specification #magic___^_^___line 4. A tracking issue will be created to monitor RFC progress through review #magic___^_^___line 5. Once approved, additional specifications (TSY, SPEC, ERR) will be generated as needed #magic___^_^___line 6. This issue will remain open as the high-level tracker for all related specifications (RFC, TSY, SPEC, ERR)'
+  - type: textarea
+    id: problem
+    attributes:
+      label: Problem Statement
+      description: What problem does this feature solve? Why is it needed?
+      placeholder: Describe the problem or limitation in the current system that motivates this feature.
+    validations:
+      required: true
+  - type: textarea
+    id: motivation
+    attributes:
+      label: Motivation
+      description: Why is this feature important? What use cases does it enable?
+      placeholder: '- Who benefits from this feature? #magic___^_^___line - What use cases does it enable? #magic___^_^___line - How does it improve the developer experience? #magic___^_^___line '
+    validations:
+      required: true
+  - type: textarea
+    id: proposal
+    attributes:
+      label: Proposed Solution
+      description: Describe your proposed solution at a high level
+      placeholder: How should this feature work? What would the API/syntax look like?
+    validations:
+      required: true
+  - type: textarea
+    id: examples
+    attributes:
+      label: Examples
+      description: Provide concrete examples demonstrating the feature
+      placeholder: "```kintsu\n// Example code showing the proposed feature\nstruct Example {{\n    field: str\n}};\n```\n"
+      render: markdown
+    validations:
+      required: true
+  - type: textarea
+    id: alternatives
+    attributes:
+      label: Alternatives Considered
+      description: What other approaches did you consider? Why is your proposal better?
+      placeholder: Describe alternative solutions and why they were not chosen
+    validations:
+      required: false
+  - type: textarea
+    id: impact
+    attributes:
+      label: Impact Analysis
+      description: What is the impact of this feature on existing functionality?
+      placeholder: '- Does this benefit users? #magic___^_^___line - Does this make the language easier to adopt? #magic___^_^___line - Does this introduce breaking changes? #magic___^_^___line - What components are affected (compiler, parser, code generators)? #magic___^_^___line - Are there performance implications? #magic___^_^___line - Are there soundness implications with respect to the type system?'
+    validations:
+      required: false
+  - type: dropdown
+    id: components
+    attributes:
+      label: Affected Components
+      description: Which components of Kintsu does this feature affect?
+      options:
+        - docs
+        - spec
+        - roadmap
+        - compiler
+        - parser
+        - registry
+      multiple: true
+    validations:
+      required: true
+  - type: checkboxes
+    id: specifications
+    attributes:
+      label: Specification Requirements
+      description: Which specifications will be needed? (Maintainers will create these if accepted)
+      options:
+        - label: AD - High-level architectural decisions and design principles for Kintsu.
+        - label: RFC - Proposals for new features or changes to existing features in Kintsu.
+        - label: SPEC - Detailed technical specifications for Kintsu features and modules.
+        - label: TSY - Specifications related to the type system in Kintsu.
+        - label: CG - Specifications for the code generation process in Kintsu.
+        - label: PERF - Specifications focused on performance optimizations and benchmarks for Kintsu.
+        - label: INTEG - Specifications for integration tests covering multiple components of Kintsu.
+        - label: UNIT - Specifications for unit tests targeting individual components of Kintsu.
+        - label: E2E - Specifications for end-to-end tests validating complete workflows in Kintsu.
+        - label: ERR - Error codes and reporting mechanisms in Kintsu.
+    validations:
+      required: false
+  - type: textarea
+    id: additional
+    attributes:
+      label: Additional Context
+      description: Any other information that would help evaluate this proposal
+      placeholder: Links to related issues, external resources, or implementation notes
+    validations:
+      required: false
