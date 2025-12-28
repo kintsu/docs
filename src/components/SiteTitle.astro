@@ -1,8 +1,10 @@
 ---
 import type { Props } from "@astrojs/starlight/props";
+import svgLogo from "../../public/favicon.svg?raw";
 ---
 
 <a href="/" class="site-title">
+  <div class="kintsu-logo" set:html={svgLogo} />
   kintsu
 </a>
 
@@ -14,11 +16,30 @@ import type { Props } from "@astrojs/starlight/props";
     text-decoration: none;
     display: flex;
     align-items: center;
-    gap: 0.5rem;
+    gap: 0.375rem;
   }
 
   .site-title:hover {
     color: var(--sl-color-white);
     opacity: 0.9;
+  }
+
+  .kintsu-logo {
+    width: 2rem;
+    height: 2rem;
+    display: flex;
+    align-items: center;
+    flex-shrink: 0;
+  }
+
+  .kintsu-logo :global(svg) {
+    display: block;
+    width: 100%;
+    height: 100%;
+  }
+
+  /* Target the SVG text in dark mode */
+  :global(.dark) .kintsu-logo * text {
+    fill: oklch(0.985 0 0);
   }
 </style>
