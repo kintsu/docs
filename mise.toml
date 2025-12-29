@@ -86,6 +86,7 @@ run = [
     "python -m auto.doc collect-specs",
     "python -m auto.doc generate-issue-templates",
     "bun md-format",
+    "bun biome format --write"
 ]
 
 [tasks.prep-docs]
