@@ -195,6 +195,26 @@ type SafeResponse = Exclude[ApiResponse, ServerError];
 type EmailType = User::email;  // str
 ```
 
+### Wire format control
+
+Define serialization formats at the schema level with **form attributes**—base64-encoded cursors, compressed payloads, complex number representations.
+
+```kintsu title="forms.ks" "#[form(" "precision"
+namespace api;
+
+// Pagination cursor: JSON -> gzip -> base64
+#[form(base64 = gzip = json)]
+cursor: Cursor
+
+// Complex number with polar form
+#[form(polar, precision = f64)]
+angle: complex
+
+// 8-bit minifloat for ML weights
+#[form(e4m3)]
+weight: f8
+```
+
 ### Rich Developer Experience
 
 Kintsu prioritises developer experience with clear diagnostics, powerful tooling, and safety guarantees.
@@ -213,7 +233,8 @@ Kintsu prioritises developer experience with clear diagnostics, powerful tooling
 
 - **Concise syntax** for types, operations, and contracts
 - **Composable** via unions (`&`, `&|`) and type expressions (`Pick`, `Omit`, `Partial`)
-- **Flexible serialization** with configurable variant tagging
+- **Flexible serialization** with configurable variant tagging and form attributes
+- **Wire format control** for compression, encoding, and precision at schema level
 - **Type introspection** to track dependencies across packages
 - **Semver enforcement** blocks breaking changes at publish time
 - **Rich diagnostics** with source spans and actionable suggestions
@@ -221,10 +242,11 @@ Kintsu prioritises developer experience with clear diagnostics, powerful tooling
 
 ### Quick links
 
-| Topic                     | Description                     |
-| ------------------------- | ------------------------------- |
-| [Syntax](/syntax)         | Builtin types, tokens, keywords |
-| [Types](/types)           | Structs, enums, oneof, errors   |
-| [Specs](/specs)           | RFCs, architecture decisions    |
-| [CLI](/reference/cli)     | Command-line reference          |
-| [Specs Summary](/summary) | Top Level Published Specs       |
+| Topic                           | Description                     |
+| ------------------------------- | ------------------------------- |
+| [Syntax](/syntax)               | Builtin types, tokens, keywords |
+| [Types](/types)                 | Structs, enums, oneof, errors   |
+| [Attributes](/types/attributes) | Form, err, and tag attributes   |
+| [Specs](/specs)                 | RFCs, architecture decisions    |
+| [CLI](/reference/cli)           | Command-line reference          |
+| [Specs Summary](/summary)       | Top Level Published Specs       |

@@ -111,9 +111,9 @@ Type aliases can reference any valid type expression:
 
 **Builtins:**
 
-- Integers: `i8`, `i16`, `i32`, `i64`, `u8`, `u16`, `u32`, `u64`, `usize`
-- Floats: `f16`, `f32`, `f64`, `complex`
-- Other: `bool`, `str`, `binary`, `base64`, `datetime`, `null`, `never`
+- Integers: `i8`, `i16`, `i32`, `i64`, `u8`, `u16`, `u32`, `u64`
+- Floats: `f16`, `f32`, `f64`, `f8`, `complex`
+- Other: `bool`, `str`, `binary`, `datetime`, `date`, `week`, `null`, `never`
 
 **Named Types:**
 
