@@ -4,48 +4,48 @@ title: "Builtins"
 
 ## Primitives
 
-| Token  | Description                                         |
-| :----- | :-------------------------------------------------- |
-| `bool` | A boolean type (`true` or `false`).                 |
-| `str`  | A UTF-8 string type.                                |
-| `null` | The null/unit value. Represents absence of a value. |
+| Token  | Description          |
+| :----- | :------------------- | ------- |
+| `bool` | A boolean type (true | false). |
+| `str`  | A string type.       |
 
 ## Integers
 
-| Token   | Description                                                            |
-| :------ | :--------------------------------------------------------------------- |
-| `i8`    | Signed 8-bit integer (-128 to 127).                                    |
-| `i16`   | Signed 16-bit integer (-32,768 to 32,767).                             |
-| `i32`   | Signed 32-bit integer (-2^31 to 2^31-1).                               |
-| `i64`   | Signed 64-bit integer (-2^63 to 2^63-1).                               |
-| `u8`    | Unsigned 8-bit integer (0 to 255).                                     |
-| `u16`   | Unsigned 16-bit integer (0 to 65,535).                                 |
-| `u32`   | Unsigned 32-bit integer (0 to 2^32-1).                                 |
-| `u64`   | Unsigned 64-bit integer (0 to 2^32-1).                                 |
-| `usize` | Platform-native unsigned integer. Size depends on target architecture. |
+| Token | Description              |
+| :---- | :----------------------- |
+| `i8`  | Signed 8-bit integer.    |
+| `i16` | Signed 16-bit integer.   |
+| `i32` | Signed 32-bit integer.   |
+| `i64` | Signed 64-bit integer.   |
+| `u8`  | Unsigned 8-bit integer.  |
+| `u16` | Unsigned 16-bit integer. |
+| `u32` | Unsigned 32-bit integer. |
+| `u64` | Unsigned 64-bit integer. |
 
 ## Floating Point
 
-| Token     | Description                                      |
-| :-------- | :----------------------------------------------- |
-| `f16`     | 16-bit floating point number (half precision).   |
-| `f32`     | 32-bit floating point number (single precision). |
-| `f64`     | 64-bit floating point number (double precision). |
-| `complex` | A complex number with real and imaginary parts.  |
+| Token     | Description                                                             |
+| :-------- | :---------------------------------------------------------------------- | -------- |
+| `f16`     | A signed 16-bit floating point number.                                  |
+| `f32`     | A signed 32-bit floating point number.                                  |
+| `f64`     | A signed 64-bit floating point number.                                  |
+| `f8`      | 8-bit minifloat (requires #[form(e4m3                                   | e5m2)]). |
+| `complex` | A complex number with real and imaginary parts (requires #[form(...)]). |
 
 ## Special Types
 
-| Token      | Description                                                                                     |
-| :--------- | :---------------------------------------------------------------------------------------------- |
-| `datetime` | An [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) compliant datetime string with timezone.  |
-| `never`    | A unit type (0 size). Indicates a function never returns or a type that cannot be instantiated. |
+| Token      | Description                                                                                 |
+| :--------- | :------------------------------------------------------------------------------------------ |
+| `datetime` | A [iso 8601](https://en.wikipedia.org/wiki/ISO_8601) compliant datetime providing timezone. |
+| `date`     | ISO 8601 date (YYYY-MM-DD).                                                                 |
+| `week`     | ISO 8601 week (YYYY-Www).                                                                   |
+| `never`    | A unit type (0 size).                                                                       |
 
 ## Binary Data
 
-| Token    | Description                                                                                                    |
-| :------- | :------------------------------------------------------------------------------------------------------------- |
-| `binary` | A raw binary stream. Distinct from `[u8]` - may use language-specific types for efficient binary manipulation. |
-| `base64` | A base64-encoded binary string. Useful for serialization contexts where raw binary is not supported.           |
+| Token    | Description                                                                                                                                  |
+| :------- | :------------------------------------------------------------------------------------------------------------------------------------------- |
+| `binary` | A binary stream. this is distinct from u8[], where we may have language specific types to utilize if you intend to manipulate octal streams. |
 
 ## References
 

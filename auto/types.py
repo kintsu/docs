@@ -29,6 +29,7 @@ SPEC_CATEGORIES = RSC / "spec-categories.yaml"
 SPEC_KINDS = RSC / "spec-kinds.yaml"
 VERSIONS = RSC / "versions.yaml"
 REFERENCES = RSC / "references.yaml"
+SYNTAX_JSON = RSC / "syntax.json"
 ISSUE_TEMPLATES_DIR = RSC / "issue-templates"
 ISSUE_TEMPLATES = ISSUE_TEMPLATES_DIR / "templates.yaml"
 ISSUE_TEMPLATES_MARKDOWN = ISSUE_TEMPLATES_DIR / "markdown"
@@ -76,6 +77,35 @@ class Meta:
     id: str
     name: str
     description: str
+
+
+@dataclass
+class SyntaxToken(Serde):
+    token: str
+    description: str
+
+
+@dataclass
+class SyntaxSpec(Serde):
+    builtin: list[SyntaxToken]
+    keywords: list[SyntaxToken]
+    tokens: list[SyntaxToken]
+
+    @classmethod
+    def load_from_dict(cls, data: dict) -> "SyntaxSpec":
+        return cls(
+            builtin=[SyntaxToken(**t) for t in data.get("builtin", [])],
+            keywords=[SyntaxToken(**t) for t in data.get("keywords", [])],
+            tokens=[SyntaxToken(**t) for t in data.get("tokens", [])],
+        )
+
+    @classmethod
+    def write_to_dict(cls, instance: "SyntaxSpec") -> dict:
+        return {
+            "builtin": [asdict(t) for t in instance.builtin],
+            "keywords": [asdict(t) for t in instance.keywords],
+            "tokens": [asdict(t) for t in instance.tokens],
+        }
 
 
 @dataclass
@@ -289,6 +319,7 @@ class Language:
     spec_categories: list[SpecCategory]
     references: dict[str, list[str]]
     issue_templates: list[IssueTemplate]
+    syntax: SyntaxSpec
 
     def get_spec_kind(self, kind_id: str) -> SpecKind | None:
         for k in self.spec_kinds:
@@ -359,6 +390,21 @@ class Language:
     def write_references(refs: dict[str, list[str]]):
         Language.dump(REFERENCES, refs, lambda x: x)
 
+    @staticmethod
+    def load_syntax() -> SyntaxSpec:
+        if SYNTAX_JSON.exists():
+            from json import loads
+            data = loads(SYNTAX_JSON.read_text())
+            return SyntaxSpec.load_from_dict(data)
+        return SyntaxSpec(builtin=[], keywords=[], tokens=[])
+
+    @staticmethod
+    def write_syntax(syntax: SyntaxSpec):
+        from json import dumps
+        SYNTAX_JSON.write_text(
+            dumps(SyntaxSpec.write_to_dict(syntax), indent=2)
+        )
+
     def validate(self):
         category_ids = {c.id for c in self.spec_categories}
         for kind in self.spec_kinds:
@@ -393,6 +439,7 @@ class Language:
             components=Language.load_components(),
             references=Language.load_references(),
             issue_templates=Language.load_issue_templates(),
+            syntax=Language.load_syntax(),
         )
         kintsu.validate()
         return kintsu
@@ -404,6 +451,7 @@ class Language:
         Language.write_spec_categories(self.spec_categories)
         Language.write_references(self.references)
         Language.write_issue_templates(self.issue_templates)
+        Language.write_syntax(self.syntax)
         self.write_spec()
 
     def write_spec(self):

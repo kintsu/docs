@@ -4,28 +4,22 @@ title: "Keywords"
 
 ## Type Declaration Keywords
 
-| Token       | Description                                                                          |
-| :---------- | :----------------------------------------------------------------------------------- |
-| `namespace` | Declares a namespace scope. Should precede an identifier.                            |
-| `use`       | Imports types from another namespace. Should precede a namespace path.               |
-| `struct`    | Declares a struct type with named fields.                                            |
-| `enum`      | Declares an enumeration with named variants and optional discriminant values.        |
-| `type`      | Declares a type alias.                                                               |
-| `oneof`     | Declares a tagged union - a sequence of type variants or named enumeration of types. |
-| `error`     | Declares an error type with variants (struct, tuple, or unit).                       |
-| `operation` | Declares an operation (RPC method) with arguments and return type.                   |
+| Token       | Description                                                                                 |
+| :---------- | :------------------------------------------------------------------------------------------ |
+| `namespace` | Keyword `namespace`. should precede an identifier.                                          |
+| `use`       | Keyword `use`. should precede a namespace to be used.                                       |
+| `struct`    | Keyword `struct`. used to declare a struct.                                                 |
+| `enum`      | Keyword `enum`. used to declare an enumeration.                                             |
+| `type`      | Keyword `type`. used to declare a type alias.                                               |
+| `oneof`     | Keyword `oneof`. used to declare a sequence of type variants or named enumeration of types. |
+| `error`     | Keyword `error`. used to declare an error type.                                             |
+| `operation` | Keyword `operation`. used to declare an operation.                                          |
 
 ## Reference Keywords
 
-| Token    | Description                                                                             |
-| :------- | :-------------------------------------------------------------------------------------- |
-| `schema` | References types within the same package. Use `schema::path::Type` for self-references. |
-
-## Literal Keywords
-
-| Token  | Description                                                                  |
-| :----- | :--------------------------------------------------------------------------- |
-| `null` | The null literal, representing absence of a value. Used with nullable types. |
+| Token    | Description                                                        |
+| :------- | :----------------------------------------------------------------- |
+| `schema` | Keyword `schema`. used to reference types within the same package. |
 
 ## References
 
