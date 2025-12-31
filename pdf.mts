@@ -305,6 +305,8 @@ export function kintsuPdf(options: KintsuPdfOptions) {
     baseOptions: {
       path: "/pdf[pathname].pdf",
       waitUntil: "networkidle0",
+      // extreme but necessary for large docs in CI
+      navTimeout: 60000 * 5,
       pdf: {
         format: "A4",
         printBackground: true,
