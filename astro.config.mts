@@ -259,6 +259,14 @@ export default defineConfig({
           label: "Test Suite",
           link: "/tests",
         },
+        {
+          label: "Legal",
+          collapsed: true,
+          items: [
+            { label: "Privacy Policy", slug: "legal/privacy" },
+            { label: "Licensing", slug: "legal/licensing" },
+          ],
+        }
       ],
     }),
     react(),
