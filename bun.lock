@@ -54,6 +54,7 @@
     },
   },
   "trustedDependencies": [
+    "sharp",
     "@biomejs/biome",
   ],
   "packages": {
