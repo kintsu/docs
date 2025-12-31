@@ -1,4 +1,4 @@
-import { defineConfig } from "astro/config";
+import { defineConfig, fontProviders } from "astro/config";
 import starlight from "@astrojs/starlight";
 import { readdirSync, readFileSync } from "node:fs";
 import { join } from "node:path";
@@ -14,6 +14,9 @@ import tailwindcss from "@tailwindcss/vite";
 import starlightLinksValidator from "starlight-links-validator";
 import react from "@astrojs/react";
 import { kintsuPdf, type DocOrderEntry } from "./pdf.mts";
+
+import sitemap from "@astrojs/sitemap";
+import llmsTxt from "./llms-txt.mts";
 
 // Production site URL for PDF link generation
 const SITE_URL = "https://docs.kintsu.dev";
@@ -119,6 +122,42 @@ export default defineConfig({
   server: {
     port: 3000,
   },
+  // Experimental fonts API: downloads fonts at build time and serves from /_astro/fonts/
+  // This eliminates Google Fonts network dependency and improves FCP
+  experimental: {
+    fonts: [
+      {
+        provider: fontProviders.google(),
+        name: "Inter",
+        cssVariable: "--font-inter",
+        weights: [400, 500, 600, 700],
+        styles: ["normal"],
+        subsets: ["latin"],
+        fallbacks: [
+          "system-ui",
+          "-apple-system",
+          "BlinkMacSystemFont",
+          "Segoe UI",
+          "Roboto",
+          "sans-serif",
+        ],
+        display: "swap",
+      },
+      {
+        provider: fontProviders.google(),
+        name: "Fira Code",
+        cssVariable: "--font-fira-code",
+        weights: [400, 500],
+        styles: ["normal"],
+        subsets: ["latin"],
+        fallbacks: ["Fira Mono", "Consolas", "Monaco", "monospace"],
+        display: "swap",
+      },
+    ],
+  },
+  build: {
+    inlineStylesheets: "always",
+  },
   markdown: {
     remarkPlugins: [remarkGfm, remarkGithubAlerts],
   },
@@ -147,6 +186,8 @@ export default defineConfig({
         styleOverrides: { codeFontFamily: "'Fira Code', monospace" },
       },
       components: {
+        Head: "./src/components/AnalyticsHead.astro",
+        ContentPanel: "./src/components/ContentPanel.astro",
         SiteTitle: "./src/components/SiteTitle.astro",
         SocialIcons: "./src/components/SocialIcons.astro",
         ThemeSelect: "./src/components/ThemeSelect.astro",
@@ -156,6 +197,7 @@ export default defineConfig({
         Search: "./src/components/Search.astro",
         Sidebar: "./src/components/Sidebar.astro",
         Header: "./src/components/Header.astro",
+        Footer: "./src/components/Footer.astro",
       },
       social: [],
       plugins: [
@@ -210,16 +252,29 @@ export default defineConfig({
         },
         {
           label: "Specifications",
+          collapsed: true,
           items: generateSpecSidebarItems(),
+        },
+        {
+          label: "Test Suite",
+          link: "/tests",
         },
       ],
     }),
     react(),
-    kintsuPdf({
+    !process.env.SKIP_PDF &&
+      kintsuPdf({
+        siteUrl: SITE_URL,
+        specKinds: kintsuSpec.spec_kinds,
+        specKindOrder: SPEC_KIND_ORDER,
+        docsOrder: DOCS_ORDER,
+      }),
+    sitemap(),
+    llmsTxt({
+      title: "Kintsu Documentation",
+      description:
+        "Documentation for Kintsu, a schema language for defining strongly-typed data structures with multi-language code generation.",
       siteUrl: SITE_URL,
-      specKinds: kintsuSpec.spec_kinds,
-      specKindOrder: SPEC_KIND_ORDER,
-      docsOrder: DOCS_ORDER,
     }),
   ],
 });

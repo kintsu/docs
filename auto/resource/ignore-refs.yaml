@@ -1,0 +1,21 @@
+
+urls:
+  - registry.corp.example.com
+  - registry.example.com
+  - registry.kintsu.dev
+  - github.com/kintsu-lang/kintsu
+  - github.com/org/my-package
+  - example.com
+  - github.com/org/repo
+  - github.com/acme/schemas
+  - github.com/acme/external
+  - github.com/org/my-package
+  - registry.url
+  - schemas.internal
+  - schemas.partner.example.com
+  - schemas.corp.example.com
+  - schemas-dev.corp.example.com
+  - acme.corp/schemas
+  - github.com/kintsu/common-types
+  - github.com/user/my-types
+  - registry.acme.internal

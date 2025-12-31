@@ -118,6 +118,14 @@
       "token": "!"
     },
     {
+      "description": "pipe tokens are supported in oneof types to separate type variants or with '&' to denote a union-or type.",
+      "token": "|"
+    },
+    {
+      "description": "used to denote the return type of an operation.",
+      "token": "->"
+    },
+    {
       "description": "pipe tokens are supported in oneof types to separate type variants.",
       "token": "\\|"
     },

@@ -1,0 +1,21 @@
+---
+/**
+ * Footer Component Override
+ *
+ * Extends Starlight's default Footer component to include:
+ * - Default Starlight footer (LastUpdated, Pagination, EditLink)
+ * - Custom site-wide footer with branding and legal links
+ */
+
+import type { Props } from "@astrojs/starlight/props";
+import Default from "@astrojs/starlight/components/Footer.astro";
+import SiteFooter from "./SiteFooter.astro";
+---
+
+<!-- Render default Starlight footer (LastUpdated, Pagination, EditLink) -->
+<Default {...Astro.props}>
+  <slot />
+</Default>
+
+<!-- Render custom site-wide footer -->
+<SiteFooter />

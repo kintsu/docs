@@ -1,0 +1,133 @@
+# Error Domain Registry
+# Maps error domain codes to ERR specifications
+# Based on ERR-0001: Error System Overview
+#
+# Error Code Format: K[Domain][Category][Sequence]
+# - K = Kintsu prefix
+# - Domain = 2 letters (e.g., LX, PR, TR)
+# - Category = 1 digit (0-9)
+# - Sequence = 3 digits (001-999)
+
+domains:
+  - code: LX
+    name: Lexical
+    err_spec: ERR-0002
+    description: Token formation from raw text
+    phase: lexing
+
+  - code: PR
+    name: Parsing
+    err_spec: ERR-0003
+    description: AST construction from tokens
+    phase: parsing
+
+  - code: NS
+    name: Namespace
+    err_spec: ERR-0004
+    description: Namespace declaration and organisation
+    phase: compilation
+
+  - code: TY
+    name: Type Definition
+    err_spec: ERR-0005
+    description: Struct, enum, error, oneof declarations
+    phase: compilation
+
+  - code: TR
+    name: Type Resolution
+    err_spec: ERR-0006
+    description: Reference resolution, alias handling
+    phase: compilation
+
+  - code: UN
+    name: Union
+    err_spec: ERR-0007
+    description: Union (&) and Union Or (&|) operations
+    phase: compilation
+
+  - code: MT
+    name: Metadata
+    err_spec: ERR-0008
+    description: Version and error attributes
+    phase: compilation
+
+  - code: TG
+    name: Tagging
+    err_spec: ERR-0009
+    description: Variant tagging styles
+    phase: compilation
+
+  - code: TE
+    name: Type Expression
+    err_spec: ERR-0010
+    description: Pick, Omit, Partial operators
+    phase: compilation
+
+  - code: PK
+    name: Package
+    err_spec: ERR-0011
+    description: Manifest and lockfile
+    phase: workspace
+
+  - code: RG
+    name: Registry
+    err_spec: ERR-0012
+    description: Client/server API operations
+    phase: runtime
+
+  - code: FS
+    name: Filesystem
+    err_spec: ERR-0013
+    description: File read/write operations
+    phase: runtime
+
+  - code: IN
+    name: Internal
+    err_spec: ERR-0014
+    description: Compiler internal errors
+    phase: any
+
+  - code: WS
+    name: Workspace
+    err_spec: ERR-0015
+    description: Workspace manifest and resolution
+    phase: workspace
+
+  - code: CL
+    name: CLI
+    err_spec: ERR-0016
+    description: Command-line interface operations
+    phase: cli
+
+  - code: CP
+    name: Compatibility
+    err_spec: ERR-0017
+    description: Version compatibility and migration
+    phase: compilation
+
+  - code: FM
+    name: Form Metadata
+    err_spec: ERR-0018
+    description: Form attributes and format specification
+    phase: compilation
+
+# Category definitions (shared across all domains)
+# Category digit is position 3 in error code (e.g., KTR1001 -> category 1)
+categories:
+  0: Syntax # Syntactic or structural malformation
+  1: Resolution # Name or reference resolution failure
+  2: Validation # Semantic constraint violation
+  3: Conflict # Duplicate or collision detected
+  4: Missing # Required element is absent
+  5: Cycle # Circular dependency detected
+  6: Deprecated # Use of deprecated feature
+  7: Suppressed # Error suppression category
+  8: Warning # Non-fatal issue
+  9: Internal # Compiler bug or unhandled condition
+
+# Severity levels with their meaning
+severities:
+  error: Hard failure that prevents compilation
+  warning: Issue that should be addressed but allows compilation
+  help: Contextual guidance (attached to other diagnostics)
+  note: Additional information (attached to other diagnostics)

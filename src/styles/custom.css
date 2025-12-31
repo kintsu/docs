@@ -1,9 +1,10 @@
-@import url("https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap");
-@import url("https://fonts.googleapis.com/css2?family=Fira+Code:wght@300..700&display=swap");
+/* Fonts are self-hosted via Astro experimental fonts API */
+/* Inter and Fira Code are downloaded at build time and served from /_astro/fonts/ */
 
 body {
   font-family:
-    "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", sans-serif;
+    var(--font-inter), -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto",
+    sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
@@ -11,13 +12,14 @@ body {
 code,
 pre,
 .sl-markdown-content code {
-  font-family: "Fira Code", "Fira Mono", monospace;
+  font-family: var(--font-fira-code), "Fira Mono", monospace;
 }
 
 :root {
   --sl-font:
-    "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", sans-serif;
-  --sl-font-mono: "Fira Code", "Fira Mono", monospace;
+    var(--font-inter), -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto",
+    sans-serif;
+  --sl-font-mono: var(--font-fira-code), "Fira Mono", monospace;
 
   --sl-color-accent-low: #1e3a8a;
   --sl-color-accent: #2563eb;
@@ -244,6 +246,21 @@ header.header {
   :root[data-theme="light"] header.header {
     background-color: oklch(1 0 0 / 0.6);
   }
+}
+
+/* ===== Expressive-Code Caption Plugin Override ===== */
+/* Fix hardcoded black background in @fujocoded/expressive-code-caption */
+.expressive-code figcaption:last-child {
+  background-color: var(--sl-color-gray-6);
+  color: var(--sl-color-gray-2);
+  border-top: 1px solid var(--sl-color-hairline);
+  padding: 0.5rem 1rem;
+  font-size: 0.875rem;
+}
+
+:root[data-theme="light"] .expressive-code figcaption:last-child {
+  background-color: var(--sl-color-gray-7);
+  color: var(--sl-color-gray-3);
 }
 
 /* Fix header to have consistent padding regardless of sidebar state */
@@ -491,4 +508,133 @@ mobile-starlight-toc > nav {
 .markdown-alert-caution .markdown-alert-title::before {
   -webkit-mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolygon points='7.86 2 16.14 2 22 7.86 22 16.14 16.14 22 7.86 22 2 16.14 2 7.86 7.86 2'/%3E%3Cline x1='12' y1='8' x2='12' y2='12'/%3E%3Cline x1='12' y1='16' x2='12.01' y2='16'/%3E%3C/svg%3E");
   mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolygon points='7.86 2 16.14 2 22 7.86 22 16.14 16.14 22 7.86 22 2 16.14 2 7.86 7.86 2'/%3E%3Cline x1='12' y1='8' x2='12' y2='12'/%3E%3Cline x1='12' y1='16' x2='12.01' y2='16'/%3E%3C/svg%3E");
+}
+
+/* ===== Test Suite Code Preview Syntax Highlighting ===== */
+/* Uses the same color variables as expressive-code for consistency */
+.code-preview {
+  color: var(--sl-color-white);
+}
+
+.code-preview .sl-comment {
+  color: var(--sl-color-gray-3);
+  font-style: italic;
+}
+
+.code-preview .sl-string {
+  color: var(--sl-color-green);
+}
+
+.code-preview .sl-keyword {
+  color: var(--sl-color-purple);
+  font-weight: 500;
+}
+
+.code-preview .sl-decorator {
+  color: var(--sl-color-orange);
+}
+
+.code-preview .sl-type {
+  color: var(--sl-color-blue);
+}
+
+.code-preview .sl-number {
+  color: var(--sl-color-orange);
+}
+
+.code-preview .sl-punctuation {
+  color: var(--sl-color-gray-2);
+}
+
+.code-preview .sl-section {
+  color: var(--sl-color-blue);
+  font-weight: 600;
+}
+
+.code-preview .sl-key {
+  color: var(--sl-color-purple);
+}
+
+.code-preview .sl-boolean {
+  color: var(--sl-color-orange);
+}
+
+/* Test explorer glass effect for collapsed panel */
+.test-explorer-glass {
+  background: rgba(var(--sl-color-bg-sidebar-rgb, 12, 10, 9), 0.85);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+}
+
+/* Hide "On this page" on test pages */
+[data-pathname^="/tests"] starlight-toc,
+[data-pathname^="/tests"] .right-sidebar-container,
+[data-pathname^="/tests"] aside.right-sidebar {
+  display: none !important;
+}
+
+/* Make test page content full width */
+[data-pathname^="/tests"] .sl-container {
+  max-width: 100%;
+}
+
+/* Card slide animations */
+.test-card-enter {
+  animation: slideInFromLeft 0.2s ease-out;
+}
+
+.test-card-exit {
+  animation: slideOutToLeft 0.2s ease-out;
+}
+
+.test-detail-enter {
+  animation: slideInFromRight 0.2s ease-out;
+}
+
+.test-detail-exit {
+  animation: slideOutToRight 0.2s ease-out;
+}
+
+@keyframes slideInFromLeft {
+  from {
+    opacity: 0;
+    transform: translateX(-20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes slideOutToLeft {
+  from {
+    opacity: 1;
+    transform: translateX(0);
+  }
+  to {
+    opacity: 0;
+    transform: translateX(-20px);
+  }
+}
+
+@keyframes slideInFromRight {
+  from {
+    opacity: 0;
+    transform: translateX(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes slideOutToRight {
+  from {
+    opacity: 1;
+    transform: translateX(0);
+  }
+  to {
+    opacity: 0;
+    transform: translateX(20px);
+  }
 }

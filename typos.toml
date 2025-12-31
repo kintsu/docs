@@ -1,0 +1,26 @@
+# typos configuration for source code spell checking
+# Canadian English for documentation is handled by Harper
+# typos focuses on code files where American spellings (e.g. CSS "color") are standard
+
+[default]
+# Use generic English - don't enforce dialect for code (CSS uses "color", not "colour")
+locale = "en"
+
+[files]
+# Exclude documentation files - Harper handles those with Canadian English
+extend-exclude = [
+  "*.md",
+  "*.mdx",
+  "src/content/**",
+  "kintsu/**",
+  "factsets/**",
+  "node_modules/**",
+  "dist/**",
+  ".git/**",
+]
+
+[default.extend-words]
+# Project-specific terms
+kintsu = "kintsu"
+astro = "astro"
+starlight = "starlight"

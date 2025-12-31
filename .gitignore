@@ -6,6 +6,9 @@ dist/
 diagrams/*.png
 auto/instructions.md
 
+src/content/tests/*.json
+test-suite.jsonl
+
 .vscode/
 
 /zzz
@@ -29,3 +32,6 @@ pnpm-debug.log*
 
 # macOS-specific files
 .DS_Store
+
+zyz/
+.harper-dictionary-generated.txt

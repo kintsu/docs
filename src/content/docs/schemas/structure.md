@@ -6,7 +6,7 @@ Schema packages follow a conventional directory layout with `lib.ks` as the entr
 
 ## Directory Layout
 
-```txts
+```txt
 my-package/
  |--- schema.toml           # Package manifest
  |--- schema/               # Schema source directory

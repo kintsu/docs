@@ -1,0 +1,119 @@
+---
+import StarlightPage from "@astrojs/starlight/components/StarlightPage.astro";
+import { getCollection } from "astro:content";
+import { TestExplorer } from "@/components/tests";
+import { renderAnsiOutputs, getAnsiStyles } from "@/lib/render-ansi";
+import type { RenderedOutputs } from "@/lib/render-ansi";
+
+const tests = await getCollection("tests");
+
+// Pre-render ANSI outputs for all CLI tests at build time
+const renderedOutputsMap = new Map<string, RenderedOutputs>();
+await Promise.all(
+  tests.map(async (test) => {
+    if (test.data.type === "cli_test") {
+      const { test: testData } = test.data;
+      const outputs = await renderAnsiOutputs({
+        stdout: testData.stdout,
+        stdout_coloured: testData.stdout_coloured,
+        stderr: testData.stderr,
+        stderr_coloured: testData.stderr_coloured,
+      });
+      renderedOutputsMap.set(testData.metadata.id, outputs);
+    }
+  })
+);
+
+// Convert Map to plain object for serialization
+const renderedOutputs = Object.fromEntries(renderedOutputsMap);
+const testData = tests.map((test) => test.data);
+
+const frontmatter = {
+  title: "Implementation Tests",
+  description:
+    "Browse and explore the Kintsu compiler test suite. Each test validates specific behaviour of the lexer, parser, type system, and code generation.",
+  tableOfContents: false,
+};
+
+// Get ANSI styles for the page
+const ansiStyles = await getAnsiStyles();
+---
+
+<StarlightPage frontmatter={frontmatter} hasSidebar={false}>
+  <TestExplorer tests={testData} renderedOutputsMap={renderedOutputs} client:load />
+</StarlightPage>
+
+<style is:global set:html={ansiStyles}></style>
+
+<style is:global>
+  /* Hide "On this page" section and pagination on test pages */
+  .tests-page starlight-toc,
+  [data-page-type="tests"] aside.right-sidebar {
+    display: none !important;
+  }
+
+  /* Hide pagination on tests page */
+  [data-pagefind-body] ~ .pagination-links {
+    display: none !important;
+  }
+
+  /* Reduce whitespace on tests page */
+  .main-frame > article.content-panel,
+  article.content-panel {
+    padding-block: 1rem !important;
+  }
+
+  /* Remove default heading margin */
+  article.content-panel > h1#_top {
+    margin-block: 0 0.5rem !important;
+  }
+
+  /* Style pre-rendered ANSI output containers */
+  .ansi-output-container {
+    border-radius: 0.375rem;
+    overflow: hidden;
+  }
+
+  .ansi-output-container .ec-line {
+    padding-inline: 0.75rem;
+  }
+
+  /* Clickable file paths in ANSI output */
+  .ansi-file-link {
+    cursor: pointer;
+    border-bottom: 1px dashed currentColor;
+    transition: color 0.15s, border-color 0.15s;
+  }
+
+  .ansi-file-link:hover {
+    color: var(--sl-color-accent);
+    border-color: var(--sl-color-accent);
+  }
+
+  .ansi-file-link::after {
+    content: '';
+    display: inline-block;
+    vertical-align: middle;
+    width: 0.875rem;
+    height: 0.875rem;
+    margin-left: 0.25rem;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%239ca3af' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z'/%3E%3Cpolyline points='14 2 14 8 20 8'/%3E%3C/svg%3E");
+    background-size: contain;
+    background-repeat: no-repeat;
+    opacity: 0;
+    transition: opacity 0.15s;
+  }
+
+  .ansi-file-link:hover::after {
+    opacity: 1;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%2360a5fa' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z'/%3E%3Cpolyline points='14 2 14 8 20 8'/%3E%3C/svg%3E");
+  }
+</style>
+
+<script>
+  // Remove pagination on tests page
+  document.addEventListener('DOMContentLoaded', () => {
+    const pagination = document.querySelector('.pagination-links');
+    if (pagination) pagination.remove();
+  });
+</script>

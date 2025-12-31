@@ -84,6 +84,7 @@ export function MobileMenuButton() {
       onClick={toggleExpanded}
       aria-expanded={expanded}
       aria-controls="starlight__sidebar"
+      aria-label={expanded ? "Close menu" : "Open menu"}
       className="shrink-0"
     >
       {expanded ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}

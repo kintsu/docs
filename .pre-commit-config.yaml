@@ -11,6 +11,7 @@ repos:
       - id: end-of-file-fixer
       - id: check-yaml
       - id: check-added-large-files
+        args: ['--maxkb=1000']
   - repo: https://github.com/google/yamlfmt
     rev: v0.20.0
     hooks:
@@ -20,3 +21,17 @@ repos:
     rev: typos-dict-v0.13.13
     hooks:
       - id: typos
+# - repo: local
+#   hooks:
+#     - id: harper
+#       name: Harper Grammar Check (Canadian English)
+#       entry: bun run scripts/harper-check.ts lint
+#       language: system
+#       types: [markdown]
+#       pass_filenames: true
+#       exclude: |
+#         (?x)^(
+#           kintsu/.*|
+#           factsets/.*|
+#           node_modules/.*
+#         )$

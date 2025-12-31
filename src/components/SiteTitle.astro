@@ -1,10 +1,16 @@
 ---
 import type { Props } from "@astrojs/starlight/props";
-import svgLogo from "../../public/favicon.svg?raw";
 ---
 
 <a href="/" class="site-title">
-  <div class="kintsu-logo" set:html={svgLogo} />
+  <picture class="kintsu-logo">
+    <source
+      type="image/png"
+      srcset="/favicons/favicon-32x32.png 32w, /favicons/favicon-48x48.png 48w, /favicons/favicon-96x96.png 96w"
+      sizes="2rem"
+    />
+    <img src="/favicon.svg" alt="Kintsu logo" width="32" height="32" fetchpriority="high" />
+  </picture>
   kintsu
 </a>
 
@@ -32,14 +38,10 @@ import svgLogo from "../../public/favicon.svg?raw";
     flex-shrink: 0;
   }
 
-  .kintsu-logo :global(svg) {
+  .kintsu-logo img {
     display: block;
     width: 100%;
     height: 100%;
-  }
-
-  /* Target the SVG text in dark mode */
-  :global(.dark) .kintsu-logo * text {
-    fill: oklch(0.985 0 0);
+    object-fit: contain;
   }
 </style>

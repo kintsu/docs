@@ -1,0 +1,76 @@
+---
+/**
+ * OneDollarStats Analytics Integration
+ *
+ * Extends Starlight's default Head component with privacy-first analytics.
+ * Focuses on high-value, actionable metrics.
+ *
+ * Tracked Events:
+ * - Search queries (content discovery)
+ * - PDF downloads (content consumption)
+ * - External links (navigation patterns)
+ * - Conversion goals (GitHub, Discord clicks)
+ *
+ * Configuration:
+ * - Tracks all pages including localhost (separate dev view)
+ * - Automatic event tracking for links and downloads
+ * - Context-aware enrichment (section, content type, theme)
+ *
+ * @see /src/lib/analytics.ts for tracking utilities
+ * @see https://docs.onedollarstats.com/installation
+ */
+import type { Props } from "@astrojs/starlight/props";
+import Default from "@astrojs/starlight/components/Head.astro";
+import { Font } from "astro:assets";
+---
+
+<!-- Render default Starlight Head (includes charset, title, meta description, etc.) -->
+<Default {...Astro.props}><slot /></Default>
+
+<!-- Self-hosted fonts via Astro experimental fonts API -->
+<!-- Fonts are downloaded at build time and served from /_astro/fonts/ -->
+<Font cssVariable="--font-inter" preload={[{ subset: "latin", weight: "400" }, { subset: "latin", weight: "500" }]} />
+<Font cssVariable="--font-fira-code" preload={[{ subset: "latin", weight: "400" }]} />
+
+<!-- Preconnect hints for critical third-party origins -->
+<link rel="preconnect" href="https://analytics.kintsu.dev" />
+
+<!-- DNS prefetch for less critical origins -->
+<link rel="dns-prefetch" href="https://github.com" />
+
+<!-- Optimized favicon links with high priority -->
+<link rel="icon" type="image/png" sizes="32x32" href="/favicons/favicon-32x32.png" fetchpriority="high" />
+<link rel="icon" type="image/png" sizes="16x16" href="/favicons/favicon-16x16.png" fetchpriority="high" />
+<link rel="apple-touch-icon" sizes="180x180" href="/favicons/apple-touch-icon.png" />
+
+<!-- Content Security Policy - fonts self-hosted, no Google Fonts needed -->
+<meta
+  http-equiv="Content-Security-Policy"
+  content="default-src 'self'; script-src 'self' 'unsafe-inline' https://collector.onedollarstats.com; style-src 'self' 'unsafe-inline'; font-src 'self'; connect-src 'self' *.kintsu.dev https://collector.onedollarstats.com; img-src 'self' data: https:; base-uri 'self'; form-action 'self'; frame-ancestors 'self';"
+/>
+
+<script>
+  import { configure } from "onedollarstats";
+  import { initializeAnalytics } from "../lib/analytics";
+
+  // Initialize OneDollarStats configuration
+  if (typeof window !== "undefined") {
+    configure({
+      collectorUrl: "https://collector.onedollarstats.com/events",
+    //   collectorUrl: "https://analytics.kintsu.dev/events",
+      autocollect: true,
+      hashRouting: false,
+      trackLocalhostAs: "docs.kintsu.dev",
+      excludePages: [],
+      includePages: [],
+    });
+
+    // Initialize centralized analytics utilities
+    // This sets up automatic tracking for:
+    // - External link clicks
+    // - PDF downloads
+    // - Theme changes
+    // - Code interactions
+    initializeAnalytics();
+  }
+</script>

@@ -265,10 +265,12 @@
     "err-0006": [
       "err-0001",
       "rfc-0023",
+      "spec-0001",
       "spec-0007",
       "spec-0010",
       "spec-0011",
       "spec-0022",
+      "tsy-0001",
       "tsy-0008"
     ],
     "err-0007": [
@@ -306,7 +308,19 @@
     ],
     "err-0017": ["err-0001", "rfc-0030", "rfc-0031"],
     "err-0018": ["err-0001", "rfc-0023", "rfc-0032", "spec-0024", "tsy-0015"],
-    "rfc-0001": ["tsy-0001"],
+    "rfc-0001": ["spec-0001", "tsy-0001"],
+    "rfc-0002": [
+      "rfc-0003",
+      "rfc-0007",
+      "spec-0002",
+      "spec-0003",
+      "spec-0007",
+      "tsy-0002",
+      "tsy-0003",
+      "tsy-0007"
+    ],
+    "rfc-0003": ["spec-0003", "tsy-0003"],
+    "rfc-0005": ["spec-0005", "tsy-0005"],
     "rfc-0006": ["spec-0006", "tsy-0002", "tsy-0006", "tsy-0007"],
     "rfc-0007": ["rfc-0008", "spec-0007", "tsy-0002", "tsy-0007"],
     "rfc-0008": ["rfc-0007", "spec-0008", "tsy-0003", "tsy-0008"],
@@ -344,11 +358,14 @@
     ],
     "rfc-0019": ["rfc-0011", "rfc-0020", "rfc-0024", "spec-0018", "spec-0023"],
     "rfc-0021": [
+      "rfc-0001",
       "rfc-0019",
       "rfc-0020",
       "rfc-0032",
+      "spec-0001",
       "spec-0020",
       "spec-0024",
+      "tsy-0001",
       "tsy-0015"
     ],
     "rfc-0022": ["rfc-0019", "rfc-0020", "spec-0021"],
@@ -377,6 +394,8 @@
       "tsy-0012",
       "tsy-0015"
     ],
+    "spec-0002": ["spec-0003", "spec-0007"],
+    "spec-0003": ["spec-0002"],
     "spec-0006": [
       "rfc-0006",
       "spec-0001",
@@ -446,7 +465,15 @@
     ],
     "spec-0018": ["rfc-0019", "rfc-0024", "spec-0019", "spec-0023"],
     "spec-0019": ["rfc-0020", "spec-0018", "spec-0020"],
-    "spec-0020": ["rfc-0021", "spec-0018", "spec-0019"],
+    "spec-0020": [
+      "rfc-0021",
+      "spec-0001",
+      "spec-0018",
+      "spec-0019",
+      "spec-0024",
+      "tsy-0001",
+      "tsy-0015"
+    ],
     "spec-0021": ["rfc-0022", "spec-0018", "spec-0019"],
     "spec-0022": ["err-0001", "rfc-0023"],
     "spec-0023": ["err-0015", "rfc-0019", "rfc-0024", "spec-0018"],
@@ -458,6 +485,8 @@
       "tsy-0001",
       "tsy-0015"
     ],
+    "tsy-0001": ["rfc-0001"],
+    "tsy-0002": ["tsy-0003", "tsy-0007"],
     "tsy-0006": ["rfc-0006", "spec-0006", "tsy-0002", "tsy-0003", "tsy-0007"],
     "tsy-0007": ["rfc-0007", "spec-0007", "tsy-0002", "tsy-0003", "tsy-0008"],
     "tsy-0008": ["rfc-0007", "rfc-0008", "spec-0008", "tsy-0003", "tsy-0007"],
@@ -497,11 +526,117 @@
     "tsy-0015": [
       "err-0001",
       "err-0018",
+      "rfc-0001",
       "rfc-0012",
       "rfc-0032",
       "spec-0024",
       "tsy-0001",
       "tsy-0012"
+    ]
+  },
+  "external_references": {
+    "err-0002": [
+      {
+        "title": "https://github.com/kintsu/kintsu/issues",
+        "desc": "",
+        "url": "https://github.com/kintsu/kintsu/issues"
+      }
+    ],
+    "rfc-0001": [
+      {
+        "title": "IEEE 754-2008",
+        "desc": "IEEE Standard for Floating-Point Arithmetic",
+        "url": "https://ieeexplore.ieee.org/document/4610935"
+      },
+      {
+        "title": "IEEE 754-2019",
+        "desc": "IEEE Standard for Floating-Point Arithmetic (current revision)",
+        "url": "https://ieeexplore.ieee.org/document/8766229"
+      },
+      {
+        "title": "ISO 8601",
+        "desc": "Date and time format standard (defines duration formats)",
+        "url": "https://www.iso.org/iso-8601-date-and-time-format.html"
+      },
+      {
+        "title": "Unicode Standard",
+        "desc": "Unicode scalar value specification",
+        "url": "https://unicode.org/standard/standard.html"
+      }
+    ],
+    "rfc-0019": [
+      {
+        "title": "Semantic Versioning 2.0.0",
+        "desc": "",
+        "url": "https://semver.org/"
+      },
+      { "title": "Semver Crate", "desc": "", "url": "https://docs.rs/semver" }
+    ],
+    "rfc-0032": [
+      {
+        "title": "IEEE 754-2008",
+        "desc": "IEEE Standard for Floating-Point Arithmetic",
+        "url": "https://ieeexplore.ieee.org/document/4610935"
+      },
+      {
+        "title": "OCP FP8 v1.0",
+        "desc": "Open Compute Project 8-bit Floating Point Specification",
+        "url": "https://www.opencompute.org/documents/ocp-8-bit-floating-point-specification-ofp8-revision-1-0-2023-12-01-pdf-1"
+      },
+      {
+        "title": "OCP MX v1.0",
+        "desc": "Open Compute Project Microscaling Formats Specification",
+        "url": "https://www.opencompute.org/documents/ocp-microscaling-formats-mx-v1-0-spec-final-pdf"
+      },
+      {
+        "title": "RFC 6838",
+        "desc": "Media Type Specifications and Registration Procedures",
+        "url": "https://datatracker.ietf.org/doc/html/rfc6838"
+      },
+      {
+        "title": "IANA Media Types",
+        "desc": "IANA Media Types Registry",
+        "url": "https://www.iana.org/assignments/media-types/media-types.xhtml"
+      }
+    ],
+    "spec-0024": [
+      {
+        "title": "OCP MX Specification v1.0",
+        "desc": "",
+        "url": "https://www.opencompute.org/documents/ocp-microscaling-formats-mx-v1-0-spec-final-pdf"
+      },
+      {
+        "title": "IEEE 754-2008",
+        "desc": "",
+        "url": "https://ieeexplore.ieee.org/document/4610935"
+      },
+      {
+        "title": "RFC 6838",
+        "desc": "",
+        "url": "https://datatracker.ietf.org/doc/html/rfc6838"
+      }
+    ],
+    "tsy-0015": [
+      {
+        "title": "IEC 60027",
+        "desc": "",
+        "url": "https://en.wikipedia.org/wiki/IEC_60027"
+      },
+      {
+        "title": "ISO 80000-2:2019",
+        "desc": "Quantities and units \u2014 Mathematics",
+        "url": "https://www.iso.org/obp/ui/#iso:std:iso:80000:-2:ed-2:v2:en"
+      },
+      {
+        "title": "RFC 6838",
+        "desc": "",
+        "url": "https://datatracker.ietf.org/doc/html/rfc6838"
+      },
+      {
+        "title": "IANA Media Types",
+        "desc": "",
+        "url": "https://www.iana.org/assignments/media-types/media-types.xhtml"
+      }
     ]
   },
   "issue_templates": [
@@ -1082,6 +1217,14 @@
         "description": "bang tokens are used to set meta as inner meta, or declare a return type may raise an error. e.g. `-> i32!`."
       },
       {
+        "token": "|",
+        "description": "pipe tokens are supported in oneof types to separate type variants or with '&' to denote a union-or type."
+      },
+      {
+        "token": "->",
+        "description": "used to denote the return type of an operation."
+      },
+      {
         "token": "\\|",
         "description": "pipe tokens are supported in oneof types to separate type variants."
       },
@@ -1095,5 +1238,967 @@
       },
       { "token": "*/", "description": "used to end a multi-line comment" }
     ]
-  }
+  },
+  "error_domains": {
+    "domains": [
+      {
+        "code": "LX",
+        "name": "Lexical",
+        "err_spec": "ERR-0002",
+        "description": "Token formation from raw text",
+        "phase": "lexing"
+      },
+      {
+        "code": "PR",
+        "name": "Parsing",
+        "err_spec": "ERR-0003",
+        "description": "AST construction from tokens",
+        "phase": "parsing"
+      },
+      {
+        "code": "NS",
+        "name": "Namespace",
+        "err_spec": "ERR-0004",
+        "description": "Namespace declaration and organisation",
+        "phase": "compilation"
+      },
+      {
+        "code": "TY",
+        "name": "Type Definition",
+        "err_spec": "ERR-0005",
+        "description": "Struct, enum, error, oneof declarations",
+        "phase": "compilation"
+      },
+      {
+        "code": "TR",
+        "name": "Type Resolution",
+        "err_spec": "ERR-0006",
+        "description": "Reference resolution, alias handling",
+        "phase": "compilation"
+      },
+      {
+        "code": "UN",
+        "name": "Union",
+        "err_spec": "ERR-0007",
+        "description": "Union (&) and Union Or (&|) operations",
+        "phase": "compilation"
+      },
+      {
+        "code": "MT",
+        "name": "Metadata",
+        "err_spec": "ERR-0008",
+        "description": "Version and error attributes",
+        "phase": "compilation"
+      },
+      {
+        "code": "TG",
+        "name": "Tagging",
+        "err_spec": "ERR-0009",
+        "description": "Variant tagging styles",
+        "phase": "compilation"
+      },
+      {
+        "code": "TE",
+        "name": "Type Expression",
+        "err_spec": "ERR-0010",
+        "description": "Pick, Omit, Partial operators",
+        "phase": "compilation"
+      },
+      {
+        "code": "PK",
+        "name": "Package",
+        "err_spec": "ERR-0011",
+        "description": "Manifest and lockfile",
+        "phase": "workspace"
+      },
+      {
+        "code": "RG",
+        "name": "Registry",
+        "err_spec": "ERR-0012",
+        "description": "Client/server API operations",
+        "phase": "runtime"
+      },
+      {
+        "code": "FS",
+        "name": "Filesystem",
+        "err_spec": "ERR-0013",
+        "description": "File read/write operations",
+        "phase": "runtime"
+      },
+      {
+        "code": "IN",
+        "name": "Internal",
+        "err_spec": "ERR-0014",
+        "description": "Compiler internal errors",
+        "phase": "any"
+      },
+      {
+        "code": "WS",
+        "name": "Workspace",
+        "err_spec": "ERR-0015",
+        "description": "Workspace manifest and resolution",
+        "phase": "workspace"
+      },
+      {
+        "code": "CL",
+        "name": "CLI",
+        "err_spec": "ERR-0016",
+        "description": "Command-line interface operations",
+        "phase": "cli"
+      },
+      {
+        "code": "CP",
+        "name": "Compatibility",
+        "err_spec": "ERR-0017",
+        "description": "Version compatibility and migration",
+        "phase": "compilation"
+      },
+      {
+        "code": "FM",
+        "name": "Form Metadata",
+        "err_spec": "ERR-0018",
+        "description": "Form attributes and format specification",
+        "phase": "compilation"
+      }
+    ],
+    "categories": {
+      "0": "Syntax",
+      "1": "Resolution",
+      "2": "Validation",
+      "3": "Conflict",
+      "4": "Missing",
+      "5": "Cycle",
+      "6": "Deprecated",
+      "7": "Suppressed",
+      "8": "Warning",
+      "9": "Internal"
+    },
+    "severities": {
+      "error": "Hard failure that prevents compilation",
+      "warning": "Issue that should be addressed but allows compilation",
+      "help": "Contextual guidance (attached to other diagnostics)",
+      "note": "Additional information (attached to other diagnostics)"
+    }
+  },
+  "spec_summaries": [
+    {
+      "id": "AD-0001",
+      "kind": "AD",
+      "number": 1,
+      "title": "Type Resolution Architecture",
+      "status": "draft",
+      "created": "2025-10-30",
+      "updated": "2025-12-24"
+    },
+    {
+      "id": "AD-0002",
+      "kind": "AD",
+      "number": 2,
+      "title": "Parallel Compilation Architecture",
+      "status": "draft",
+      "created": "2025-10-31",
+      "updated": "2025-12-24"
+    },
+    {
+      "id": "ERR-0001",
+      "kind": "ERR",
+      "number": 1,
+      "title": "Error System Overview",
+      "status": "draft",
+      "created": "2025-12-25",
+      "updated": "2025-12-28"
+    },
+    {
+      "id": "ERR-0002",
+      "kind": "ERR",
+      "number": 2,
+      "title": "Lexical Errors",
+      "status": "draft",
+      "created": "2025-12-25",
+      "updated": "2025-12-25"
+    },
+    {
+      "id": "ERR-0003",
+      "kind": "ERR",
+      "number": 3,
+      "title": "Parsing Errors",
+      "status": "draft",
+      "created": "2025-12-25",
+      "updated": "2025-12-25"
+    },
+    {
+      "id": "ERR-0004",
+      "kind": "ERR",
+      "number": 4,
+      "title": "Namespace Errors",
+      "status": "draft",
+      "created": "2025-12-25",
+      "updated": "2025-12-25"
+    },
+    {
+      "id": "ERR-0005",
+      "kind": "ERR",
+      "number": 5,
+      "title": "Type Definition Errors",
+      "status": "draft",
+      "created": "2025-12-25",
+      "updated": "2025-12-25"
+    },
+    {
+      "id": "ERR-0006",
+      "kind": "ERR",
+      "number": 6,
+      "title": "Type Resolution Errors",
+      "status": "draft",
+      "created": "2025-12-25",
+      "updated": "2025-12-25"
+    },
+    {
+      "id": "ERR-0007",
+      "kind": "ERR",
+      "number": 7,
+      "title": "Union Errors",
+      "status": "draft",
+      "created": "2025-12-25",
+      "updated": "2025-12-25"
+    },
+    {
+      "id": "ERR-0008",
+      "kind": "ERR",
+      "number": 8,
+      "title": "Metadata Errors",
+      "status": "draft",
+      "created": "2025-12-25",
+      "updated": "2025-12-25"
+    },
+    {
+      "id": "ERR-0009",
+      "kind": "ERR",
+      "number": 9,
+      "title": "Tagging Errors",
+      "status": "draft",
+      "created": "2025-12-25",
+      "updated": "2025-12-25"
+    },
+    {
+      "id": "ERR-0010",
+      "kind": "ERR",
+      "number": 10,
+      "title": "Type Expression Errors",
+      "status": "draft",
+      "created": "2025-12-25",
+      "updated": "2025-12-25"
+    },
+    {
+      "id": "ERR-0011",
+      "kind": "ERR",
+      "number": 11,
+      "title": "Package Errors",
+      "status": "draft",
+      "created": "2025-12-25",
+      "updated": "2025-12-26"
+    },
+    {
+      "id": "ERR-0012",
+      "kind": "ERR",
+      "number": 12,
+      "title": "Registry Errors",
+      "status": "draft",
+      "created": "2025-12-25",
+      "updated": "2025-12-26"
+    },
+    {
+      "id": "ERR-0013",
+      "kind": "ERR",
+      "number": 13,
+      "title": "Filesystem Errors",
+      "status": "draft",
+      "created": "2025-12-25",
+      "updated": "2025-12-25"
+    },
+    {
+      "id": "ERR-0014",
+      "kind": "ERR",
+      "number": 14,
+      "title": "Internal Errors",
+      "status": "draft",
+      "created": "2025-12-25",
+      "updated": "2025-12-25"
+    },
+    {
+      "id": "ERR-0015",
+      "kind": "ERR",
+      "number": 15,
+      "title": "Workspace Errors",
+      "status": "draft",
+      "created": "2025-12-26",
+      "updated": "2025-12-26"
+    },
+    {
+      "id": "ERR-0016",
+      "kind": "ERR",
+      "number": 16,
+      "title": "CLI Errors",
+      "status": "draft",
+      "created": "2025-12-26",
+      "updated": "2025-12-26"
+    },
+    {
+      "id": "ERR-0017",
+      "kind": "ERR",
+      "number": 17,
+      "title": "Compatibility Errors",
+      "status": "draft",
+      "created": "2025-12-27",
+      "updated": "2025-12-27"
+    },
+    {
+      "id": "ERR-0018",
+      "kind": "ERR",
+      "number": 18,
+      "title": "Form Metadata Error Domain",
+      "status": "draft",
+      "created": "2025-12-28",
+      "updated": "2025-12-31"
+    },
+    {
+      "id": "RFC-0001",
+      "kind": "RFC",
+      "number": 1,
+      "title": "Builtin Type System Design",
+      "status": "draft",
+      "created": "2025-10-30",
+      "updated": "2025-12-31"
+    },
+    {
+      "id": "RFC-0002",
+      "kind": "RFC",
+      "number": 2,
+      "title": "Struct Type Design",
+      "status": "draft",
+      "created": "2025-10-30",
+      "updated": "2025-10-30"
+    },
+    {
+      "id": "RFC-0003",
+      "kind": "RFC",
+      "number": 3,
+      "title": "Support Anonymous Structs",
+      "status": "draft",
+      "created": "2025-10-30",
+      "updated": "2025-10-30"
+    },
+    {
+      "id": "RFC-0004",
+      "kind": "RFC",
+      "number": 4,
+      "title": "Enum Type Design",
+      "status": "draft",
+      "created": "2025-10-30",
+      "updated": "2025-10-30"
+    },
+    {
+      "id": "RFC-0005",
+      "kind": "RFC",
+      "number": 5,
+      "title": "Error Type Design",
+      "status": "draft",
+      "created": "2025-10-30",
+      "updated": "2025-10-30"
+    },
+    {
+      "id": "RFC-0006",
+      "kind": "RFC",
+      "number": 6,
+      "title": "Type Alias Design",
+      "status": "draft",
+      "created": "2025-10-30",
+      "updated": "2025-12-25"
+    },
+    {
+      "id": "RFC-0007",
+      "kind": "RFC",
+      "number": 7,
+      "title": "Union Type Support",
+      "status": "draft",
+      "created": "2025-10-30",
+      "updated": "2025-12-25"
+    },
+    {
+      "id": "RFC-0008",
+      "kind": "RFC",
+      "number": 8,
+      "title": "OneOf Type Design",
+      "status": "draft",
+      "created": "2025-10-30",
+      "updated": "2025-10-30"
+    },
+    {
+      "id": "RFC-0009",
+      "kind": "RFC",
+      "number": 9,
+      "title": "Operation Design",
+      "status": "draft",
+      "created": "2025-10-30",
+      "updated": "2025-10-30"
+    },
+    {
+      "id": "RFC-0010",
+      "kind": "RFC",
+      "number": 10,
+      "title": "Namespace System",
+      "status": "draft",
+      "created": "2025-10-30",
+      "updated": "2025-12-25"
+    },
+    {
+      "id": "RFC-0011",
+      "kind": "RFC",
+      "number": 11,
+      "title": "Import System",
+      "status": "draft",
+      "created": "2025-10-30",
+      "updated": "2025-12-25"
+    },
+    {
+      "id": "RFC-0012",
+      "kind": "RFC",
+      "number": 12,
+      "title": "Metadata System",
+      "status": "draft",
+      "created": "2025-10-30",
+      "updated": "2025-10-30"
+    },
+    {
+      "id": "RFC-0013",
+      "kind": "RFC",
+      "number": 13,
+      "title": "Type Resolution Design",
+      "status": "draft",
+      "created": "2025-10-30",
+      "updated": "2025-10-30"
+    },
+    {
+      "id": "RFC-0014",
+      "kind": "RFC",
+      "number": 14,
+      "title": "Parallel Compilation Design",
+      "status": "draft",
+      "created": "2025-10-31",
+      "updated": "2025-10-31"
+    },
+    {
+      "id": "RFC-0015",
+      "kind": "RFC",
+      "number": 15,
+      "title": "Type Registry Design",
+      "status": "draft",
+      "created": "2025-10-31",
+      "updated": "2025-10-31"
+    },
+    {
+      "id": "RFC-0016",
+      "kind": "RFC",
+      "number": 16,
+      "title": "Union Or (&|)",
+      "status": "draft",
+      "created": "2025-10-31",
+      "updated": "2025-10-31"
+    },
+    {
+      "id": "RFC-0017",
+      "kind": "RFC",
+      "number": 17,
+      "title": "Variant Tagging Design",
+      "status": "draft",
+      "created": "2025-12-25",
+      "updated": "2025-12-25"
+    },
+    {
+      "id": "RFC-0018",
+      "kind": "RFC",
+      "number": 18,
+      "title": "Type Expression Design",
+      "status": "draft",
+      "created": "2025-12-25",
+      "updated": "2025-12-25"
+    },
+    {
+      "id": "RFC-0019",
+      "kind": "RFC",
+      "number": 19,
+      "title": "Package Manifest Format",
+      "status": "draft",
+      "created": "2025-12-25",
+      "updated": "2025-12-27"
+    },
+    {
+      "id": "RFC-0020",
+      "kind": "RFC",
+      "number": 20,
+      "title": "Lockfile Format",
+      "status": "draft",
+      "created": "2025-12-25",
+      "updated": "2025-12-25"
+    },
+    {
+      "id": "RFC-0021",
+      "kind": "RFC",
+      "number": 21,
+      "title": "Declaration Bundle Format",
+      "status": "draft",
+      "created": "2025-12-25",
+      "updated": "2025-12-31"
+    },
+    {
+      "id": "RFC-0022",
+      "kind": "RFC",
+      "number": 22,
+      "title": "User Configuration",
+      "status": "draft",
+      "created": "2025-12-25",
+      "updated": "2025-12-26"
+    },
+    {
+      "id": "RFC-0023",
+      "kind": "RFC",
+      "number": 23,
+      "title": "Error Handling Design",
+      "status": "draft",
+      "created": "2025-12-25",
+      "updated": "2025-12-28"
+    },
+    {
+      "id": "RFC-0024",
+      "kind": "RFC",
+      "number": 24,
+      "title": "Workspace Manifest Format",
+      "status": "draft",
+      "created": "2025-12-26",
+      "updated": "2025-12-27"
+    },
+    {
+      "id": "RFC-0025",
+      "kind": "RFC",
+      "number": 25,
+      "title": "CLI Dependency Commands",
+      "status": "draft",
+      "created": "2025-12-26",
+      "updated": "2025-12-26"
+    },
+    {
+      "id": "RFC-0026",
+      "kind": "RFC",
+      "number": 26,
+      "title": "CLI Authentication Commands",
+      "status": "draft",
+      "created": "2025-12-26",
+      "updated": "2025-12-26"
+    },
+    {
+      "id": "RFC-0027",
+      "kind": "RFC",
+      "number": 27,
+      "title": "CLI Inspection Commands",
+      "status": "draft",
+      "created": "2025-12-26",
+      "updated": "2025-12-26"
+    },
+    {
+      "id": "RFC-0028",
+      "kind": "RFC",
+      "number": 28,
+      "title": "CLI Publishing Commands",
+      "status": "draft",
+      "created": "2025-12-26",
+      "updated": "2025-12-26"
+    },
+    {
+      "id": "RFC-0029",
+      "kind": "RFC",
+      "number": 29,
+      "title": "CLI Scaffolding Commands",
+      "status": "draft",
+      "created": "2025-12-26",
+      "updated": "2025-12-26"
+    },
+    {
+      "id": "RFC-0030",
+      "kind": "RFC",
+      "number": 30,
+      "title": "Type Introspection",
+      "status": "draft",
+      "created": "2025-12-27",
+      "updated": "2025-12-27"
+    },
+    {
+      "id": "RFC-0031",
+      "kind": "RFC",
+      "number": 31,
+      "title": "Versioning Guarantees",
+      "status": "draft",
+      "created": "2025-12-27",
+      "updated": "2025-12-27"
+    },
+    {
+      "id": "RFC-0032",
+      "kind": "RFC",
+      "number": 32,
+      "title": "Form Metadata Design",
+      "status": "draft",
+      "created": "2025-12-28",
+      "updated": "2025-12-31"
+    },
+    {
+      "id": "SPEC-0001",
+      "kind": "SPEC",
+      "number": 1,
+      "title": "Builtin Type Resolution",
+      "status": "draft",
+      "created": "2025-10-30",
+      "updated": "2025-12-31"
+    },
+    {
+      "id": "SPEC-0002",
+      "kind": "SPEC",
+      "number": 2,
+      "title": "Struct Compilation",
+      "status": "draft",
+      "created": "2025-10-30",
+      "updated": "2025-10-30"
+    },
+    {
+      "id": "SPEC-0003",
+      "kind": "SPEC",
+      "number": 3,
+      "title": "Anonymous Struct Compilation",
+      "status": "draft",
+      "created": "2025-10-30",
+      "updated": "2025-10-30"
+    },
+    {
+      "id": "SPEC-0004",
+      "kind": "SPEC",
+      "number": 4,
+      "title": "Enum Compilation",
+      "status": "draft",
+      "created": "2025-10-30",
+      "updated": "2025-10-30"
+    },
+    {
+      "id": "SPEC-0005",
+      "kind": "SPEC",
+      "number": 5,
+      "title": "Error Compilation",
+      "status": "draft",
+      "created": "2025-10-30",
+      "updated": "2025-10-30"
+    },
+    {
+      "id": "SPEC-0006",
+      "kind": "SPEC",
+      "number": 6,
+      "title": "Type Alias Compilation",
+      "status": "draft",
+      "created": "2025-10-30",
+      "updated": "2025-10-30"
+    },
+    {
+      "id": "SPEC-0007",
+      "kind": "SPEC",
+      "number": 7,
+      "title": "Union Type Compilation",
+      "status": "draft",
+      "created": "2025-10-30",
+      "updated": "2025-10-30"
+    },
+    {
+      "id": "SPEC-0008",
+      "kind": "SPEC",
+      "number": 8,
+      "title": "OneOf Compilation",
+      "status": "draft",
+      "created": "2025-10-30",
+      "updated": "2025-10-30"
+    },
+    {
+      "id": "SPEC-0009",
+      "kind": "SPEC",
+      "number": 9,
+      "title": "Operation Compilation",
+      "status": "draft",
+      "created": "2025-10-30",
+      "updated": "2025-10-30"
+    },
+    {
+      "id": "SPEC-0010",
+      "kind": "SPEC",
+      "number": 10,
+      "title": "Namespace Compilation",
+      "status": "draft",
+      "created": "2025-10-30",
+      "updated": "2025-12-25"
+    },
+    {
+      "id": "SPEC-0011",
+      "kind": "SPEC",
+      "number": 11,
+      "title": "Import Resolution",
+      "status": "draft",
+      "created": "2025-10-30",
+      "updated": "2025-12-25"
+    },
+    {
+      "id": "SPEC-0012",
+      "kind": "SPEC",
+      "number": 12,
+      "title": "Metadata Resolution",
+      "status": "draft",
+      "created": "2025-10-30",
+      "updated": "2025-12-25"
+    },
+    {
+      "id": "SPEC-0013",
+      "kind": "SPEC",
+      "number": 13,
+      "title": "Type Resolution Phases",
+      "status": "draft",
+      "created": "2025-10-30",
+      "updated": "2025-12-25"
+    },
+    {
+      "id": "SPEC-0014",
+      "kind": "SPEC",
+      "number": 14,
+      "title": "Schema Compilation",
+      "status": "draft",
+      "created": "2025-10-31",
+      "updated": "2025-12-24"
+    },
+    {
+      "id": "SPEC-0015",
+      "kind": "SPEC",
+      "number": 15,
+      "title": "Type Registry",
+      "status": "draft",
+      "created": "2025-10-31",
+      "updated": "2025-12-24"
+    },
+    {
+      "id": "SPEC-0016",
+      "kind": "SPEC",
+      "number": 16,
+      "title": "Variant Tagging Compilation",
+      "status": "draft",
+      "created": "2025-12-25",
+      "updated": "2025-12-25"
+    },
+    {
+      "id": "SPEC-0017",
+      "kind": "SPEC",
+      "number": 17,
+      "title": "Type Expression Compilation",
+      "status": "draft",
+      "created": "2025-12-25",
+      "updated": "2025-12-25"
+    },
+    {
+      "id": "SPEC-0018",
+      "kind": "SPEC",
+      "number": 18,
+      "title": "Package Manifest Implementation",
+      "status": "draft",
+      "created": "2025-12-25",
+      "updated": "2025-12-27"
+    },
+    {
+      "id": "SPEC-0019",
+      "kind": "SPEC",
+      "number": 19,
+      "title": "Lockfile Implementation",
+      "status": "draft",
+      "created": "2025-12-25",
+      "updated": "2025-12-25"
+    },
+    {
+      "id": "SPEC-0020",
+      "kind": "SPEC",
+      "number": 20,
+      "title": "Declaration Bundle Implementation",
+      "status": "draft",
+      "created": "2025-12-25",
+      "updated": "2025-12-31"
+    },
+    {
+      "id": "SPEC-0021",
+      "kind": "SPEC",
+      "number": 21,
+      "title": "User Configuration Implementation",
+      "status": "draft",
+      "created": "2025-12-25",
+      "updated": "2025-12-25"
+    },
+    {
+      "id": "SPEC-0022",
+      "kind": "SPEC",
+      "number": 22,
+      "title": "Error System Architecture",
+      "status": "draft",
+      "created": "2025-12-25",
+      "updated": "2025-12-25"
+    },
+    {
+      "id": "SPEC-0023",
+      "kind": "SPEC",
+      "number": 23,
+      "title": "Workspace Manifest Implementation",
+      "status": "draft",
+      "created": "2025-12-27",
+      "updated": "2025-12-27"
+    },
+    {
+      "id": "SPEC-0024",
+      "kind": "SPEC",
+      "number": 24,
+      "title": "Form Attribute Compilation",
+      "status": "draft",
+      "created": "2025-12-28",
+      "updated": "2025-12-30"
+    },
+    {
+      "id": "TSY-0001",
+      "kind": "TSY",
+      "number": 1,
+      "title": "Builtin Types",
+      "status": "draft",
+      "created": "2025-10-30",
+      "updated": "2025-12-31"
+    },
+    {
+      "id": "TSY-0002",
+      "kind": "TSY",
+      "number": 2,
+      "title": "Struct Types",
+      "status": "draft",
+      "created": "2025-10-30",
+      "updated": "2025-10-30"
+    },
+    {
+      "id": "TSY-0003",
+      "kind": "TSY",
+      "number": 3,
+      "title": "Anonymous Structs",
+      "status": "draft",
+      "created": "2025-10-30",
+      "updated": "2025-10-30"
+    },
+    {
+      "id": "TSY-0004",
+      "kind": "TSY",
+      "number": 4,
+      "title": "Enum Types",
+      "status": "draft",
+      "created": "2025-10-30",
+      "updated": "2025-12-25"
+    },
+    {
+      "id": "TSY-0005",
+      "kind": "TSY",
+      "number": 5,
+      "title": "Error Types",
+      "status": "draft",
+      "created": "2025-10-30",
+      "updated": "2025-12-25"
+    },
+    {
+      "id": "TSY-0006",
+      "kind": "TSY",
+      "number": 6,
+      "title": "Type Aliases",
+      "status": "draft",
+      "created": "2025-10-30",
+      "updated": "2025-12-25"
+    },
+    {
+      "id": "TSY-0007",
+      "kind": "TSY",
+      "number": 7,
+      "title": "Union Types",
+      "status": "draft",
+      "created": "2025-10-30",
+      "updated": "2025-12-25"
+    },
+    {
+      "id": "TSY-0008",
+      "kind": "TSY",
+      "number": 8,
+      "title": "OneOf Types",
+      "status": "draft",
+      "created": "2025-10-30",
+      "updated": "2025-12-25"
+    },
+    {
+      "id": "TSY-0009",
+      "kind": "TSY",
+      "number": 9,
+      "title": "Operations",
+      "status": "draft",
+      "created": "2025-10-30",
+      "updated": "2025-12-25"
+    },
+    {
+      "id": "TSY-0010",
+      "kind": "TSY",
+      "number": 10,
+      "title": "Namespaces",
+      "status": "draft",
+      "created": "2025-10-30",
+      "updated": "2025-12-25"
+    },
+    {
+      "id": "TSY-0011",
+      "kind": "TSY",
+      "number": 11,
+      "title": "Imports",
+      "status": "draft",
+      "created": "2025-10-30",
+      "updated": "2025-12-25"
+    },
+    {
+      "id": "TSY-0012",
+      "kind": "TSY",
+      "number": 12,
+      "title": "Metadata",
+      "status": "draft",
+      "created": "2025-10-30",
+      "updated": "2025-12-31"
+    },
+    {
+      "id": "TSY-0013",
+      "kind": "TSY",
+      "number": 13,
+      "title": "Variant Tagging Rules",
+      "status": "draft",
+      "created": "2025-12-25",
+      "updated": "2025-12-25"
+    },
+    {
+      "id": "TSY-0014",
+      "kind": "TSY",
+      "number": 14,
+      "title": "Type Expression Rules",
+      "status": "draft",
+      "created": "2025-12-25",
+      "updated": "2025-12-25"
+    },
+    {
+      "id": "TSY-0015",
+      "kind": "TSY",
+      "number": 15,
+      "title": "Form Metadata Rules",
+      "status": "draft",
+      "created": "2025-12-28",
+      "updated": "2025-12-31"
+    }
+  ]
 }

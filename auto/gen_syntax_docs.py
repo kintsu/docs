@@ -7,7 +7,6 @@ files in src/content/docs/syntax/ with preserved frontmatter, descriptions, and 
 
 from json import loads
 from pathlib import Path
-from typing import Any
 
 
 ROOT = Path(__file__).parent.parent
@@ -85,7 +84,7 @@ def format_builtin_table(items: list[dict[str, str]]) -> str:
         output.append("| Token | Description |")
         output.append("| :---- | :---------- |")
         for item in categorized["primitives"]:
-            desc = capitalize_first_sentence(item["description"])
+            desc = capitalize_first_sentence(item["description"]).replace("|", "\\|")
             output.append(f"| `{item['token']}` | {desc} |")
         output.append("")
 
@@ -94,7 +93,7 @@ def format_builtin_table(items: list[dict[str, str]]) -> str:
         output.append("| Token | Description |")
         output.append("| :---- | :---------- |")
         for item in categorized["integers"]:
-            desc = capitalize_first_sentence(item["description"])
+            desc = capitalize_first_sentence(item["description"]).replace("|", "\\|")
             output.append(f"| `{item['token']}` | {desc} |")
         output.append("")
 
@@ -103,7 +102,7 @@ def format_builtin_table(items: list[dict[str, str]]) -> str:
         output.append("| Token | Description |")
         output.append("| :---- | :---------- |")
         for item in categorized["floats"]:
-            desc = capitalize_first_sentence(item["description"])
+            desc = capitalize_first_sentence(item["description"]).replace("|", "\\|")
             output.append(f"| `{item['token']}` | {desc} |")
         output.append("")
 
@@ -112,7 +111,7 @@ def format_builtin_table(items: list[dict[str, str]]) -> str:
         output.append("| Token | Description |")
         output.append("| :---- | :---------- |")
         for item in categorized["special"]:
-            desc = capitalize_first_sentence(item["description"])
+            desc = capitalize_first_sentence(item["description"]).replace("|", "\\|")
             output.append(f"| `{item['token']}` | {desc} |")
         output.append("")
 
@@ -121,7 +120,7 @@ def format_builtin_table(items: list[dict[str, str]]) -> str:
         output.append("| Token | Description |")
         output.append("| :---- | :---------- |")
         for item in categorized["binary"]:
-            desc = capitalize_first_sentence(item["description"])
+            desc = capitalize_first_sentence(item["description"]).replace("|", "\\|")
             output.append(f"| `{item['token']}` | {desc} |")
         output.append("")
 
@@ -130,7 +129,7 @@ def format_builtin_table(items: list[dict[str, str]]) -> str:
         output.append("| Token | Description |")
         output.append("| :---- | :---------- |")
         for item in categorized["other"]:
-            desc = capitalize_first_sentence(item["description"])
+            desc = capitalize_first_sentence(item["description"]).replace("|", "\\|")
             output.append(f"| `{item['token']}` | {desc} |")
         output.append("")
 
@@ -167,7 +166,7 @@ def format_keywords_table(items: list[dict[str, str]]) -> str:
         output.append("| Token | Description |")
         output.append("| :---- | :---------- |")
         for item in categorized["type_decl"]:
-            desc = capitalize_first_sentence(item["description"])
+            desc = capitalize_first_sentence(item["description"]).replace("|", "\\|")
             output.append(f"| `{item['token']}` | {desc} |")
         output.append("")
 
@@ -176,7 +175,7 @@ def format_keywords_table(items: list[dict[str, str]]) -> str:
         output.append("| Token | Description |")
         output.append("| :---- | :---------- |")
         for item in categorized["reference"]:
-            desc = capitalize_first_sentence(item["description"])
+            desc = capitalize_first_sentence(item["description"]).replace("|", "\\|")
             output.append(f"| `{item['token']}` | {desc} |")
         output.append("")
 
@@ -185,7 +184,7 @@ def format_keywords_table(items: list[dict[str, str]]) -> str:
         output.append("| Token | Description |")
         output.append("| :---- | :---------- |")
         for item in categorized["other"]:
-            desc = capitalize_first_sentence(item["description"])
+            desc = capitalize_first_sentence(item["description"]).replace("|", "\\|")
             output.append(f"| `{item['token']}` | {desc} |")
         output.append("")
 
@@ -199,7 +198,7 @@ def format_tokens_table(items: list[dict[str, str]]) -> str:
     output.append("| :---- | :---------- |")
 
     for item in items:
-        desc = capitalize_first_sentence(item["description"])
+        desc = capitalize_first_sentence(item["description"]).replace("|", "\\|")
         output.append(f"| `{item['token']}` | {desc} |")
 
     return "\n".join(output)

@@ -1,0 +1,429 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "definitions": {
+    "CliTestResult": {
+      "description": "Result of a CLI error test.",
+      "properties": {
+        "actual_error_code": {
+          "description": "Actual error code found (if any)",
+          "type": "string"
+        },
+        "error_message": {
+          "description": "Combined output for error_message field",
+          "type": "string"
+        },
+        "error_metadata": {
+          "allOf": [
+            {
+              "$ref": "#/definitions/ErrorMetadata"
+            }
+          ],
+          "description": "Structured error metadata for documentation (None for non-error tests)"
+        },
+        "exit_code": {
+          "description": "Exit code from CLI",
+          "format": "int32",
+          "type": "integer"
+        },
+        "expected_error_code": {
+          "description": "Expected error code (if any)",
+          "type": "string"
+        },
+        "expected_span": {
+          "description": "Whether a source span was expected per SPEC-0022",
+          "type": "boolean"
+        },
+        "fs": {
+          "allOf": [
+            {
+              "$ref": "#/definitions/MemoryFileSystem"
+            }
+          ],
+          "description": "Test filesystem for documentation generation"
+        },
+        "has_source_span": {
+          "description": "Whether a source span was actually present in output",
+          "type": "boolean"
+        },
+        "metadata": {
+          "allOf": [
+            {
+              "$ref": "#/definitions/TestMetadata"
+            }
+          ],
+          "description": "Test metadata"
+        },
+        "passed": {
+          "description": "Whether test passed expectation",
+          "type": "boolean"
+        },
+        "pre_compiled": {
+          "description": "Whether pre-compilation was run for coverage",
+          "type": "boolean"
+        },
+        "span_matches_expectation": {
+          "description": "Whether span expectation was met",
+          "type": "boolean"
+        },
+        "stderr": {
+          "description": "Stderr content (ANSI stripped for snapshots)",
+          "type": "string"
+        },
+        "stderr_coloured": {
+          "description": "Stderr content with ANSI color codes preserved",
+          "type": "string"
+        },
+        "stdout": {
+          "description": "Stdout content",
+          "type": "string"
+        },
+        "stdout_coloured": {
+          "description": "Stdout content with ANSI color codes preserved",
+          "type": "string"
+        }
+      },
+      "required": [
+        "error_message",
+        "exit_code",
+        "expected_span",
+        "fs",
+        "has_source_span",
+        "metadata",
+        "passed",
+        "pre_compiled",
+        "span_matches_expectation",
+        "stderr",
+        "stderr_coloured",
+        "stdout",
+        "stdout_coloured"
+      ],
+      "type": "object"
+    },
+    "ErrorMetadata": {
+      "description": "Detailed error metadata extracted from compiler output. Used for generating documentation website error code pages.",
+      "properties": {
+        "code": {
+          "description": "Error code (e.g., \"KTR1002\")",
+          "type": "string"
+        },
+        "domain": {
+          "description": "Error domain prefix (e.g., \"KTR\", \"KLX\", \"KWS\")",
+          "type": "string"
+        },
+        "error_category": {
+          "description": "Parsed error category (from kintsu_errors::Category)",
+          "type": "string"
+        },
+        "error_domain": {
+          "description": "Parsed error domain (from kintsu_errors::Domain)",
+          "type": "string"
+        },
+        "error_sequence": {
+          "description": "Error sequence number (e.g., 2 from KTR1002)",
+          "format": "uint16",
+          "minimum": 0.0,
+          "type": "integer"
+        },
+        "error_severity": {
+          "description": "Error severity derived from category level",
+          "type": "string"
+        },
+        "help": {
+          "description": "Help text if present",
+          "type": "string"
+        },
+        "labeled_spans": {
+          "description": "Labeled spans in the source",
+          "items": {
+            "$ref": "#/definitions/LabeledSpan"
+          },
+          "type": "array"
+        },
+        "message": {
+          "description": "Primary error message",
+          "type": "string"
+        },
+        "notes": {
+          "description": "Related notes or context",
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
+        },
+        "severity": {
+          "allOf": [
+            {
+              "$ref": "#/definitions/ErrorSeverity"
+            }
+          ],
+          "description": "Error severity (error, warning, help, note)"
+        },
+        "source_location": {
+          "allOf": [
+            {
+              "$ref": "#/definitions/SourceLocation"
+            }
+          ],
+          "description": "Source location information"
+        }
+      },
+      "required": ["labeled_spans", "notes", "severity"],
+      "type": "object"
+    },
+    "ErrorSeverity": {
+      "description": "Error severity level",
+      "enum": ["error", "warning", "help", "note"],
+      "type": "string"
+    },
+    "LabeledSpan": {
+      "description": "A labeled span in the source code",
+      "properties": {
+        "label": {
+          "description": "The label text",
+          "type": "string"
+        },
+        "primary": {
+          "description": "Whether this is the primary span",
+          "type": "boolean"
+        }
+      },
+      "required": ["label", "primary"],
+      "type": "object"
+    },
+    "MemoryFileSystem": {
+      "additionalProperties": {
+        "type": "string"
+      },
+      "type": "object"
+    },
+    "SourceLocation": {
+      "description": "Source location for an error",
+      "properties": {
+        "column": {
+          "description": "Column number (1-indexed)",
+          "format": "uint32",
+          "minimum": 0.0,
+          "type": "integer"
+        },
+        "file": {
+          "description": "File path",
+          "type": "string"
+        },
+        "line": {
+          "description": "Line number (1-indexed)",
+          "format": "uint32",
+          "minimum": 0.0,
+          "type": "integer"
+        }
+      },
+      "required": ["column", "file", "line"],
+      "type": "object"
+    },
+    "Tag": {
+      "oneOf": [
+        {
+          "description": "Tests that focus on basic functionality and correctness.",
+          "enum": ["smoke"],
+          "type": "string"
+        },
+        {
+          "description": "Tests that focus on type system soundness.",
+          "enum": ["soundness"],
+          "type": "string"
+        },
+        {
+          "description": "Tests that focus on various aspects of schema and code generation.",
+          "enum": ["validations"],
+          "type": "string"
+        },
+        {
+          "description": "Tests that focus on lockfile generation and related functionality.",
+          "enum": ["lockfile"],
+          "type": "string"
+        },
+        {
+          "description": "Tests that focus on testing the file system operations.",
+          "enum": ["file-operation"],
+          "type": "string"
+        },
+        {
+          "description": "Tests that focus on import resolution and related features.",
+          "enum": ["imports"],
+          "type": "string"
+        },
+        {
+          "description": "Tests that focus on namespace handling and related features.",
+          "enum": ["namespace"],
+          "type": "string"
+        },
+        {
+          "description": "Tests that focus on dependency resolution and management.",
+          "enum": ["dependencies"],
+          "type": "string"
+        },
+        {
+          "description": "Tests that focus on version resolution and related features.",
+          "enum": ["version-resolution"],
+          "type": "string"
+        },
+        {
+          "description": "Tests that focus on operation type resolution.",
+          "enum": ["operation"],
+          "type": "string"
+        },
+        {
+          "description": "Tests that focus on error type resolution.",
+          "enum": ["error"],
+          "type": "string"
+        },
+        {
+          "description": "Tests that focus on one-of type resolution.",
+          "enum": ["one-of"],
+          "type": "string"
+        },
+        {
+          "description": "Tests that focus on union type resolution.",
+          "enum": ["union"],
+          "type": "string"
+        },
+        {
+          "description": "Tests that focus on type alias resolution.",
+          "enum": ["type-alias"],
+          "type": "string"
+        },
+        {
+          "description": "Tests that focus on struct type resolution.",
+          "enum": ["struct"],
+          "type": "string"
+        },
+        {
+          "description": "Tests that focus on enum type resolution.",
+          "enum": ["enum"],
+          "type": "string"
+        }
+      ]
+    },
+    "TestMetadata": {
+      "properties": {
+        "expect_pass": {
+          "type": "boolean"
+        },
+        "id": {
+          "type": "string"
+        },
+        "name": {
+          "type": "string"
+        },
+        "purpose": {
+          "type": "string"
+        },
+        "tags": {
+          "items": {
+            "$ref": "#/definitions/Tag"
+          },
+          "type": "array"
+        }
+      },
+      "required": ["expect_pass", "id", "name", "purpose", "tags"],
+      "type": "object"
+    },
+    "TestReportType": {
+      "description": "Type of test report for JSONL output.",
+      "oneOf": [
+        {
+          "description": "CLI error test result",
+          "enum": ["cli_test"],
+          "type": "string"
+        },
+        {
+          "description": "Compile/harness test result",
+          "enum": ["compile_test"],
+          "type": "string"
+        }
+      ]
+    },
+    "TestReport_for_CliTestResult": {
+      "description": "Wrapper for JSONL output with type tag.",
+      "properties": {
+        "test": {
+          "allOf": [
+            {
+              "$ref": "#/definitions/CliTestResult"
+            }
+          ],
+          "description": "The test result content"
+        },
+        "type": {
+          "allOf": [
+            {
+              "$ref": "#/definitions/TestReportType"
+            }
+          ],
+          "description": "Type of test report"
+        }
+      },
+      "required": ["test", "type"],
+      "title": "TestReport_for_CliTestResult",
+      "type": "object"
+    },
+    "TestReport_for_TestResult": {
+      "description": "Wrapper for JSONL output with type tag.",
+      "properties": {
+        "test": {
+          "allOf": [
+            {
+              "$ref": "#/definitions/TestResult"
+            }
+          ],
+          "description": "The test result content"
+        },
+        "type": {
+          "allOf": [
+            {
+              "$ref": "#/definitions/TestReportType"
+            }
+          ],
+          "description": "Type of test report"
+        }
+      },
+      "required": ["test", "type"],
+      "title": "TestReport_for_TestResult",
+      "type": "object"
+    },
+    "TestResult": {
+      "properties": {
+        "actual_pass": {
+          "type": "boolean"
+        },
+        "error_message": {
+          "type": "string"
+        },
+        "fs": {
+          "$ref": "#/definitions/MemoryFileSystem"
+        },
+        "matches_expectation": {
+          "type": "boolean"
+        },
+        "metadata": {
+          "$ref": "#/definitions/TestMetadata"
+        }
+      },
+      "required": ["actual_pass", "fs", "matches_expectation", "metadata"],
+      "type": "object"
+    }
+  },
+  "description": "Test results from the Kintsu test suite. Each line in the JSONL file is either a CLI test or compile test.",
+  "oneOf": [
+    {
+      "$ref": "#/definitions/TestReport_for_CliTestResult",
+      "description": "CLI error test result",
+      "title": "CliTestReport"
+    },
+    {
+      "$ref": "#/definitions/TestReport_for_TestResult",
+      "description": "Compile/harness test result",
+      "title": "CompileTestReport"
+    }
+  ],
+  "title": "TestSuiteReport"
+}

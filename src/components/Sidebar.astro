@@ -16,6 +16,10 @@ function hasCurrentItem(entries: any[]): boolean {
 }
 ---
 
+<div class="md:sl-hidden mobile-footer mobile-footer-top">
+  <MobileMenuFooter />
+</div>
+
 <SidebarPersister>
   <nav class="sidebar-nav" aria-label="Main navigation">
     <ul class="sidebar-list top-level">
@@ -83,10 +87,6 @@ function hasCurrentItem(entries: any[]): boolean {
     </ul>
   </nav>
 </SidebarPersister>
-
-<div class="md:sl-hidden mobile-footer">
-  <MobileMenuFooter />
-</div>
 
 <style>
   .sidebar-nav {
@@ -273,11 +273,11 @@ function hasCurrentItem(entries: any[]): boolean {
     padding: 0.25rem 0.625rem;
   }
 
-  /* Mobile footer */
-  .mobile-footer {
-    margin-top: auto;
-    padding-top: 1rem;
-    border-top: 1px solid var(--sl-color-gray-5);
+  /* Mobile footer - positioned at top on mobile */
+  .mobile-footer-top {
+    padding-bottom: 0.75rem;
+    margin-bottom: 0.5rem;
+    border-bottom: 1px solid var(--sl-color-gray-5);
   }
 
   /* Responsive adjustments */

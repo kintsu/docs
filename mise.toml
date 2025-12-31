@@ -5,6 +5,7 @@ node = "latest"
 prek = "latest"
 prettier = "latest"
 python = "latest"
+typos = "latest"
 uv = "latest"
 
 [tasks]
@@ -76,23 +77,47 @@ depends = [
 description = "Normalize Unicode characters to ASCII in markdown files"
 run = "python -m auto.doc normalize-ascii"
 
+[tasks.autolink-refs]
+description = "Auto-link bare spec references in markdown files"
+run = "python -m auto.doc autolink-refs"
+
 [tasks.regenerate]
 description = "Regenerate all documentation, references, and issue templates"
 run = [
     { task = "normalize-ascii" },
+    { task = "autolink-refs" },
     "python -m auto.doc collect-refs",
     "python -m auto.doc spec-guide",
     "python -m auto.doc reference-tables",
     "python -m auto.doc collect-specs",
+    "python -m auto.doc collect-spec-summaries",
     "python -m auto.doc generate-issue-templates",
+    "bun scripts/generate-favicons.ts",
+    { task = "prep-test-suite" },
+    { task = "diagrams" },
     "bun md-format",
     "bun biome format --write"
 ]
 
-[tasks.prep-docs]
+
+[tasks.prep-test-suite]
 run = [
-    "cargo run -p kintsu-parser --bin emit --features emit",
-    "cargo run -p kintsu-cli --bin emit --features emit",
+    "rm -rf ./src/content/tests/*.json",
+    'bun ./scripts/split-tests.ts || echo "Skipping test suite prep if no tests found (CI until implemented)."',
 ]
 
-depends = ["diagrams"]
+[tasks.harper-generate]
+description = "Generate Harper dictionary with case variants"
+run = "bun scripts/harper-check.ts generate"
+
+[tasks.harper]
+description = "Check grammar in markdown files (Canadian English)"
+run = "bun scripts/harper-check.ts check"
+depends = ["harper-generate"]
+
+[tasks.spell-check]
+description = "Run all spell checks (typos for code + Harper for docs)"
+run = [
+    "typos",
+    { task = "harper" },
+]

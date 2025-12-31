@@ -4,7 +4,7 @@ description: Unified typing.
 hero:
   tagline: Welcome to kintsu docs
   image:
-    file: ../../assets/icon.svg
+    html: '<img src="/favicons/favicon-512x512.png" alt="Kintsu logo" width="320" height="320" srcset="/favicons/favicon-192x192.png 192w, /favicons/favicon-512x512.png 512w" sizes="(max-width: 50rem) 192px, 320px" style="max-width: 100%; height: auto;" fetchpriority="high" />'
   actions: []
 ---
 
@@ -74,7 +74,11 @@ error UserError {
 operation get_user(id: i64) -> User!;
 ```
 
-<img src="/compile.vhs.gif" />
+<img
+  src="/compile.vhs.gif"
+  alt="Terminal demonstration of Kintsu compiler checking schemas and generating code"
+  style="max-width: 100%; height: auto;"
+/>
 
 ### Powerful composition
 
@@ -202,17 +206,23 @@ Define serialization formats at the schema level with **form attributes**—base
 ```kintsu title="forms.ks" "#[form(" "precision"
 namespace api;
 
-// Pagination cursor: JSON -> gzip -> base64
-#[form(base64 = gzip = json)]
-cursor: Cursor
+struct PaginatedBase {
+  // Pagination cursor: JSON -> gzip -> base64
+  #[form(base64 = gzip = json)]
+  cursor: Cursor
+}
+// in transit: PaginatedBase { cursor: string }
 
-// Complex number with polar form
-#[form(polar, precision = f64)]
-angle: complex
+struct Vector {
+  // Complex number with polar form
+  #[form(polar, precision = f64)]
+  angle: complex,
 
-// 8-bit minifloat for ML weights
-#[form(e4m3)]
-weight: f8
+  // 8-bit minifloat for ML weights
+  #[form(e4m3)]
+  weight: f8
+}
+// in transit: Vector { angle: { }, weight: <fp8 e4m3> }
 ```
 
 ### Rich Developer Experience

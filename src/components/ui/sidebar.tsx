@@ -84,6 +84,7 @@ function SidebarProvider({
         name: SIDEBAR_COOKIE_NAME,
         path: "/",
         value: String(openState),
+        sameSite: "lax",
       });
     },
     [setOpenProp, open],

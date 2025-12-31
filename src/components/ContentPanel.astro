@@ -1,0 +1,16 @@
+---
+/**
+ * ContentPanel Component Override
+ *
+ * Extends Starlight's default ContentPanel component.
+ * Feedback widget is now integrated via EditLink component.
+ */
+
+import type { Props } from "@astrojs/starlight/props";
+import Default from "@astrojs/starlight/components/ContentPanel.astro";
+---
+
+<!-- Render default Starlight content -->
+<Default {...Astro.props}>
+  <slot />
+</Default>

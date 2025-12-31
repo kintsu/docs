@@ -3,12 +3,26 @@ name: specification-workflow
 title: "Specification Workflow"
 description: "Standard workflow for creating RFC, TSY, AD, SPEC, and ERR documents for Kintsu"
 tags: ["specs", "documentation", "workflow", "kintsu", "errors"]
-updated: 2025-12-27
+updated: 2025-12-30
 ---
 
 # Specification Workflow
 
 This skill documents the process for creating and managing Kintsu specifications.
+
+## Related Workflows
+
+| Workflow | Use Case |
+|----------|----------|
+| **specification-workflow** (this) | Creating new specifications from scratch |
+| **spec-planning** | Planning updates to existing specifications |
+
+**When to use which:**
+- New language feature requiring new spec files -> specification-workflow
+- Adding types/forms/errors to existing specs -> spec-planning
+- Both new specs AND updates -> spec-planning first, then specification-workflow
+
+See [spec-planning](/specs/skills/spec-planning) for the iterative design workflow.
 
 ## Specification Types
 

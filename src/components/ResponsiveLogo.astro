@@ -1,0 +1,103 @@
+---
+/**
+ * ResponsiveLogo Component
+ *
+ * Renders optimized PNG favicons at appropriate sizes based on display size,
+ * with SVG fallback for best quality on high-DPI displays or when ONGs fail.
+ *
+ * Uses <picture> element with srcset for responsive image loading:
+ * - Small displays (< 64px): 48px PNG
+ * - Medium displays (64-128px): 96px PNG
+ * - Large displays (128-256px): 192px PNG
+ * - Extra large displays (> 256px): 512px PNG or SVG fallback
+ *
+ * @example
+ * <ResponsiveLogo size="lg" alt="Kintsu logo" />
+ */
+
+interface Props {
+  /** Size variant: sm (32px), md (64px), lg (128px), xl (256px), hero (512px) */
+  size?: "sm" | "md" | "lg" | "xl" | "hero";
+  /** Alt text for accessibility */
+  alt?: string;
+  /** Additional CSS classes */
+  class?: string;
+}
+
+const { size = "md", alt = "Kintsu logo", class: className = "" } = Astro.props;
+
+// Size mappings in pixels
+const sizeMap = {
+  sm: 32,
+  md: 64,
+  lg: 128,
+  xl: 256,
+  hero: 512,
+} as const;
+
+const displaySize = sizeMap[size];
+---
+
+<picture class:list={["responsive-logo", `responsive-logo--${size}`, className]}>
+  {/* WebP would be even better but we have ONGs generated */}
+  {/* Serve appropriate PNG based on display size and device pixel ratio */}
+  <source
+    type="image/png"
+    srcset={`
+      /favicons/favicon-48x48.png 48w,
+      /favicons/favicon-96x96.png 96w,
+      /favicons/favicon-128x128.png 128w,
+      /favicons/favicon-192x192.png 192w,
+      /favicons/favicon-512x512.png 512w
+    `}
+    sizes={`${displaySize}px`}
+  />
+  {/* SVG fallback for best quality on high-DPI or when ONGs unavailable */}
+  <img
+    src="/favicon.svg"
+    alt={alt}
+    width={displaySize}
+    height={displaySize}
+    loading={size === "hero" ? "eager" : "lazy"}
+    decoding={size === "hero" ? "sync" : "async"}
+  />
+</picture>
+
+<style>
+  .responsive-logo {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .responsive-logo img {
+    display: block;
+    object-fit: contain;
+  }
+
+  .responsive-logo--sm img {
+    width: 2rem;
+    height: 2rem;
+  }
+
+  .responsive-logo--md img {
+    width: 4rem;
+    height: 4rem;
+  }
+
+  .responsive-logo--lg img {
+    width: 8rem;
+    height: 8rem;
+  }
+
+  .responsive-logo--xl img {
+    width: 16rem;
+    height: 16rem;
+  }
+
+  .responsive-logo--hero img {
+    width: 100%;
+    max-width: 20rem;
+    height: auto;
+  }
+</style>

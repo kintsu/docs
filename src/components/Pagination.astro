@@ -1,6 +1,9 @@
 ---
-// Pagination disabled for docs - static site with fixed navigation
-import type { Props } from "@astrojs/starlight/props";
+/**
+ * Pagination component - re-enables Starlight's default pagination
+ * Provides Next/Previous page navigation between docs and specs
+ */
+import Default from "@astrojs/starlight/components/Pagination.astro";
 ---
 
-<!-- Pagination intentionally removed for cleaner docs UI -->
+<Default {...Astro.props} />
