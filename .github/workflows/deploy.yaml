@@ -31,8 +31,7 @@ jobs:
       - name: Refresh Spec Summaries
         run: |
           python -m pip install -r requirements.txt
-          python -m auto.doc collect-specs
-          python -m auto.doc spec-guide
+          mise regenerate
 
       - name: Generate Assets
         run: |
@@ -71,12 +70,22 @@ jobs:
           path: |
             ./dist/*.pdf
 
+      - name: Assemble Specfiles
+        run: |
+          cp ./auto/kintsu.yaml ./kintsu.yaml
+          cp ./src/assets/kintsu.json ./kintsu.json
+
       - name: Upload Kinstu specs yaml
         uses: actions/upload-artifact@v6
         with:
-          name: Kintsu-Specs-JSON
-          path: |
-            ./auto/kintsu.yaml
+          name: kintsu-language-spec.yaml
+          path: ./kintsu.yaml
+
+      - name: Upload Kinstu specs json
+        uses: actions/upload-artifact@v6
+        with:
+          name: kintsu-language-spec.json
+          path: ./kintsu.json
 
   deploy:
     needs: build
