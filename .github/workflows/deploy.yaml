@@ -35,10 +35,6 @@ jobs:
         run: |
           mise regenerate
 
-      - name: Generate Assets
-        run: |
-          mise run diagrams
-
       # https://ler.quest/astro-pdf/configuring-puppeteer/
       - name: Install browsers for Puppeteer
         run: |

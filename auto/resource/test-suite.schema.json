@@ -167,12 +167,21 @@
           "description": "Source location information"
         }
       },
-      "required": ["labeled_spans", "notes", "severity"],
+      "required": [
+        "labeled_spans",
+        "notes",
+        "severity"
+      ],
       "type": "object"
     },
     "ErrorSeverity": {
       "description": "Error severity level",
-      "enum": ["error", "warning", "help", "note"],
+      "enum": [
+        "error",
+        "warning",
+        "help",
+        "note"
+      ],
       "type": "string"
     },
     "LabeledSpan": {
@@ -187,7 +196,10 @@
           "type": "boolean"
         }
       },
-      "required": ["label", "primary"],
+      "required": [
+        "label",
+        "primary"
+      ],
       "type": "object"
     },
     "MemoryFileSystem": {
@@ -216,89 +228,125 @@
           "type": "integer"
         }
       },
-      "required": ["column", "file", "line"],
+      "required": [
+        "column",
+        "file",
+        "line"
+      ],
       "type": "object"
     },
     "Tag": {
       "oneOf": [
         {
           "description": "Tests that focus on basic functionality and correctness.",
-          "enum": ["smoke"],
+          "enum": [
+            "smoke"
+          ],
           "type": "string"
         },
         {
           "description": "Tests that focus on type system soundness.",
-          "enum": ["soundness"],
+          "enum": [
+            "soundness"
+          ],
           "type": "string"
         },
         {
           "description": "Tests that focus on various aspects of schema and code generation.",
-          "enum": ["validations"],
+          "enum": [
+            "validations"
+          ],
           "type": "string"
         },
         {
           "description": "Tests that focus on lockfile generation and related functionality.",
-          "enum": ["lockfile"],
+          "enum": [
+            "lockfile"
+          ],
           "type": "string"
         },
         {
           "description": "Tests that focus on testing the file system operations.",
-          "enum": ["file-operation"],
+          "enum": [
+            "file-operation"
+          ],
           "type": "string"
         },
         {
           "description": "Tests that focus on import resolution and related features.",
-          "enum": ["imports"],
+          "enum": [
+            "imports"
+          ],
           "type": "string"
         },
         {
           "description": "Tests that focus on namespace handling and related features.",
-          "enum": ["namespace"],
+          "enum": [
+            "namespace"
+          ],
           "type": "string"
         },
         {
           "description": "Tests that focus on dependency resolution and management.",
-          "enum": ["dependencies"],
+          "enum": [
+            "dependencies"
+          ],
           "type": "string"
         },
         {
           "description": "Tests that focus on version resolution and related features.",
-          "enum": ["version-resolution"],
+          "enum": [
+            "version-resolution"
+          ],
           "type": "string"
         },
         {
           "description": "Tests that focus on operation type resolution.",
-          "enum": ["operation"],
+          "enum": [
+            "operation"
+          ],
           "type": "string"
         },
         {
           "description": "Tests that focus on error type resolution.",
-          "enum": ["error"],
+          "enum": [
+            "error"
+          ],
           "type": "string"
         },
         {
           "description": "Tests that focus on one-of type resolution.",
-          "enum": ["one-of"],
+          "enum": [
+            "one-of"
+          ],
           "type": "string"
         },
         {
           "description": "Tests that focus on union type resolution.",
-          "enum": ["union"],
+          "enum": [
+            "union"
+          ],
           "type": "string"
         },
         {
           "description": "Tests that focus on type alias resolution.",
-          "enum": ["type-alias"],
+          "enum": [
+            "type-alias"
+          ],
           "type": "string"
         },
         {
           "description": "Tests that focus on struct type resolution.",
-          "enum": ["struct"],
+          "enum": [
+            "struct"
+          ],
           "type": "string"
         },
         {
           "description": "Tests that focus on enum type resolution.",
-          "enum": ["enum"],
+          "enum": [
+            "enum"
+          ],
           "type": "string"
         }
       ]
@@ -324,7 +372,13 @@
           "type": "array"
         }
       },
-      "required": ["expect_pass", "id", "name", "purpose", "tags"],
+      "required": [
+        "expect_pass",
+        "id",
+        "name",
+        "purpose",
+        "tags"
+      ],
       "type": "object"
     },
     "TestReportType": {
@@ -332,12 +386,16 @@
       "oneOf": [
         {
           "description": "CLI error test result",
-          "enum": ["cli_test"],
+          "enum": [
+            "cli_test"
+          ],
           "type": "string"
         },
         {
           "description": "Compile/harness test result",
-          "enum": ["compile_test"],
+          "enum": [
+            "compile_test"
+          ],
           "type": "string"
         }
       ]
@@ -362,7 +420,10 @@
           "description": "Type of test report"
         }
       },
-      "required": ["test", "type"],
+      "required": [
+        "test",
+        "type"
+      ],
       "title": "TestReport_for_CliTestResult",
       "type": "object"
     },
@@ -386,7 +447,10 @@
           "description": "Type of test report"
         }
       },
-      "required": ["test", "type"],
+      "required": [
+        "test",
+        "type"
+      ],
       "title": "TestReport_for_TestResult",
       "type": "object"
     },
@@ -408,7 +472,12 @@
           "$ref": "#/definitions/TestMetadata"
         }
       },
-      "required": ["actual_pass", "fs", "matches_expectation", "metadata"],
+      "required": [
+        "actual_pass",
+        "fs",
+        "matches_expectation",
+        "metadata"
+      ],
       "type": "object"
     }
   },

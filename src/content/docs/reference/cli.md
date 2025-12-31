@@ -9,16 +9,16 @@ This document contains the help content for the `` command-line program.
 
 **Command Overview:**
 
-- [``↴](#)
-- [` generate`↴](#generate)
-- [` check`↴](#check)
-- [` init`↴](#init)
-- [` fmt`↴](#fmt)
-- [` registry`↴](#registry)
-- [` registry publish`↴](#registry-publish)
-- [` list`↴](#list)
-- [` tree`↴](#tree)
-- [` inspect`↴](#inspect)
+* [``↴](#)
+* [` generate`↴](#generate)
+* [` check`↴](#check)
+* [` init`↴](#init)
+* [` fmt`↴](#fmt)
+* [` registry`↴](#registry)
+* [` registry publish`↴](#registry-publish)
+* [` list`↴](#list)
+* [` tree`↴](#tree)
+* [` inspect`↴](#inspect)
 
 ## ``
 
@@ -26,18 +26,18 @@ This document contains the help content for the `` command-line program.
 
 ###### **Subcommands:**
 
-- `generate` — generates models as defined in `op-gen.toml`
-- `check` — checks models for soundness
-- `init` — initializes a new schema project
-- `fmt` — formats schemas
-- `registry` — registry sub commands
-- `list` — list dependencies or workspace schemas
-- `tree` — display dependency tree
-- `inspect` — inspect manifests (derived virtual or canonical)
+* `generate` — generates models as defined in `op-gen.toml`
+* `check` — checks models for soundness
+* `init` — initializes a new schema project
+* `fmt` — formats schemas
+* `registry` — registry sub commands
+* `list` — list dependencies or workspace schemas
+* `tree` — display dependency tree
+* `inspect` — inspect manifests (derived virtual or canonical)
 
 ###### **Options:**
 
-- `--log-level <LOG_LEVEL>` — the verbosity level to print logs at.
+* `--log-level <LOG_LEVEL>` — the verbosity level to print logs at.
 
   Default value: `off`
 
@@ -50,6 +50,9 @@ This document contains the help content for the `` command-line program.
   - `off`:
     Disable all logging output
 
+
+
+
 ## ` generate`
 
 generates models as defined in `op-gen.toml`
@@ -58,10 +61,12 @@ generates models as defined in `op-gen.toml`
 
 ###### **Options:**
 
-- `-d`, `--config-dir <CONFIG_DIR>`
-- `--no-progress` — disable progress output
+* `-d`, `--config-dir <CONFIG_DIR>`
+* `--no-progress` — disable progress output
 
   Default value: `false`
+
+
 
 ## ` check`
 
@@ -71,11 +76,13 @@ checks models for soundness
 
 ###### **Options:**
 
-- `-d`, `--config-dir <CONFIG_DIR>`
-- `-s`, `--schema <SCHEMA>` — Target a specific workspace schema by alias. Only valid in workspace contexts.
-- `--no-progress` — disable progress output
+* `-d`, `--config-dir <CONFIG_DIR>`
+* `-s`, `--schema <SCHEMA>` — Target a specific workspace schema by alias. Only valid in workspace contexts.
+* `--no-progress` — disable progress output
 
   Default value: `false`
+
+
 
 ## ` init`
 
@@ -85,8 +92,10 @@ initializes a new schema project
 
 ###### **Options:**
 
-- `-n`, `--name <NAME>` — the name of the package to create.
-- `-d`, `--dir <DIR>` — the directory to create the new package in.
+* `-n`, `--name <NAME>` — the name of the package to create.
+* `-d`, `--dir <DIR>` — the directory to create the new package in.
+
+
 
 ## ` fmt`
 
@@ -96,27 +105,26 @@ formats schemas
 
 ###### **Arguments:**
 
-- `<INCLUDE>` — a list of paths or globs to include in formatting
+* `<INCLUDE>` — a list of paths or globs to include in formatting
 
   Default value: `./**/*.ks`
 
 ###### **Options:**
 
-- `-d`, `--config-dir <CONFIG_DIR>`
-- `--no-progress` — disable progress output
+* `-d`, `--config-dir <CONFIG_DIR>`
+* `--no-progress` — disable progress output
 
   Default value: `false`
-
-- `--dry` — if --dry, no edits will be written to files
+* `--dry` — if --dry, no edits will be written to files
 
   Default value: `false`
-
-- `--safe` — if --safe=false, unsafe edits will be applied
+* `--safe` — if --safe=false, unsafe edits will be applied
 
   Default value: `true`
+* `-e`, `--exclude <EXCLUDE>` — a list of paths or globs to exclude from formatting.
+* `-W`, `--warn-is-fail` — fail if warnings are encountered
 
-- `-e`, `--exclude <EXCLUDE>` — a list of paths or globs to exclude from formatting.
-- `-W`, `--warn-is-fail` — fail if warnings are encountered
+
 
 ## ` registry`
 
@@ -126,7 +134,9 @@ registry sub commands
 
 ###### **Subcommands:**
 
-- `publish` — Shared progress configuration for CLI commands. Use with `#[clap(flatten)]` in command arg structs
+* `publish` — Shared progress configuration for CLI commands. Use with `#[clap(flatten)]` in command arg structs
+
+
 
 ## ` registry publish`
 
@@ -136,12 +146,14 @@ Shared progress configuration for CLI commands. Use with `#[clap(flatten)]` in c
 
 ###### **Options:**
 
-- `-d`, `--config-dir <CONFIG_DIR>`
-- `-r`, `--base-url <BASE_URL>` — the base url of the registry.
-- `--token <TOKEN>` — the API key for the registry.
-- `--no-progress` — disable progress output
+* `-d`, `--config-dir <CONFIG_DIR>`
+* `-r`, `--base-url <BASE_URL>` — the base url of the registry.
+* `--token <TOKEN>` — the API key for the registry.
+* `--no-progress` — disable progress output
 
   Default value: `false`
+
+
 
 ## ` list`
 
@@ -151,19 +163,19 @@ list dependencies or workspace schemas
 
 ###### **Options:**
 
-- `-d`, `--config-dir <CONFIG_DIR>`
-- `--no-progress` — disable progress output
+* `-d`, `--config-dir <CONFIG_DIR>`
+* `--no-progress` — disable progress output
 
   Default value: `false`
-
-- `--json` — Output in JSON format
-- `-o`, `--outdated` — Show only outdated packages
-- `--depth <DEPTH>` — Maximum dependency depth (default: 1)
+* `--json` — Output in JSON format
+* `-o`, `--outdated` — Show only outdated packages
+* `--depth <DEPTH>` — Maximum dependency depth (default: 1)
 
   Default value: `1`
+* `-w`, `--workspace` — List workspace schemas instead of dependencies
+* `--no-color` — Disable coloured output
 
-- `-w`, `--workspace` — List workspace schemas instead of dependencies
-- `--no-color` — Disable coloured output
+
 
 ## ` tree`
 
@@ -173,18 +185,19 @@ display dependency tree
 
 ###### **Options:**
 
-- `-d`, `--config-dir <CONFIG_DIR>`
-- `--no-progress` — disable progress output
+* `-d`, `--config-dir <CONFIG_DIR>`
+* `--no-progress` — disable progress output
 
   Default value: `false`
+* `--depth <DEPTH>` — Maximum tree depth (unlimited by default)
+* `-i`, `--invert` — Show reverse dependencies
+* `-p`, `--package <PACKAGE>` — Focus on specific package
+* `--duplicates` — Only show packages appearing multiple times
+* `--json` — Output in JSON format
+* `-w`, `--workspace` — Show workspace dependency graph
+* `--no-color` — Disable coloured output
 
-- `--depth <DEPTH>` — Maximum tree depth (unlimited by default)
-- `-i`, `--invert` — Show reverse dependencies
-- `-p`, `--package <PACKAGE>` — Focus on specific package
-- `--duplicates` — Only show packages appearing multiple times
-- `--json` — Output in JSON format
-- `-w`, `--workspace` — Show workspace dependency graph
-- `--no-color` — Disable coloured output
+
 
 ## ` inspect`
 
@@ -194,11 +207,10 @@ inspect manifests (derived virtual or canonical)
 
 ###### **Options:**
 
-- `-d`, `--config-dir <CONFIG_DIR>`
-- `--no-progress` — disable progress output
+* `-d`, `--config-dir <CONFIG_DIR>`
+* `--no-progress` — disable progress output
 
   Default value: `false`
-
-- `-s`, `--schema <SCHEMA>` — Show specific schema's derived manifest
-- `--json` — Output in JSON format
-- `--no-color` — Disable coloured output
+* `-s`, `--schema <SCHEMA>` — Show specific schema's derived manifest
+* `--json` — Output in JSON format
+* `--no-color` — Disable coloured output

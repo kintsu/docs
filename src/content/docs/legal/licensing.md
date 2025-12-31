@@ -2,8 +2,6 @@
 title: "Licensing Structure"
 ---
 
-# Licensing Structure
-
 ## Overview
 
 The Kintsu project uses a dual-licensing approach to balance open-source principles with commercial sustainability:
